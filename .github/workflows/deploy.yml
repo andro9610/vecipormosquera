@@ -2,7 +2,7 @@ name: Deploy Vite site to GitHub Pages
 
 on:
   push:
-    branches: ["main"] # Cambia a "master" si tu rama principal se llama así
+    branches: ["main"] # Asegúrate de que tu rama principal sea main
   workflow_dispatch:
 
 permissions:
@@ -24,11 +24,10 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 20
-          cache: 'npm'
+          node-version: 22 # Actualizado a Node 22 para evitar avisos
 
       - name: Install dependencies
-        run: npm ci
+        run: npm install # Cambiado de 'npm ci' a 'npm install' para mayor flexibilidad
 
       - name: Build project
         run: npm run build
@@ -36,7 +35,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: './dist' # Vite genera la web compilada en esta carpeta
+          path: './dist'
 
   deploy:
     environment:
