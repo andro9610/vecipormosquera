@@ -5,10 +5,10 @@ import { resolve } from 'node:path';
 
 // https://vite.dev/config/
 export default defineConfig({
+  base: '/vecipormosquera/', // 👈 Va aquí, al mismo nivel que plugins
   plugins: [
     react(),
     babel({ presets: [reactCompilerPreset()] }),
-    base: '/vecipormosquera/',
   ],
   resolve: {
     alias: {
