@@ -6,6 +6,8 @@ import { handleDragEnd, SortableTextareaItem } from '../fragments/sortableTextAr
 import { useRequirementContext } from '../context/requirementsContext';
 import { useDocumentTools } from '../hooks/generateDocument';
 
+const logo = '/logo_img.png';
+
 export const RequirementsForm = () => {
     const { state, dispatch } = useRequirementContext();
     const { actuacionPrevia, solicitante, peticiones, hechos } = state;
@@ -39,7 +41,7 @@ export const RequirementsForm = () => {
             <Row className="align-items-center my-2">
                 <Col xs="auto" className="d-flex align-items-center p-0">
                     <Image
-                        src="public\logo_img.png"
+                        src={logo}
                         className="ms-3"
                         alt="Logo"
                         style={{ maxWidth: '80px', width: '100%', objectFit: 'contain' }}
