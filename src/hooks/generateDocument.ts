@@ -1,5 +1,6 @@
 import { Buffer } from 'buffer';
 import JSZip from 'jszip';
+import templateUrl from '../docs/Solicitud_Revision.docx?url';
 import type { RequirementsState } from '../reducers/requirementsReducer';
 
 if (typeof globalThis.Buffer === 'undefined') {
@@ -18,7 +19,6 @@ const formatNumberedList = (items: Array<{ value: string }>) => {
 
 export const useDocumentTools = () => {
     const generateDocument = async (data: RequirementsState) => {
-        const templateUrl = new URL('../docs/Solicitud_Revision.docx', import.meta.url).href;
         const response = await fetch(templateUrl);
 
         if (!response.ok) {
