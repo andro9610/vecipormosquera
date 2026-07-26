@@ -41,6 +41,7 @@ export const SortableTextareaItem = ({
         border: isDragging ? '1px solid #0d6efd' : '1px solid #d7dde5',
         borderRadius: '1rem',
         boxShadow: isDragging ? '0 10px 24px rgba(13, 110, 253, 0.18)' : '0 6px 18px rgba(15, 23, 42, 0.06)',
+        touchAction: 'none',
     };
 
     return (
@@ -71,7 +72,7 @@ export const SortableTextareaItem = ({
                     variant="outline-secondary"
                     size="sm"
                     className="d-flex align-items-center justify-content-center rounded"
-                    style={{ width: '3rem', height: '3rem', padding: 0, userSelect: 'none' }}
+                    style={{ width: '3rem', height: '3rem', padding: 0, userSelect: 'none', touchAction: 'none' }}
                     {...attributes}
                     {...listeners}
                     aria-label="Mover elemento"

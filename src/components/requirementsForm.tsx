@@ -1,5 +1,5 @@
 import { Form, Row, Col, Button, Image, Accordion, Container } from 'react-bootstrap';
-import { DndContext, closestCenter, type DragEndEvent } from '@dnd-kit/core';
+import { DndContext, closestCenter, type DragEndEvent, PointerSensor, TouchSensor, MouseSensor, useSensor, useSensors } from '@dnd-kit/core';
 import { SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable';
 import { HelpTooltip } from '../fragments/HelpTooltip';
 import { handleDragEnd, SortableTextareaItem } from '../fragments/sortableTextAreaItem';
@@ -10,6 +10,11 @@ export const RequirementsForm = () => {
     const { state, dispatch } = useRequirementContext();
     const { actuacionPrevia, solicitante, peticiones, hechos } = state;
     const { generateDocument } = useDocumentTools();
+    const sensors = useSensors(
+        useSensor(PointerSensor, { activationConstraint: { distance: 5 } }),
+        useSensor(TouchSensor, { activationConstraint: { delay: 150, tolerance: 5 } }),
+        useSensor(MouseSensor),
+    );
 
     const handleDragEndPeticiones = (event: DragEndEvent) => {
         handleDragEnd(event, () => {
@@ -34,7 +39,7 @@ export const RequirementsForm = () => {
             <Row className="align-items-center my-2">
                 <Col xs="auto" className="d-flex align-items-center p-0">
                     <Image
-                        src="src\assets\Logo_img.png"
+                        src="public\logo_img.png"
                         className="ms-3"
                         alt="Logo"
                         style={{ maxWidth: '80px', width: '100%', objectFit: 'contain' }}
@@ -153,7 +158,7 @@ export const RequirementsForm = () => {
                         </span>
                     </Accordion.Header>
                     <Accordion.Body>
-                        <DndContext collisionDetection={closestCenter} onDragEnd={handleDragEndPeticiones}>
+                        <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEndPeticiones}>
                             <SortableContext items={peticiones.map((peticion: { id: string }) => peticion.id)} strategy={verticalListSortingStrategy}>
                                 {peticiones.map((peticion: { id: string; value: string }) => (
                                     <SortableTextareaItem
@@ -181,7 +186,7 @@ export const RequirementsForm = () => {
                         </span>
                     </Accordion.Header>
                     <Accordion.Body>
-                        <DndContext collisionDetection={closestCenter} onDragEnd={handleDragEndHechos}>
+                        <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEndHechos}>
                             <SortableContext items={hechos.map((hecho: { id: string }) => hecho.id)} strategy={verticalListSortingStrategy}>
                                 {hechos.map((hecho: { id: string; value: string }) => (
                                     <SortableTextareaItem
