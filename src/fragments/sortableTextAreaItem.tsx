@@ -1,5 +1,4 @@
 import React from 'react';
-import { Form, Button } from 'react-bootstrap';
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import type { DragEndEvent } from '@dnd-kit/core';
@@ -35,50 +34,45 @@ export const SortableTextareaItem = ({
     const style: React.CSSProperties = {
         transform: CSS.Transform.toString(transform),
         transition,
-        opacity: isDragging ? 0.7 : 1,
+        opacity: isDragging ? 0.82 : 1,
         cursor: isDragging ? 'grabbing' : 'grab',
-        backgroundColor: isDragging ? '#f8fafc' : '#ffffff',
-        border: isDragging ? '1px solid #0d6efd' : '1px solid #d7dde5',
-        borderRadius: '1rem',
-        boxShadow: isDragging ? '0 10px 24px rgba(13, 110, 253, 0.18)' : '0 6px 18px rgba(15, 23, 42, 0.06)',
         touchAction: 'none',
     };
 
     return (
-        <div ref={setNodeRef} style={style} className="d-flex align-items-start gap-2 ps-3 py-3 mb-3">
-            <Form.Control
-                as="textarea"
+        <div
+            ref={setNodeRef}
+            style={style}
+            className={`surface-panel mb-3 flex items-start gap-3 p-4 transition-all ${isDragging ? 'border-primary ring-2 ring-primary/20 shadow-lg' : ''}`}
+        >
+            <textarea
                 rows={4}
                 value={value}
                 onChange={(event) => onChange(id, event.target.value)}
                 placeholder={placeholder}
-                className="flex-grow-1 border-0 shadow-none"
-                style={{ resize: 'vertical', minHeight: '4.5rem', backgroundColor: 'transparent' }}
+                className="textarea textarea-ghost control-organic w-full resize-y bg-transparent"
+                style={{ minHeight: '4.5rem' }}
             />
-            <div className="d-flex flex-column gap-2" style={{ minWidth: '3.5rem' }}>
-                <Button
+            <div className="flex min-w-14 flex-col gap-2">
+                <button
                     type="button"
-                    variant="outline-danger"
-                    size="sm"
-                    className="d-flex align-items-center justify-content-center rounded"
-                    style={{ width: '3rem', height: '3rem', padding: 0 }}
+                    className="btn btn-outline btn-error btn-square"
+                    style={{ width: '3rem', height: '3rem' }}
                     onClick={() => onRemove(id)}
                     aria-label="Eliminar elemento"
                 >
-                    <span style={{ fontSize: '1.15rem', lineHeight: 1 }}>×</span>
-                </Button>
-                <Button
+                    <span className="text-lg leading-none">x</span>
+                </button>
+                <button
                     type="button"
-                    variant="outline-secondary"
-                    size="sm"
-                    className="d-flex align-items-center justify-content-center rounded"
-                    style={{ width: '3rem', height: '3rem', padding: 0, userSelect: 'none', touchAction: 'none' }}
+                    className="btn btn-outline btn-primary btn-square"
+                    style={{ width: '3rem', height: '3rem', userSelect: 'none', touchAction: 'none' }}
                     {...attributes}
                     {...listeners}
                     aria-label="Mover elemento"
                 >
-                    <span style={{ fontSize: '1rem', lineHeight: 1 }}>⋮⋮</span>
-                </Button>
+                    <span className="text-base leading-none">::</span>
+                </button>
             </div>
         </div>
     );

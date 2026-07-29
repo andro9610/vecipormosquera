@@ -32,3 +32,35 @@ test('reorders hechos by moving the dragged item to the target position', () => 
 
     assert.deepEqual(nextState.hechos.map((item) => item.id), ['item-0', 'item-2', 'item-1']);
 });
+
+test('clears peticion text when removing the only item', () => {
+    const state = {
+        ...initialState,
+        peticiones: [{ id: 'only', value: 'contenido' }],
+    };
+
+    const nextState = requirementsReducer(state, {
+        type: 'REMOVE_PETICION',
+        payload: 'only',
+    });
+
+    assert.equal(nextState.peticiones.length, 1);
+    assert.equal(nextState.peticiones[0].id, 'only');
+    assert.equal(nextState.peticiones[0].value, '');
+});
+
+test('clears hecho text when removing the only item', () => {
+    const state = {
+        ...initialState,
+        hechos: [{ id: 'only', value: 'contenido' }],
+    };
+
+    const nextState = requirementsReducer(state, {
+        type: 'REMOVE_HECHO',
+        payload: 'only',
+    });
+
+    assert.equal(nextState.hechos.length, 1);
+    assert.equal(nextState.hechos[0].id, 'only');
+    assert.equal(nextState.hechos[0].value, '');
+});
