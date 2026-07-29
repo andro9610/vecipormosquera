@@ -1,19 +1,21 @@
-import { OverlayTrigger, Tooltip } from 'react-bootstrap';
-
 type HelpTooltipProps = { text: string };
 
 export const HelpTooltip = ({ text }: HelpTooltipProps) => {
     return (
-        <OverlayTrigger
-            placement="right"
-            overlay={<Tooltip id={`tooltip-${text.replace(/\s+/g, '-').toLowerCase()}`}>{text}</Tooltip>}
-        >
+        <span className="tooltip [--placement:right] [--trigger:hover]">
             <span
-                className="d-inline-flex align-items-center justify-content-center rounded-circle border border-secondary-subtle text-secondary ms-2"
-                style={{ width: '1.25rem', height: '1.25rem', fontSize: '0.78rem', cursor: 'help' }}
+                className="tooltip-toggle inline-flex h-5 w-5 cursor-help items-center justify-center rounded-full border border-base-300 text-xs font-bold text-base-content/70"
+                aria-label="Mostrar ayuda"
+                role="img"
+                tabIndex={0}
             >
                 ?
             </span>
-        </OverlayTrigger>
+            <span className="tooltip-content tooltip-shown:opacity-100 tooltip-shown:visible invisible z-50 opacity-0" role="tooltip">
+                <span className="tooltip-body tooltip-primary max-w-xs whitespace-normal break-words text-left text-xs leading-snug">
+                    {text}
+                </span>
+            </span>
+        </span>
     );
 }

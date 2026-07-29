@@ -89,7 +89,9 @@ export default function requirementsReducer(
                 ...state,
                 peticiones: state.peticiones.length > 1
                     ? state.peticiones.filter((peticion) => peticion.id !== action.payload)
-                    : state.peticiones,
+                    : state.peticiones.map((peticion) =>
+                        peticion.id === action.payload ? { ...peticion, value: '' } : peticion
+                    ),
             };
 
         case 'UPDATE_PETICION':
@@ -118,7 +120,9 @@ export default function requirementsReducer(
                 ...state,
                 hechos: state.hechos.length > 1
                     ? state.hechos.filter((hecho) => hecho.id !== action.payload)
-                    : state.hechos,
+                    : state.hechos.map((hecho) =>
+                        hecho.id === action.payload ? { ...hecho, value: '' } : hecho
+                    ),
             };
 
         case 'UPDATE_HECHO':
