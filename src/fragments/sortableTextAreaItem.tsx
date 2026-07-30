@@ -2,6 +2,7 @@ import React from 'react';
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import type { DragEndEvent } from '@dnd-kit/core';
+import { MaterialIcon } from '../components/MaterialIcon';
 
 type SortableTextareaItemProps = {
     id: string;
@@ -61,7 +62,7 @@ export const SortableTextareaItem = ({
                     onClick={() => onRemove(id)}
                     aria-label="Eliminar elemento"
                 >
-                    <span className="text-lg leading-none">x</span>
+                    <MaterialIcon icon="close" opticalSize={20} aria-hidden="true" />
                 </button>
                 <button
                     type="button"
@@ -71,7 +72,7 @@ export const SortableTextareaItem = ({
                     {...listeners}
                     aria-label="Mover elemento"
                 >
-                    <span className="text-base leading-none">::</span>
+                    <MaterialIcon icon="drag_indicator" opticalSize={20} aria-hidden="true" />
                 </button>
             </div>
         </div>

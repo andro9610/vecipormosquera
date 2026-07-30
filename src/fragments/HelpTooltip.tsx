@@ -4,7 +4,7 @@ export const HelpTooltip = ({ text }: HelpTooltipProps) => {
     return (
         <span className="tooltip [--placement:right] [--trigger:hover]">
             <span
-                className="tooltip-toggle inline-flex h-5 w-5 cursor-help items-center justify-center rounded-full border border-base-300 text-xs font-bold text-base-content/70"
+                className="tooltip-toggle inline-flex h-5 w-5 cursor-help items-center justify-center rounded-sm border border-base-300 text-xs font-bold text-base-content/70"
                 aria-label="Mostrar ayuda"
                 role="img"
                 tabIndex={0}
