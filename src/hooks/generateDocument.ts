@@ -2,20 +2,11 @@ import { Buffer } from 'buffer';
 import JSZip from 'jszip';
 import templateUrl from '../docs/Solicitud_Revision.docx?url';
 import type { RequirementsState } from '../reducers/requirementsReducer';
+import { formatNumberedList, formatWordText } from './formatNumberedList';
 
 if (typeof globalThis.Buffer === 'undefined') {
     (globalThis as typeof globalThis & { Buffer?: typeof Buffer }).Buffer = Buffer;
 }
-
-const formatNumberedList = (items: Array<{ value: string }>) => {
-    return items
-        .map((item, index) => {
-            const trimmedValue = item.value.trim();
-            return trimmedValue ? `${index + 1}. ${trimmedValue}` : '';
-        })
-        .filter(Boolean)
-        .join('\n\n');
-};
 
 export const useDocumentTools = () => {
     const generateDocument = async (data: RequirementsState) => {
@@ -56,7 +47,7 @@ export const useDocumentTools = () => {
             let updatedContent = originalContent;
 
             for (const [marker, value] of replacements) {
-                const escapedValue = value.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+                const escapedValue = formatWordText(value);
                 updatedContent = updatedContent.split(marker).join(escapedValue);
             }
 
@@ -88,7 +79,16 @@ export const useDocumentTools = () => {
         const url = URL.createObjectURL(blob);
         const link = document.createElement('a');
         link.href = url;
-        link.download = 'Solicitud_Revision.docx';
+        const now = new Date();
+        const dateTimeString = now.toLocaleString('es-CO', {
+            year: 'numeric',
+            month: '2-digit',
+            day: '2-digit',
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit',
+        }).replace(/\//g, '-');
+        link.download = `Solicitud_Revision_${dateTimeString}.docx`;
         document.body.appendChild(link);
         link.click();
         link.remove();

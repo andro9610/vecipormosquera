@@ -1,5 +1,6 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
+import { BrowserRouter } from 'react-router-dom'
 import App from './App.tsx'
 import './styles.css'
 import 'flyonui/flyonui'
@@ -10,6 +11,8 @@ document.documentElement.style.colorScheme = 'light'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <App />
+    <BrowserRouter basename="/vecipormosquera">
+      <App />
+    </BrowserRouter>
   </StrictMode>,
 )
