@@ -25,7 +25,7 @@ export type RequirementsAction =
     | { type: 'REMOVE_HECHO'; payload: string }
     | { type: 'UPDATE_HECHO'; payload: { id: string; value: string } }
     | { type: 'REORDER_HECHOS'; payload: { activeId: string; overId: string } }
-    | { type: 'INSERT_SAMPLE_DATA' };
+
 const createItem = (): SortableTextItem => ({ id: crypto.randomUUID(), value: '' });
 
 const reorderItems = <T extends { id: string }>(items: T[], activeId: string, overId: string): T[] => {
@@ -139,29 +139,6 @@ export default function requirementsReducer(
                 hechos: reorderItems(state.hechos, action.payload.activeId, action.payload.overId),
             };
         }
-        //TODO: Eliminar al completar
-        case 'INSERT_SAMPLE_DATA':
-            return {
-                ...state,
-                actuacionPrevia: 'Solicitud de revisión de la actuación administrativa',
-                solicitante: {
-                    tratamiento: 'Sr',
-                    nombre: 'Juan Pérez',
-                    cedula: '1234567890',
-                    direccion: 'Calle Falsa 123',
-                    celular: '0987654321',
-                    correo: 'correo@dominio.com',
-                },
-                peticiones: [
-                    { id: crypto.randomUUID(), value: 'Que se declare la nulidad de la resolución impugnada.' },
-                    { id: crypto.randomUUID(), value: 'Que se ordene la devolución de los valores pagados indebidamente.' },
-                ],
-                hechos: [
-                    { id: crypto.randomUUID(), value: 'El 1 de enero de 2024, el solicitante presentó una solicitud de revisión.' },
-                    { id: crypto.randomUUID(), value: 'El 15 de enero de 2024, la autoridad emitió una resolución desfavorable.' },
-                ],
-            };
-
         default:
             return state;
     }
