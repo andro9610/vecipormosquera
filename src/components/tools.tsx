@@ -22,7 +22,7 @@ const options: SelectionOption[] = [
 	},
 ];
 
-export const SelectionCard = () => {
+export const Tools = () => {
 	return (
 		<section className="mx-auto w-full max-w-5xl space-y-6">
 			<header className="surface-organic p-6 md:p-8">
