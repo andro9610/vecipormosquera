@@ -10,7 +10,7 @@ import {
 } from '@dnd-kit/core';
 import { SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable';
 import type { SortableTextItem } from '../../types/sortableTextItem';
-import { MaterialIcon } from '../../fragments/materialIcon';
+import { MaterialIcon } from '../../fragments/MaterialIcon';
 import { SortableTextareaItem, handleDragEnd } from '../../fragments/sortableTextAreaItem';
 
 type RequirementsProps = {
