@@ -1,5 +1,5 @@
 import { useRef, type ChangeEvent } from 'react';
-import { MaterialIcon } from '../../fragments/materialIcon';
+import { MaterialIcon } from '../../fragments/MaterialIcon';
 
 type AttachmentsProps = {
     attachmentNames: string[];

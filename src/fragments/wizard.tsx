@@ -1,5 +1,5 @@
 import { useState, type ReactNode } from 'react';
-import { MaterialIcon } from './materialIcon';
+import { MaterialIcon } from './MaterialIcon';
 
 export type WizardStep = {
     key: string;
