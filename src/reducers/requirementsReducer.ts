@@ -7,16 +7,21 @@ export type RequirementsState = {
         nombre: string;
         cedula: string;
         direccion: string;
+        identificador: string;
+        numeroIdentificacion: string;
         celular: string;
         correo: string;
     };
     peticiones: SortableTextItem[];
     hechos: SortableTextItem[];
+    anexos: string[];
 };
 
 export type RequirementsAction =
+    | { type: 'HYDRATE_REQUIREMENTS'; payload: RequirementsState }
     | { type: 'SET_ACTUACION_PREVIA'; payload: string }
     | { type: 'SET_SOLICITANTE_FIELD'; payload: { field: keyof RequirementsState['solicitante']; value: string } }
+    | { type: 'SET_ANEXOS'; payload: string[] }
     | { type: 'ADD_PETICION' }
     | { type: 'REMOVE_PETICION'; payload: string }
     | { type: 'UPDATE_PETICION'; payload: { id: string; value: string } }
@@ -51,11 +56,14 @@ export const initialState: RequirementsState = {
         nombre: '',
         cedula: '',
         direccion: '',
+        identificador: '',
+        numeroIdentificacion: '',
         celular: '',
         correo: '',
     },
     peticiones: [createItem()],
     hechos: [createItem()],
+    anexos: [],
 };
 
 export default function requirementsReducer(
@@ -63,6 +71,9 @@ export default function requirementsReducer(
     action: RequirementsAction
 ): RequirementsState {
     switch (action.type) {
+        case 'HYDRATE_REQUIREMENTS':
+            return action.payload;
+
         case 'SET_ACTUACION_PREVIA':
             return {
                 ...state,
@@ -76,6 +87,12 @@ export default function requirementsReducer(
                     ...state.solicitante,
                     [action.payload.field]: action.payload.value,
                 },
+            };
+
+        case 'SET_ANEXOS':
+            return {
+                ...state,
+                anexos: action.payload,
             };
 
         case 'ADD_PETICION':

@@ -9,6 +9,8 @@
     --color-primary-content: #ffffff;
     --color-secondary: #f2af0d;
     --color-secondary-content: #000000;
+    --color-danger: #b91c1c;
+    --color-danger-content: #ffffff;
     --color-accent: #376400;
     --color-accent-content: #ffffff;
     --color-base-content: #000000;
@@ -130,4 +132,57 @@ input[type="number"] {
     box-shadow:
         0 0 0 0.2rem color-mix(in oklab, var(--color-primary) 15%, transparent),
         inset 0 1px 0 color-mix(in oklab, white 65%, transparent);
+}
+
+/* Variante danger reutilizable para acciones destructivas y mensajes criticos. */
+.text-danger {
+    color: var(--color-danger) !important;
+}
+
+.bg-danger {
+    background-color: var(--color-danger) !important;
+    color: var(--color-danger-content) !important;
+}
+
+.border-danger {
+    border-color: var(--color-danger) !important;
+}
+
+.btn-danger {
+    border-color: var(--color-danger) !important;
+    background-color: var(--color-danger) !important;
+    color: var(--color-danger-content) !important;
+}
+
+.btn-danger:hover,
+.btn-danger:active {
+    border-color: color-mix(in oklab, var(--color-danger) 88%, black) !important;
+    background-color: color-mix(in oklab, var(--color-danger) 88%, black) !important;
+}
+
+.btn-danger:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 0.2rem color-mix(in oklab, var(--color-danger) 24%, transparent);
+}
+
+.btn.btn-outline.btn-danger {
+    background-color: transparent !important;
+    color: var(--color-danger) !important;
+}
+
+.btn.btn-outline.btn-danger:hover,
+.btn.btn-outline.btn-danger:active {
+    background-color: color-mix(in oklab, var(--color-danger) 12%, transparent) !important;
+}
+
+.badge-danger {
+    border: 1px solid color-mix(in oklab, var(--color-danger) 35%, transparent);
+    background-color: color-mix(in oklab, var(--color-danger) 13%, white);
+    color: color-mix(in oklab, var(--color-danger) 92%, black);
+}
+
+.surface-danger {
+    border: 1px solid color-mix(in oklab, var(--color-danger) 35%, transparent);
+    background: color-mix(in oklab, var(--color-danger) 9%, white);
+    color: color-mix(in oklab, var(--color-danger) 88%, black);
 }
