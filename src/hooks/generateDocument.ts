@@ -6,8 +6,6 @@ import type { RequirementsState } from '../reducers/requirementsReducer';
 import type { ReconsiderationState } from '../reducers/reconsiderationReducer';
 import { formatNumberedList, formatWordText } from './formatNumberedList';
 
-const RECONSIDERATION_DEFAULT_MARKER = 'TODO_MARCADOR_RECONSIDERACION';
-
 type ReplacementInput = Map<string, string> | Map<string, string>[];
 
 type TemplateGenerationOptions = {
