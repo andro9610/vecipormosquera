@@ -7,7 +7,7 @@ import { Facts } from './revisionForm/facts';
 import { Requirements } from './revisionForm/requirements';
 import { Resume } from './revisionForm/resume';
 
-export const RequirementsForm = () => {
+export const RevisionForm = () => {
     const { state, dispatch } = useRequirementContext();
     const { actuacionPrevia, solicitante, peticiones, hechos } = state;
     const { generateDocument } = useDocumentTools();
@@ -112,7 +112,7 @@ export const RequirementsForm = () => {
             title="SOLICITUD DE REVISION DE AVALUO CATASTRAL"
             steps={steps}
             finishLabel="Generar documento"
-            onFinish={() => generateDocument(state)}
+            onFinish={() => generateDocument('revision', state)}
         />
     );
 };

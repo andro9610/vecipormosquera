@@ -57,7 +57,7 @@ export const SortableTextareaItem = ({
             <div className="flex min-w-14 flex-col gap-2">
                 <button
                     type="button"
-                    className="btn btn-outline btn-error btn-square"
+                    className="btn btn-outline btn-danger btn-square"
                     style={{ width: '3rem', height: '3rem' }}
                     onClick={() => onRemove(id)}
                     aria-label="Eliminar elemento"

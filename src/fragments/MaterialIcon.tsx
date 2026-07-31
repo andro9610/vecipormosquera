@@ -14,7 +14,7 @@ type MaterialIconProps = Omit<ComponentPropsWithoutRef<'span'>, 'children'> & {
 
 export const MaterialIcon = ({
     icon,
-    variant = 'outlined',
+    variant = 'rounded',
     fill = 0,
     weight = 400,
     grade = 0,
