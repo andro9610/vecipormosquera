@@ -9,9 +9,7 @@ export const Partners: React.FC = () => {
               alt="Veeduría Manuela Beltrán"
               className="w-10 h-10 object-contain grayscale"
             />
-            <span className="text-base font-bold tracking-tight text-slate-700">
-              Veeduria Manuela Beltran
-            </span>
+            <span className="text-base font-bold tracking-tight text-slate-700">Veeduria Manuela Beltran</span>
           </div>
         </a>
       </div>
