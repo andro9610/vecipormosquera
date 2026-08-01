@@ -95,6 +95,13 @@ main {
     border-radius: 0.3rem;
 }
 
+.nav-link-active {
+    background-color: var(--color-primary) !important;
+    border-color: var(--color-primary) !important;
+    color: var(--color-primary-content) !important;
+    box-shadow: 0 0 0 0.2rem color-mix(in oklab, var(--color-primary) 18%, transparent);
+}
+
 /* Fuerza un indicador visual claro para diferenciar los select de los input. */
 select.select {
     appearance: none;
