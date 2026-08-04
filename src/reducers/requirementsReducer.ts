@@ -52,7 +52,7 @@ const reorderItems = <T extends { id: string }>(items: T[], activeId: string, ov
 export const initialState: RequirementsState = {
     actuacionPrevia: '',
     solicitante: {
-        tratamiento: '',
+        tratamiento: 'Sr',
         nombre: '',
         cedula: '',
         direccion: '',

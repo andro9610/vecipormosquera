@@ -17,6 +17,12 @@ type TemplateGenerationOptions = {
 type DocumentKind = 'revision' | 'reconsideracion';
 type DocumentData = RequirementsState | ReconsiderationState;
 
+const hasActuaComo = (
+    data: DocumentData
+): data is ReconsiderationState => {
+    return 'actuaComo' in data.solicitante;
+};
+
 if (typeof globalThis.Buffer === 'undefined') {
     (globalThis as typeof globalThis & { Buffer?: typeof Buffer }).Buffer = Buffer;
 }
@@ -78,7 +84,6 @@ const buildCommonReplacements = (data: DocumentData): Map<string, string> => {
         ['Celular_Solicitante', data.solicitante.celular?.trim() ?? ''],
         ['Correo_Solicitante', data.solicitante.correo?.trim() ?? ''],
         ['Actuacion_Previa', data.actuacionPrevia?.trim() ? `Referencia. ${data.actuacionPrevia.trim()}` : ''],
-        ['Peticiones_Solicitud', formatNumberedList(data.peticiones)],
         ['Hechos_Solicitud', formatNumberedList(data.hechos)],
     ]);
 };
@@ -91,6 +96,9 @@ const buildReconsiderationReplacements = (data: DocumentData): Map<string, strin
         ['Nombre_Solicitante', data.solicitante.nombre?.trim() ?? ''],
         ['Genero_Verbo', data.solicitante.tratamiento?.trim() === 'Sr' ? 'o' : 'a'],
         ['Cedula_Solicitante', data.solicitante.cedula?.trim() ?? ''],
+        ['Actua_Como', hasActuaComo(data) && data.solicitante.actuaComo 
+            ? data.solicitante.tratamiento?.trim() === 'Sr' ? 'Propietario' : 'Propietaria'
+            : data.solicitante.tratamiento?.trim() === 'Sr' ? 'Poseedor' : 'Poseedora' ],
         ['Identificador_Inmueble', data.solicitante.identificador?.trim() ?? ''],
         ['Numero_Identificacion_Inmueble', data.solicitante.numeroIdentificacion?.trim() ?? ''],
         ['Direccion_Solicitante', data.solicitante.direccion?.trim() ?? ''],
