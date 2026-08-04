@@ -1,13 +1,15 @@
 import { Outlet, Route, Routes } from "react-router-dom";
 import { Home } from "../components/home";
-import { ReconsiderationForm } from "../components/reconsiderationForm/reconsiderationForm";
-import { RevisionForm } from "../components/revisionForm/revisionForm";
-import { Tools } from "../components/tools";
+import { ReconsiderationForm } from "../components/toolsPage/reconsiderationForm/reconsiderationForm";
+import { RevisionForm } from "../components/toolsPage/revisionForm/revisionForm";
+import { ToolsPage } from "../components/toolsPage/toolsPage";
 import { Layout } from "../layout/layout";
-import { ReconsiderationProvider } from "../components/reconsiderationForm/context/reconsiderationProvider";
-import { RequirementsProvider } from "../context/requirementsProvider";
-import { AboutUs } from "../components/aboutUs";
+import { ReconsiderationProvider } from "../components/toolsPage/reconsiderationForm/context/reconsiderationProvider";
+import { RequirementsProvider } from "../components/toolsPage/revisionForm/context/requirementsProvider";
+import { AboutUs } from "../components/aboutUs/aboutUs";
 import { ContactUs } from "../components/contactUs";
+import { PageInProgress } from "../components/pageInProgress/pageInProgress";
+import { Volunteer } from "../components/volunteer/volunteer";
 
 export const RoutesComponent: React.FC = () => {
   return (
@@ -17,7 +19,7 @@ export const RoutesComponent: React.FC = () => {
         <Route path="aboutUs" element={<AboutUs />} />
         <Route path="contact" element={<ContactUs />} />
         <Route path="tools/*" element={<Outlet />}>
-          <Route index element={<Tools />} />
+          <Route index element={<ToolsPage />} />
           <Route
             path="solicitudRevisionCatastral"
             element={
@@ -34,8 +36,9 @@ export const RoutesComponent: React.FC = () => {
               </ReconsiderationProvider>
             }
           />
-          <Route path="encuestaDocumento" element={<div>Texto</div>} />
+          <Route path="encuestaDocumento" element={<PageInProgress />} />
         </Route>
+        <Route path="volunteer" element={<Volunteer />} />
         <Route path="*" element={<Home />} />
       </Route>
     </Routes>

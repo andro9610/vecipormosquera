@@ -2,8 +2,8 @@ import { Buffer } from 'buffer';
 import JSZip from 'jszip';
 import revisionTemplateUrl from '../docs/Solicitud_Revision.docx?url';
 import reconsiderationTemplateUrl from '../docs/Recurso_Reconsideracion.docx?url';
-import type { RequirementsState } from '../reducers/requirementsReducer';
-import type { ReconsiderationState } from '../reducers/reconsiderationReducer';
+import type { RequirementsState } from '../components/toolsPage/revisionForm/states/requirementsReducer';
+import type { ReconsiderationState } from '../components/toolsPage/reconsiderationForm/types/reconsiderationState';
 import { formatNumberedList, formatWordText } from './formatNumberedList';
 
 type ReplacementInput = Map<string, string> | Map<string, string>[];
