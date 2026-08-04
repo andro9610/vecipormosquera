@@ -1,5 +1,5 @@
 import type { Dispatch } from 'react';
-import type { ReconsiderationAction, ReconsiderationState } from '../reducers/reconsiderationReducer';
+import type { ReconsiderationAction, ReconsiderationState } from '../../../reducers/reconsiderationReducer';
 
 export type ReconsiderationContextValue = {
     state: ReconsiderationState;

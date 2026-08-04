@@ -5,9 +5,17 @@ type SelectionOption = {
   description: string;
   path: string;
   icon: string;
+  actionText?: string;
 };
 
 const options: SelectionOption[] = [
+  {
+    title: "¿QUE DOCUMENTO DEBERIA PRESENTAR?",
+    description: "Ingrese para conocer el documento que debe presentar según su caso.",
+    path: "encuestaDocumento",
+    icon: "help_outline",
+    actionText: "Iniciar encuesta",
+  },
   {
     title: "SOLICITUD DE REVISIÓN DE AVALUO CATASTRAL",
     description: "Ingrese para diligenciar la solicitud de revision y generar el documento final.",
@@ -25,12 +33,10 @@ const options: SelectionOption[] = [
 export const Tools = () => {
   return (
     <section className="mx-auto w-full max-w-5xl space-y-6">
-      <header className="surface-organic p-6 md:p-8">
-        <h1 className="text-2xl font-semibold md:text-3xl">AVALUO CATASTRAL E IMPUESTO PREDIAL</h1>
-        <p className="mt-2 text-sm text-base-content/80 md:text-base">
-          Haga clic para iniciar el formulario correspondiente.
-        </p>
-      </header>
+      <h1 className="text-2xl font-semibold md:text-3xl">AVALUO CATASTRAL E IMPUESTO PREDIAL</h1>
+      <p className="mt-2 text-sm text-base-content/80 md:text-base">
+        Haga clic para iniciar el formulario correspondiente.
+      </p>
 
       <div className="grid gap-4 md:grid-cols-2">
         {options.map((option) => (
@@ -46,7 +52,7 @@ export const Tools = () => {
                 <h2 className="text-lg font-semibold leading-tight md:text-xl">{option.title}</h2>
                 <p className="text-sm text-base-content/80 md:text-base">{option.description}</p>
                 <span className="inline-flex items-center text-sm font-medium text-primary">
-                  Diligenciar
+                  {option.actionText ?? "Diligenciar"}
                   <MaterialIcon icon="chevron_right" className="ml-1 text-base" />
                 </span>
               </div>

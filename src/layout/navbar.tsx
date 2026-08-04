@@ -1,21 +1,10 @@
-import { useState } from "react";
 import { NavLink } from "react-router-dom";
 import { MaterialIcon } from "../fragments/MaterialIcon";
+import { navBarRoutes as navItems } from "./const/navBarRoutes";
+import { useDropdownMenu } from "./hooks/useDropdownMenu";
 
 export const Navbar: React.FC = () => {
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-
-  const getNavClassName = ({ isActive }: { isActive: boolean }) => `dropdown-item ${isActive ? "nav-link-active" : ""}`;
-
-  const navItems = [
-    { to: "/", label: "Inicio", end: true },
-    { to: "/tools", label: "Herramientas" },
-
-    {
-      to: "/aboutUs",
-      label: "Sobre Nosotros",
-    },
-  ];
+  const { isMobileMenuOpen, setIsMobileMenuOpen, getNavClassName } = useDropdownMenu();
 
   return (
     <header className="px-6 py-5">
@@ -47,6 +36,7 @@ export const Navbar: React.FC = () => {
                       end={item.end}
                       className={getNavClassName}
                       onClick={() => setIsMobileMenuOpen(false)}>
+                      <MaterialIcon icon={item.icon} className="mr-1 text-base" />
                       {item.label}
                     </NavLink>
                   </li>
@@ -61,6 +51,7 @@ export const Navbar: React.FC = () => {
             {navItems.map((item) => (
               <li key={item.to}>
                 <NavLink to={item.to} end={item.end} className={getNavClassName}>
+                  <MaterialIcon icon={item.icon} className="mr-1 text-base" />
                   {item.label}
                 </NavLink>
               </li>
