@@ -6,7 +6,7 @@ import { resolve } from 'node:path';
 
 // https://vite.dev/config/
 export default defineConfig({
-  base: '/vecipormosquera/',
+  base: '/',
   plugins: [
     tailwindcss(),
     react(),
