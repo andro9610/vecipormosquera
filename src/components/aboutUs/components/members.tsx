@@ -1,4 +1,5 @@
 import { useMemo } from "react";
+import { useImageTools } from "../../../hooks/useImageTools";
 
 const members = [
   {
@@ -28,11 +29,8 @@ const members = [
   },
 ];
 
-const assetBase = import.meta.env.BASE_URL.replace(/\/$/, "");
-
-const buildAssetUrl = (path: string) => `${assetBase}/${path}`;
-
 export const Members: React.FC = () => {
+  const { buildAssetUrl } = useImageTools();
 
   const slides = useMemo(
     () => members.map((member) => ({ ...member, src: buildAssetUrl(`images/members/${member.image}`) })),
