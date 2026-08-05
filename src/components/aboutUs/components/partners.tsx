@@ -1,8 +1,8 @@
-const assetBase = import.meta.env.BASE_URL.replace(/\/$/, "");
-
-const buildAssetUrl = (path: string) => `${assetBase}/${path}`;
+import { useImageTools } from "../../../hooks/useImageTools";
 
 export const Partners: React.FC = () => {
+  const { buildAssetUrl } = useImageTools();
+
   return (
     <section className="w-full max-w-6xl mx-auto mt-8 px-4 flex justify-center">
       <div className="flex flex-wrap items-center justify-center gap-8 opacity-70 text-slate-500 text-sm font-semibold tracking-wider">

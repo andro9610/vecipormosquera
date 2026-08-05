@@ -7,7 +7,7 @@ import { Layout } from "../layout/layout";
 import { ReconsiderationProvider } from "../components/toolsPage/reconsiderationForm/context/reconsiderationProvider";
 import { RequirementsProvider } from "../components/toolsPage/revisionForm/context/requirementsProvider";
 import { AboutUs } from "../components/aboutUs/aboutUs";
-import { ContactUs } from "../components/contactUs";
+import { ContactUs } from "../components/contactUs/contactUs";
 import { PageInProgress } from "../components/pageInProgress/pageInProgress";
 import { Volunteer } from "../components/volunteer/volunteer";
 
