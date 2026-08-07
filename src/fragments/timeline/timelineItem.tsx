@@ -1,6 +1,7 @@
 import React from "react";
-
-type Variant = "primary" | "success" | "info";
+import type { Variant } from "./types/variant";
+import { variantToClasses } from "./const/variantToClases";
+import { useDateTools } from "../../hooks/useDateTools";
 
 export type TimelineItemProps = {
     date: string | Date;
@@ -12,23 +13,9 @@ export type TimelineItemProps = {
     visibleTag?: boolean;
 };
 
-const variantToClasses: Record<Variant, { outer: string; badge: string }> = {
-    primary: { outer: "bg-primary/20", badge: "badge-primary" },
-    success: { outer: "bg-success/20", badge: "badge-success" },
-    info: { outer: "bg-info/20", badge: "badge-info" },
-};
-
-function formatDateToEsCo(d: string | Date) {
-    const date = typeof d === "string" ? new Date(d) : d;
-    try {
-        return date.toLocaleDateString("es-CO", { day: "numeric", month: "long", year: "numeric" });
-    } catch {
-        return date.toDateString();
-    }
-}
-
 export const TimelineItem: React.FC<TimelineItemProps> = ({ date, title, text, children, variant = "primary", tag, visibleTag = false }) => {
     const classes = variantToClasses[variant];
+    const { formatDateToEsCo } = useDateTools();
 
     return (
         <>

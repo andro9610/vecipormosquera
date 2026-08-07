@@ -1,6 +1,6 @@
 import { useReconsiderationContext } from "./context/reconsiderationContext";
 import { useDocumentTools } from "../../../hooks/generateDocument";
-import { Wizard, type WizardStep } from "../../../fragments/wizard";
+import { Wizard, type WizardStep } from "../../../fragments/wizard/wizard";
 import { Attachements } from "./components/attachments";
 import { ClaimantInfo } from "./components/claimantInfo";
 import { Facts } from "./components/facts";

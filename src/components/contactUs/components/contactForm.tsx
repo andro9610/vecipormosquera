@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { MaterialIcon } from "../../../fragments/MaterialIcon";
+import { MaterialIcon } from "../../../fragments/materialIcon/MaterialIcon";
 
 const DESTINATARIO = "vecipormosquera@hotmail.com";
 

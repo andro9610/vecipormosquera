@@ -20,7 +20,7 @@ const members = [
   {
     name: "Manuel Nova",
     role: "Secretario",
-    image: "no_photo.png",
+    image: "manuel.jpg",
   },
   {
     name: "Santiago Avila",

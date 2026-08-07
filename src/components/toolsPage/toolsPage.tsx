@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { MaterialIcon } from "../../fragments/MaterialIcon";
+import { MaterialIcon } from "../../fragments/materialIcon/MaterialIcon";
 type SelectionOption = {
   title: string;
   description: string;

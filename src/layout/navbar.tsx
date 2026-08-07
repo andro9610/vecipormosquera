@@ -1,5 +1,5 @@
 import { NavLink } from "react-router-dom";
-import { MaterialIcon } from "../fragments/MaterialIcon";
+import { MaterialIcon } from "../fragments/materialIcon/MaterialIcon";
 import { navBarRoutes as navItems } from "./const/navBarRoutes";
 import { useDropdownMenu } from "./hooks/useDropdownMenu";
 

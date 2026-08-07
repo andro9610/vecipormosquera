@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { MaterialIcon } from "./MaterialIcon";
+import { MaterialIcon } from "../materialIcon/MaterialIcon";
 
 type Props = {
     url: string;
@@ -91,13 +91,13 @@ export const PdfViewer: React.FC<Props> = ({ url }) => {
     const next = () => setPageNumber(p => Math.min(numPages || p + 1, p + 1));
 
     return (
-        <div className="w-full h-full bg-white flex flex-col">
+        <div className="w-full h-full bg-white flex flex-col border border-gray-300 rounded-lg shadow-md p-4">
             <div className="flex items-center justify-between p-2 border-b bg-gray-50">
                 <div className="flex items-center gap-2">
-                    <button onClick={prev} disabled={pageNumber <= 1} className="w-9 h-9 flex items-center justify-center bg-white border rounded disabled:opacity-50"><MaterialIcon icon="chevron_left" /></button>
-                    <button onClick={next} disabled={numPages > 0 && pageNumber >= numPages} className="w-9 h-9 flex items-center justify-center bg-white border rounded disabled:opacity-50"><MaterialIcon icon="chevron_right" /></button>
+                    <button onClick={prev} disabled={pageNumber <= 1} className="w-9 h-9 flex items-center justify-center border rounded disabled:opacity-50 disabled:border-none"><MaterialIcon icon="chevron_left" /></button>
+                    <button onClick={next} disabled={numPages > 0 && pageNumber >= numPages} className="w-9 h-9 flex items-center justify-center bg-white border rounded disabled:opacity-50 disabled:border-none"><MaterialIcon icon="chevron_right" /></button>
                 </div>
-                <div className="text-sm">Página {pageNumber}{numPages ? ` de ${numPages}` : ""}</div>
+                <div className="label-text font-bold">Página {pageNumber}{numPages ? ` de ${numPages}` : ""}</div>
             </div>
             <div ref={containerRef} className="flex-1 overflow-auto p-4">
                 {loading && !error && <div>Cargando estatutos…</div>}

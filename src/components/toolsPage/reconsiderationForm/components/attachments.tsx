@@ -1,4 +1,4 @@
-import { MaterialIcon } from "../../../../fragments/MaterialIcon";
+import { MaterialIcon } from "../../../../fragments/materialIcon/MaterialIcon";
 import { ACCEPTED_EXTENSIONS } from "../const/const";
 import { useAttachementUtilities } from "../hooks/useAttachementUtilities";
 
