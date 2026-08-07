@@ -1,6 +1,6 @@
 import { useRequirementContext } from "./context/requirementsContext";
 import { useDocumentTools } from "../../../hooks/generateDocument";
-import { Wizard, type WizardStep } from "../../../fragments/wizard";
+import { Wizard, type WizardStep } from "../../../fragments/wizard/wizard";
 import { PreviousAct } from "./components/previousAct";
 import { ClaimantInfo } from "./components/claimantInfo";
 import { Facts } from "./components/facts";

@@ -1,7 +1,7 @@
 import { DndContext, closestCenter } from "@dnd-kit/core";
 import { SortableContext, verticalListSortingStrategy } from "@dnd-kit/sortable";
 import type { SortableTextItem } from "../../../../types/sortableTextItem";
-import { MaterialIcon } from "../../../../fragments/MaterialIcon";
+import { MaterialIcon } from "../../../../fragments/materialIcon/MaterialIcon";
 import { SortableTextareaItem } from "../../../../fragments/sortableTextAreaItem/sortableTextAreaItem";
 import { useSortableTextAreaItemUtilities } from "../../../../fragments/sortableTextAreaItem/hooks/useSortableTextAreaItemUtilities";
 

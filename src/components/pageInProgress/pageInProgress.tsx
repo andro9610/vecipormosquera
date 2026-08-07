@@ -1,4 +1,4 @@
-import { MaterialIcon } from "../../fragments/MaterialIcon";
+import { MaterialIcon } from "../../fragments/materialIcon/MaterialIcon";
 import { useNavigate } from "react-router-dom";
 
 export const PageInProgress: React.FC = () => {

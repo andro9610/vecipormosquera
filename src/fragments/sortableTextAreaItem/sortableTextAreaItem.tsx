@@ -2,7 +2,7 @@ import React from "react";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import type { DragEndEvent } from "@dnd-kit/core";
-import { MaterialIcon } from "../MaterialIcon";
+import { MaterialIcon } from "../materialIcon/MaterialIcon";
 
 type SortableTextareaItemProps = {
   id: string;

@@ -1,7 +1,7 @@
 import React from "react";
 import estatutosUrl from "../../docs/Estatutos.pdf?url";
-import { MaterialIcon } from "../../fragments/MaterialIcon";
-import PdfViewer from "../../fragments/PdfViewer";
+import { MaterialIcon } from "../../fragments/materialIcon/MaterialIcon";
+import PdfViewer from "../../fragments/pdfViewer/PdfViewer";
 
 export const Bylaws: React.FC = () => {
     const fileUrl = estatutosUrl;
