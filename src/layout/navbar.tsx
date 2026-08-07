@@ -9,7 +9,7 @@ export const Navbar: React.FC = () => {
   return (
     <header className="px-6 py-5">
       <nav className="navbar relative rounded-box shadow-base-300/20 shadow-sm">
-        <div className="navbar-start md:hidden">
+        <div className="navbar-start sm:hidden">
           <div className="relative inline-flex">
             <button
               type="button"
@@ -46,13 +46,13 @@ export const Navbar: React.FC = () => {
           </div>
         </div>
 
-        <div className="navbar-center absolute left-1/2 hidden -translate-x-1/2 md:flex">
+        <div className="navbar-center absolute left-1/2 hidden sm:flex transform -translate-x-1/2">
           <ul className="menu menu-horizontal gap-2 p-0 text-base rtl:ml-20">
             {navItems.map((item) => (
               <li key={item.to}>
                 <NavLink to={item.to} end={item.end} className={getNavClassName}>
                   <MaterialIcon icon={item.icon} className="mr-1 text-base" />
-                  {item.label}
+                  <span className="hidden xl:inline">{item.label}</span>
                 </NavLink>
               </li>
             ))}
@@ -62,7 +62,7 @@ export const Navbar: React.FC = () => {
         <div className="navbar-end ml-auto items-center">
           <button className="btn btn-outline my-2 ms-1 me-2 flex items-center gap-1">
             <NavLink to="/contact" className="flex items-center gap-1">
-              <span>Contáctanos</span>
+              <span className="hidden md:inline">Contáctanos</span>
               <MaterialIcon icon="arrow_outward" />
             </NavLink>
           </button>

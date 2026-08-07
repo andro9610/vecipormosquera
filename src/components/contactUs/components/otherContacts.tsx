@@ -21,7 +21,7 @@ export const OtherContacts = () => {
                             alt="facebook"
                             className="w-full max-w-12.5 h-auto"
                         />
-                        <span className="text-sm font-bold whitespace-nowrap">@vecipormosquera</span>
+                        <span className="text-sm font-bold whitespace-nowrap hidden xl:flex">@vecipormosquera</span>
                     </a>
                 </div>
                 <div className="flex flex-wrap items-center gap-3">
@@ -31,7 +31,7 @@ export const OtherContacts = () => {
                             alt="instagram"
                             className="w-full max-w-12.5 h-auto"
                         />
-                        <span className="text-sm font-bold whitespace-nowrap">@vecipormosquera</span>
+                        <span className="text-sm font-bold whitespace-nowrap hidden xl:flex">@vecipormosquera</span>
                     </a>
                 </div>
                 <div className="flex flex-wrap items-center gap-3">
@@ -41,7 +41,7 @@ export const OtherContacts = () => {
                             alt="tiktok"
                             className="w-full max-w-12.5 h-auto"
                         />
-                        <span className="text-sm font-bold whitespace-nowrap">@vecipormosquera</span>
+                        <span className="text-sm font-bold whitespace-nowrap hidden xl:flex">@vecipormosquera</span>
                     </a>
                 </div>
             </div>
