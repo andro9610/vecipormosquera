@@ -1,5 +1,4 @@
 import { Outlet, Route, Routes } from "react-router-dom";
-import { Home } from "../components/home";
 import { ReconsiderationForm } from "../components/toolsPage/reconsiderationForm/reconsiderationForm";
 import { RevisionForm } from "../components/toolsPage/revisionForm/revisionForm";
 import { ToolsPage } from "../components/toolsPage/toolsPage";
@@ -10,12 +9,14 @@ import { AboutUs } from "../components/aboutUs/aboutUs";
 import { ContactUs } from "../components/contactUs/contactUs";
 import { PageInProgress } from "../components/pageInProgress/pageInProgress";
 import { Volunteer } from "../components/volunteer/volunteer";
+import { Bylaws } from "../components/bylaws/bylaws";
+import { OrganizationTimeline } from "../components/organizationTimeline/organizationTimeLine";
 
 export const RoutesComponent: React.FC = () => {
   return (
     <Routes>
       <Route element={<Layout />}>
-        <Route index element={<Home />} />
+        <Route index element={<OrganizationTimeline />} />
         <Route path="aboutUs" element={<AboutUs />} />
         <Route path="contact" element={<ContactUs />} />
         <Route path="tools/*" element={<Outlet />}>
@@ -39,7 +40,8 @@ export const RoutesComponent: React.FC = () => {
           <Route path="encuestaDocumento" element={<PageInProgress />} />
         </Route>
         <Route path="volunteer" element={<Volunteer />} />
-        <Route path="*" element={<Home />} />
+        <Route path="bylaws" element={<Bylaws />} />
+        <Route path="*" element={<OrganizationTimeline />} />
       </Route>
     </Routes>
   );
