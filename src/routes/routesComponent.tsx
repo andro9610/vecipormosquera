@@ -11,6 +11,7 @@ import { PageInProgress } from "../components/pageInProgress/pageInProgress";
 import { Volunteer } from "../components/volunteer/volunteer";
 import { Bylaws } from "../components/bylaws/bylaws";
 import { OrganizationTimeline } from "../components/organizationTimeline/organizationTimeLine";
+import { JoinUsForm } from "../components/aboutUs/components/joinUsForm/joinUsForm";
 
 export const RoutesComponent: React.FC = () => {
   return (
@@ -18,6 +19,7 @@ export const RoutesComponent: React.FC = () => {
       <Route element={<Layout />}>
         <Route index element={<OrganizationTimeline />} />
         <Route path="aboutUs" element={<AboutUs />} />
+        <Route path="joinUs" element={<JoinUsForm />} />
         <Route path="contact" element={<ContactUs />} />
         <Route path="tools/*" element={<Outlet />}>
           <Route index element={<ToolsPage />} />

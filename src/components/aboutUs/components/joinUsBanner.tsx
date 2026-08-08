@@ -10,7 +10,7 @@ export const JoinUsBanner: React.FC = () => {
                     <h2 className="text-2xl font-bold">¿Quieres unirte a nuestro equipo?</h2>
                     <div className="mt-2 flex flex-col md:flex-row items-center gap-4">
                         <p className="text-base text-slate-700 flex-1">Estamos buscando personas apasionadas y comprometidas para unirse a nuestro equipo. Si estás interesado en hacer una diferencia en nuestro municipio, ¡queremos conocerte!</p>
-                        <button className="px-6 py-2 btn btn-outline rounded-lg flex items-center" onClick={() => navigate("/volunteer")}>
+                        <button className="px-6 py-2 btn btn-outline rounded-lg flex items-center" onClick={() => navigate("/joinUs")}>
                             <MaterialIcon icon="group_add" className="me-4" />Únete a nosotros</button>
                     </div>
                 </div>
