@@ -8,7 +8,6 @@ import { RequirementsProvider } from "../components/toolsPage/revisionForm/conte
 import { AboutUs } from "../components/aboutUs/aboutUs";
 import { ContactUs } from "../components/contactUs/contactUs";
 import { PageInProgress } from "../components/pageInProgress/pageInProgress";
-import { Volunteer } from "../components/volunteer/volunteer";
 import { Bylaws } from "../components/bylaws/bylaws";
 import { OrganizationTimeline } from "../components/organizationTimeline/organizationTimeLine";
 import { JoinUsForm } from "../components/aboutUs/components/joinUsForm/joinUsForm";
@@ -41,7 +40,6 @@ export const RoutesComponent: React.FC = () => {
           />
           <Route path="encuestaDocumento" element={<PageInProgress />} />
         </Route>
-        <Route path="volunteer" element={<Volunteer />} />
         <Route path="bylaws" element={<Bylaws />} />
         <Route path="*" element={<OrganizationTimeline />} />
       </Route>

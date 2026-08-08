@@ -5,7 +5,7 @@ import reconsiderationTemplateUrl from '../docs/Recurso_Reconsideracion.docx?url
 import type { RequirementsState } from '../components/toolsPage/revisionForm/states/requirementsReducer';
 import type { ReconsiderationState } from '../components/toolsPage/reconsiderationForm/types/reconsiderationState';
 import { formatNumberedList, formatWordText } from './formatNumberedList';
-
+import { useToastNotification } from './useToastNotification';
 type ReplacementInput = Map<string, string> | Map<string, string>[];
 
 type TemplateGenerationOptions = {
@@ -110,6 +110,7 @@ const buildReconsiderationReplacements = (data: DocumentData): Map<string, strin
 };
 
 export const useDocumentTools = () => {
+    const { notify } = useToastNotification();
     const generateDocumentFromTemplate = async ({
         templateUrl,
         replacementMaps,
@@ -171,6 +172,7 @@ export const useDocumentTools = () => {
         link.click();
         link.remove();
         URL.revokeObjectURL(url);
+        notify('success', 'Documento generado correctamente');
     };
 
     const generateDocument = async (kind: DocumentKind, data: DocumentData) => {
