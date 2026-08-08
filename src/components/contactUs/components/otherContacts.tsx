@@ -13,7 +13,7 @@ export const OtherContacts = () => {
                 />
             </div>
             <p className="text-2xl font-semibold uppercase tracking-[0.3em] text-slate-600 pt-20">Siguenos en redes</p>
-            <div className="flex flex-wrap items-center gap-4 md:pt-7">
+            <div className="flex flex-wrap items-center gap-4 md:pt-7 sm:pt-3 sm:pt-5 sm:pb-5 xs:pt-5 xs:pb-5">
                 <div className="flex flex-wrap items-center gap-3">
                     <a href="https://www.facebook.com/vecipormosquera" target="_blank" rel="noopener noreferrer" className="flex flex-wrap items-center gap-3">
                         <img
