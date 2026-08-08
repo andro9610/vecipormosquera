@@ -7,6 +7,7 @@ type TimelineFilterProps = {
 };
 
 export const TimelineFilter: React.FC<TimelineFilterProps> = ({ tags, selectedTag, onChange }) => {
+
     return (
         <div className="filters-section">
             <div className="filter flex flex-wrap gap-2 items-center">
@@ -14,7 +15,7 @@ export const TimelineFilter: React.FC<TimelineFilterProps> = ({ tags, selectedTa
                     <button
                         type="button"
                         className="chip rounded-full px-3 py-1 text-sm flex items-center gap-2 bg-base-200 hover:bg-base-300 border border-base-300"
-                        onClick={() => onChange(null)}
+                        onClick={() => {onChange(null)}}
                         aria-label="Limpiar filtro"
                     >
                         <MaterialIcon icon="filter_alt_off" className="text-sm" />
