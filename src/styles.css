@@ -17,6 +17,16 @@
     --color-base-content: #000000;
     --color-neutral: #376400;
     --color-neutral-content: #ffffff;
+    
+    /* React-Toastify background/icon color variables */
+    --toastify-color-info: #e6f4ea;
+    --toastify-color-success: #e6f4ea;
+    --toastify-color-warning: #fff7e6;
+    --toastify-color-error: #fdecea;
+    --toastify-icon-color-info: #376400;
+    --toastify-icon-color-success: #376400;
+    --toastify-icon-color-warning: #f2af0d;
+    --toastify-icon-color-error: #b91c1c;
 }
 
 body {
@@ -209,4 +219,61 @@ input[type="number"] {
     border: 1px solid color-mix(in oklab, var(--color-danger) 35%, transparent);
     background: color-mix(in oklab, var(--color-danger) 9%, white);
     color: color-mix(in oklab, var(--color-danger) 88%, black);
+}
+
+/* Reglas específicas para React-Toastify (tema 'colored') */
+.Toastify__toast--success {
+    background: var(--toastify-color-success) !important;
+    color: var(--toastify-text-color-success) !important;
+}
+.Toastify__toast--info {
+    background: var(--toastify-color-info) !important;
+    color: var(--toastify-text-color-info) !important;
+}
+.Toastify__toast--warning {
+    background: var(--toastify-color-warning) !important;
+    color: var(--toastify-text-color-warning) !important;
+}
+.Toastify__toast--error {
+    background: var(--toastify-color-error) !important;
+    color: var(--toastify-text-color-error) !important;
+}
+.Toastify__toast .Toastify__progress-bar--success {
+    background: var(--toastify-icon-color-success) !important;
+}
+
+/* Selectores más específicos (por si React-Toastify aplica estilos inline) */
+.Toastify__toast[data-toastify-type="success"] {
+    background-color: var(--toastify-color-success) !important;
+    color: var(--toastify-text-color-success) !important;
+}
+.Toastify__toast[data-toastify-type="success"] .Toastify__progress-bar {
+    background: var(--toastify-icon-color-success) !important;
+}
+
+/* Estilos para toasts personalizados */
+.my-toast {
+    border-radius: 0.6rem !important;
+    padding: 0.8rem 1rem !important;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.08) !important;
+}
+.my-toast--success {
+    background-color: #376400 !important;
+    color: #cadfb1 !important;
+    border: 1px solid rgba(55,100,0,0.12) !important;
+}
+.my-toast--info {
+    background-color: #2ea1e4 !important;
+    color: #c4e3f5 !important;
+}
+.my-toast--warning {
+    background-color: #887508 !important;
+    color: #ddd9cf !important;
+}
+.my-toast--error {
+    background-color: #7a1212 !important;
+    color: #fdecea !important;
+}
+.my-toast-progress {
+    height: 4px !important;
 }

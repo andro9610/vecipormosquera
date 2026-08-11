@@ -105,7 +105,7 @@ export const ClaimantInfo = ({ value, onChangeField }: ClaimantInfoProps) => {
             onChange={(event) => onChangeField("celular", event.target.value)}
           />
         </div>
-        <div className="md:col-span-2">
+        <div className="md:col-span-1">
           <label htmlFor="correo" className="label">
             <span className="label-text">Correo electronico</span>
           </label>

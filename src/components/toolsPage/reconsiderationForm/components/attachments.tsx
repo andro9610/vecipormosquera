@@ -1,6 +1,7 @@
 import { MaterialIcon } from "../../../../fragments/materialIcon/MaterialIcon";
 import { ACCEPTED_EXTENSIONS } from "../const/const";
 import { useAttachementUtilities } from "../hooks/useAttachementUtilities";
+import { useState } from "react";
 
 type AttachmentsProps = {
   attachmentNames: string[];
@@ -10,6 +11,14 @@ type AttachmentsProps = {
 export const Attachements = ({ attachmentNames, onAttachmentsChange }: AttachmentsProps) => {
   const { fileInputRef, handleFileChange, clearAttachments, removeAttachment, openFilePicker } =
     useAttachementUtilities({ attachmentNames, onAttachmentsChange });
+  const [manualInput, setManualInput] = useState("");
+
+  const handleAddManual = () => {
+    if (manualInput.trim()) {
+      onAttachmentsChange([...attachmentNames, manualInput.trim()]);
+      setManualInput("");
+    }
+  };
 
   return (
     <div className="space-y-4">
@@ -52,11 +61,31 @@ export const Attachements = ({ attachmentNames, onAttachmentsChange }: Attachmen
           </ul>
         </div>
       )}
-      <div className="flex justify-center gap-2">
+      <div className="flex flex-col items stretch gap-2">
         <button type="button" className="btn btn-outline" onClick={openFilePicker}>
           <MaterialIcon icon="add_notes" className="mr-2" />
-          Agregar Documentos
+          Cargar Documentos
         </button>
+        <div className="text-center">o</div>
+        <div className="flex flex-col w-full gap-2">
+          <input
+            aria-label="Agregar documento manualmente"
+            placeholder="Escribe el nombre del documento y presiona +"
+            value={manualInput}
+            onChange={(e) => setManualInput(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                e.preventDefault();
+                handleAddManual();
+              }
+            }}
+            className="input input-sm w-full mb-3"
+          />
+          <button type="button" className="btn btn-primary btn-sm py-2" onClick={handleAddManual}>
+            <MaterialIcon icon="add" className="mr-2" />
+            Agregar
+          </button>
+        </div>
       </div>
     </div>
   );
