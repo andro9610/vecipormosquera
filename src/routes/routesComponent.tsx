@@ -11,12 +11,14 @@ import { PageInProgress } from "../components/pageInProgress/pageInProgress";
 import { Bylaws } from "../components/bylaws/bylaws";
 import { OrganizationTimeline } from "../components/organizationTimeline/organizationTimeLine";
 import { JoinUsForm } from "../components/aboutUs/components/joinUsForm/joinUsForm";
+import { TestPage } from "../components/testPage/testPage";
 
 export const RoutesComponent: React.FC = () => {
   return (
     <Routes>
       <Route element={<Layout />}>
-        <Route index element={<OrganizationTimeline />} />
+        {/**<Route index element={<OrganizationTimeline />} />*/}
+        <Route index element={<TestPage />} />
         <Route path="aboutUs" element={<AboutUs />} />
         <Route path="joinUs" element={<JoinUsForm />} />
         <Route path="contact" element={<ContactUs />} />

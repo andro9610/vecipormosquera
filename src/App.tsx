@@ -1,12 +1,13 @@
 import { RoutesComponent } from "./routes/routesComponent";
-import { ToastContainer} from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const App = () => {
   return (
     <>
       <main className="min-h-screen px-4 py-3 md:px-4 md:py-3">
         <RoutesComponent />
-        <ToastContainer 
+        <ToastContainer
           position="bottom-center"
           autoClose={3000}
           hideProgressBar={false}
@@ -16,7 +17,7 @@ const App = () => {
           pauseOnFocusLoss
           draggable
           pauseOnHover
-          theme="colored"  
+          theme="colored"
         />
       </main>
     </>

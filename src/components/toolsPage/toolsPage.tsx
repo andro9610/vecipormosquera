@@ -10,13 +10,6 @@ type SelectionOption = {
 
 const options: SelectionOption[] = [
   {
-    title: "¿QUE DOCUMENTO DEBERIA PRESENTAR?",
-    description: "Ingrese para conocer el documento que debe presentar según su caso.",
-    path: "encuestaDocumento",
-    icon: "help_outline",
-    actionText: "Iniciar encuesta",
-  },
-  {
     title: "SOLICITUD DE REVISIÓN DE AVALUO CATASTRAL",
     description: "Ingrese para diligenciar la solicitud de revision y generar el documento final.",
     path: "solicitudRevisionCatastral",
