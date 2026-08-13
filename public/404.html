@@ -1,0 +1,22 @@
+<!doctype html>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Redirecting…</title>
+<script>
+  (function () {
+    var originalPath = location.pathname + location.search + location.hash;
+    function loadIndex() {
+      fetch('/index.html').then(function (r) { return r.text(); }).then(function (html) {
+        document.open(); document.write(html); document.close();
+        history.replaceState({}, '', originalPath);
+      }).catch(function () {
+        location.replace('/');
+      });
+    }
+    fetch(originalPath, { method: 'HEAD' }).then(function (res) {
+      if (!res || res.status >= 400) loadIndex();
+    }).catch(function () {
+      loadIndex();
+    });
+  })();
+</script>

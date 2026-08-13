@@ -14,7 +14,7 @@ export default defineConfig({
   ],
   resolve: {
     alias: {
-      buffer: resolve(__dirname, 'node_modules/buffer/index.js'),
+      buffer: resolve(import.meta.dirname, 'node_modules/buffer/index.js'),
     },
   },
   define: {
