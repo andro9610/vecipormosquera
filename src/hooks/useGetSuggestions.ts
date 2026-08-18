@@ -10,7 +10,12 @@ export const useGetSuggestions = (form: string, section: string) => {
     const [suggestions, setSuggestions] = useState<Suggestion[]>([]);
 
     const getSuggestions = useCallback(async () => {
-        const response = await fetch(`${serviceUrl}/suggestions/${form}/${section}`);
+        const response = await fetch(`${serviceUrl}/suggestions/${form}/${section}`,{
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json",
+            },
+        });
         if (!response.ok) {
             throw new Error(`Error HTTP: ${response.status}`);
         }
