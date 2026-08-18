@@ -4,10 +4,12 @@ import type { SortableTextItem } from "../../../../types/sortableTextItem";
 import { MaterialIcon } from "../../../../fragments/materialIcon/MaterialIcon";
 import { SortableTextareaItem } from "../../../../fragments/sortableTextAreaItem/sortableTextAreaItem";
 import { useSortableTextAreaItemUtilities } from "../../../../fragments/sortableTextAreaItem/hooks/useSortableTextAreaItemUtilities";
+import SuggestionsChips from '../../../../fragments/suggestionsChips/suggestionsChips';
+import { useGetSuggestions } from "../../../../hooks/useGetSuggestions";
 
 type FactsProps = {
   facts: SortableTextItem[];
-  onAdd: () => void;
+  onAdd: (initialValue?: string) => void;
   onUpdate: (id: string, value: string) => void;
   onRemove: (id: string) => void;
   onReorder: (activeId: string, overId: string) => void;
@@ -15,9 +17,17 @@ type FactsProps = {
 
 export const Facts = ({ facts, onAdd, onUpdate, onRemove, onReorder }: FactsProps) => {
   const { sensors, handleDragEnd } = useSortableTextAreaItemUtilities(onReorder);
-
+  const { suggestions } = useGetSuggestions('RECURSO_RECONSIDERACION', 'HECHOS');
+  
   return (
     <div className="space-y-3">
+      { suggestions.length > 0 &&
+        <SuggestionsChips
+          className="mb-2"
+          suggestions={suggestions}
+          onSelect={(t) => onAdd(t)}
+        />
+      }
       <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
         <SortableContext items={facts.map((fact) => fact.id)} strategy={verticalListSortingStrategy}>
           {facts.map((fact) => (
@@ -33,7 +43,7 @@ export const Facts = ({ facts, onAdd, onUpdate, onRemove, onReorder }: FactsProp
         </SortableContext>
       </DndContext>
       <div className="flex justify-center">
-        <button className="btn btn-outline" type="button" onClick={onAdd}>
+        <button className="btn btn-outline" type="button" onClick={()=>onAdd()}>
           <MaterialIcon icon="list_alt_add" opticalSize={20} className="mr-1" aria-hidden="true" />
           Agregar hecho
         </button>
