@@ -51,10 +51,16 @@ export const reconsiderationReducer = (
 			};
 
 		case 'ADD_HECHO':
-			return {
-				...state,
-				hechos: [...state.hechos, createItem()],
-			};
+				return {
+					...state,
+					hechos: [...state.hechos, createItem()],
+				};
+
+			case 'ADD_HECHO_WITH_VALUE':
+				return {
+					...state,
+					hechos: [...state.hechos, { id: crypto.randomUUID(), value: action.payload ?? '' }],
+				};
 
 		case 'REMOVE_HECHO':
 			return {

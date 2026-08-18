@@ -65,7 +65,7 @@ export const RevisionForm = () => {
       content: (
         <Facts
           facts={hechos}
-          onAdd={() => dispatch({ type: "ADD_HECHO" })}
+          onAdd={(initialValue?: string) => dispatch({ type: "ADD_HECHO_WITH_VALUE", payload: initialValue })}
           onUpdate={(id, value) => dispatch({ type: "UPDATE_HECHO", payload: { id, value } })}
           onRemove={(id) => dispatch({ type: "REMOVE_HECHO", payload: id })}
           onReorder={(activeId, overId) =>

@@ -27,6 +27,7 @@ export type RequirementsAction =
     | { type: 'UPDATE_PETICION'; payload: { id: string; value: string } }
     | { type: 'REORDER_PETICIONES'; payload: { activeId: string; overId: string } }
     | { type: 'ADD_HECHO' }
+    | { type: 'ADD_HECHO_WITH_VALUE'; payload?: string }
     | { type: 'REMOVE_HECHO'; payload: string }
     | { type: 'UPDATE_HECHO'; payload: { id: string; value: string } }
     | { type: 'REORDER_HECHOS'; payload: { activeId: string; overId: string } }
@@ -131,6 +132,14 @@ export default function requirementsReducer(
                 ...state,
                 hechos: [...state.hechos, createItem()],
             };
+
+        case 'ADD_HECHO_WITH_VALUE': {
+            const newItem = { id: crypto.randomUUID(), value: action.payload ?? '' } as SortableTextItem;
+            return {
+                ...state,
+                hechos: [...state.hechos, newItem],
+            };
+        }
 
         case 'REMOVE_HECHO':
             return {

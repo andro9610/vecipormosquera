@@ -53,16 +53,6 @@ export const ContactForm = () => {
                             type="radio"
                             name="medioEnvio"
                             className="radio radio-primary"
-                            checked={medioEnvio === "correo"}
-                            onChange={() => setMedioEnvio("correo")}
-                        />
-                        <span className="text-base font-medium">Correo</span>
-                    </label>
-                    <label className="custom-option flex sm:w-1/2 flex-row items-start gap-3">
-                        <input
-                            type="radio"
-                            name="medioEnvio"
-                            className="radio radio-primary"
                             checked={medioEnvio === "whatsapp"}
                             onChange={() => setMedioEnvio("whatsapp")}
                         />

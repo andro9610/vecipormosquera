@@ -7,16 +7,18 @@ export type WizardStep = {
   helper: string;
   canContinue: boolean;
   content: ReactNode;
+  onStep?: (from: number, to: number) => void;
 };
 
 type WizardProps = {
   title: string;
   steps: WizardStep[];
   onFinish: () => void;
+  onStep?: (newIndex: number) => void;
   finishLabel?: string;
 };
 
-export const Wizard = ({ title, steps, onFinish, finishLabel = "Finalizar" }: WizardProps) => {
+export const Wizard = ({ title, steps, onFinish, onStep, finishLabel = "Finalizar" }: WizardProps) => {
   const [currentStep, setCurrentStep] = useState(0);
 
   if (steps.length === 0) {
@@ -27,8 +29,24 @@ export const Wizard = ({ title, steps, onFinish, finishLabel = "Finalizar" }: Wi
   const isFirstStep = currentStep === 0;
   const currentStepData = steps[currentStep];
 
-  const goToPreviousStep = () => setCurrentStep((step) => Math.max(step - 1, 0));
-  const goToNextStep = () => setCurrentStep((step) => Math.min(step + 1, steps.length - 1));
+  const goToPreviousStep = () => {
+    setCurrentStep((step) => {
+      const next = Math.max(step - 1, 0);
+      if (onStep) onStep(next);
+      const targetStep = steps[next];
+      if (targetStep?.onStep) targetStep.onStep(step, next);
+      return next;
+    });
+  };
+  const goToNextStep = () => {
+    setCurrentStep((step) => {
+      const next = Math.min(step + 1, steps.length - 1);
+      if (onStep) onStep(next);
+      const targetStep = steps[next];
+      if (targetStep?.onStep) targetStep.onStep(step, next);
+      return next;
+    });
+  };
 
   return (
     <section className="surface-organic backdrop-blur md:p-8">

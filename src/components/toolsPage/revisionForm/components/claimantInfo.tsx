@@ -79,7 +79,7 @@ export const ClaimantInfo = ({ value, onChangeField }: ClaimantInfoProps) => {
         </div>
         <div className="md:col-span-2">
           <label htmlFor="direccion" className="label">
-            <span className="label-text">Direccion</span>
+            <span className="label-text">Direccion de notificación</span>
           </label>
           <input
             id="direccion"
