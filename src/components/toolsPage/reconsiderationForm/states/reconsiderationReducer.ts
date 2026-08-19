@@ -1,6 +1,9 @@
 import type { ReconsiderationState } from '../types/reconsiderationState';
 import type { ReconsiderationAction } from '../types/reconsiderationAction';
 import { useTextAreaTools } from '../../../../hooks/useTextAreaTools';
+import type { SortableTextItem } from '../../../../types/sortableTextItem';
+
+const createItem = (): SortableTextItem => ({ id: crypto.randomUUID(), value: '' });
 
 export const initialReconsiderationState: ReconsiderationState = {
 	actuacionPrevia: '',
@@ -15,7 +18,7 @@ export const initialReconsiderationState: ReconsiderationState = {
 		celular: '',
 		correo: '',
 	},
-	hechos: [],
+	hechos: [createItem()],
 	anexos: [],
 };
 

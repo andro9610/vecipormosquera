@@ -24,7 +24,14 @@ export const Requirements = ({ requirements, onAdd, onUpdate, onRemove, onReorde
         <SuggestionsChips
           className="mb-2"
           suggestions={suggestions}
-          onSelect={(t) => onAdd(t)}
+          onSelect={(t) => {
+            const emptyRequirement = requirements.find((req) => req.value.trim().length === 0);
+            if (emptyRequirement) {
+              onUpdate(emptyRequirement.id, t);
+            } else {
+              onAdd(t);
+            }
+          }}
         />
       }
       <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>

@@ -1,10 +1,9 @@
-import { useRef, type ChangeEvent } from "react";
+import { useRef, useState, type ChangeEvent } from "react";
 
 type useAttachmentsUtilitiesProps = {
   attachmentNames: string[];
   onAttachmentsChange: (attachmentNames: string[]) => void;
 };
-
 
 export const useAttachementUtilities = ({attachmentNames, onAttachmentsChange}: useAttachmentsUtilitiesProps) => {
       const fileInputRef = useRef<HTMLInputElement | null>(null);
@@ -33,11 +32,23 @@ export const useAttachementUtilities = ({attachmentNames, onAttachmentsChange}: 
         fileInputRef.current?.click();
       };
 
+
+      const [manualInput, setManualInput] = useState("");
+
+      const handleAddManual = () => {
+        if (manualInput.trim()) {
+          onAttachmentsChange([...attachmentNames, manualInput.trim()]);
+          setManualInput("");
+        }
+      };
+
       return {
         fileInputRef,
         handleFileChange,
         clearAttachments,
         removeAttachment,
-        openFilePicker
+        openFilePicker,
+        manualInput, setManualInput,
+        handleAddManual
     }
 }

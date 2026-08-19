@@ -1,7 +1,7 @@
 import { useReconsiderationContext } from "./context/reconsiderationContext";
 import { useDocumentTools } from "../../../hooks/generateDocument";
 import { Wizard, type WizardStep } from "../../../fragments/wizard/wizard";
-import { Attachements } from "./components/attachments";
+import { Attachements } from "./components/attachements/attachments";
 import { ClaimantInfo } from "./components/claimantInfo";
 import { Facts } from "./components/facts";
 import { PreviousAct } from "./components/previousAct";
@@ -140,6 +140,7 @@ export const ReconsiderationForm = () => {
   return (
     <div className="space-y-3">
       <Wizard
+        icon="autorenew"
         title="SOLICITUD DE RECONSIDERACIÓN"
         steps={steps}
         finishLabel="Generar documento"

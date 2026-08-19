@@ -5,12 +5,13 @@ import { ToolsPage } from "../components/toolsPage/toolsPage";
 import { Layout } from "../layout/layout";
 import { ReconsiderationProvider } from "../components/toolsPage/reconsiderationForm/context/reconsiderationProvider";
 import { RequirementsProvider } from "../components/toolsPage/revisionForm/context/requirementsProvider";
+import { ExpeditionProvider } from "../components/toolsPage/expeditionForm/context/expeditionProvider";
 import { AboutUs } from "../components/aboutUs/aboutUs";
 import { ContactUs } from "../components/contactUs/contactUs";
-import { PageInProgress } from "../components/pageInProgress/pageInProgress";
 import { Bylaws } from "../components/bylaws/bylaws";
 import { OrganizationTimeline } from "../components/organizationTimeline/organizationTimeLine";
 import { JoinUsForm } from "../components/aboutUs/components/joinUsForm/joinUsForm";
+import { ExpeditionForm } from "../components/toolsPage/expeditionForm/expeditionForm";
 
 export const RoutesComponent: React.FC = () => {
   return (
@@ -39,7 +40,14 @@ export const RoutesComponent: React.FC = () => {
               </ReconsiderationProvider>
             }
           />
-          <Route path="encuestaDocumento" element={<PageInProgress />} />
+          <Route
+            path="solicitudExpedicionPredial"
+            element={
+              <ExpeditionProvider>
+                <ExpeditionForm />
+              </ExpeditionProvider>
+            }
+          />
         </Route>
         <Route path="bylaws" element={<Bylaws />} />
         <Route path="*" element={<OrganizationTimeline />} />
@@ -47,3 +55,4 @@ export const RoutesComponent: React.FC = () => {
     </Routes>
   );
 };
+
