@@ -25,7 +25,14 @@ export const Facts = ({ facts, onAdd, onUpdate, onRemove, onReorder }: FactsProp
         <SuggestionsChips
           className="mb-2"
           suggestions={suggestions}
-          onSelect={(t) => onAdd(t)}
+          onSelect={(t) => {
+            const emptyFact = facts.find((fact) => fact.value.trim().length === 0);
+            if (emptyFact) {
+              onUpdate(emptyFact.id, t);
+            } else {
+              onAdd(t);
+            }
+          }}
         />
       }
       <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
@@ -51,3 +58,4 @@ export const Facts = ({ facts, onAdd, onUpdate, onRemove, onReorder }: FactsProp
     </div>
   );
 };
+

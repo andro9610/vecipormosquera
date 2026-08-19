@@ -9,6 +9,13 @@ export const Navbar: React.FC = () => {
   return (
     <header className="px-6 py-5">
       <nav className="navbar relative rounded-box shadow-base-300/20 shadow-sm">
+        <NavLink to="/" className="flex items-center gap-1">
+          <img
+            src={`${import.meta.env.BASE_URL}logo_vector.svg`}
+            alt="Logo"
+            className="absolute left-1/2 top-1/2 w-full max-w-[100px] h-12 transform -translate-x-1/2 -translate-y-1/2 sm:left-4 sm:translate-x-0"
+          />
+        </NavLink>
         <div className="navbar-start sm:hidden">
           <div className="relative inline-flex">
             <button
@@ -60,10 +67,14 @@ export const Navbar: React.FC = () => {
         </div>
 
         <div className="navbar-end ml-auto items-center">
-          <button className="btn btn-outline my-2 ms-1 me-2 flex items-center gap-1">
+          <button className="btn btn-outline my-2 ms-1 me-2 flex items-center gap-2">
             <NavLink to="/contact" className="flex items-center gap-1">
-              <span className="hidden md:inline">Contáctanos</span>
-              <MaterialIcon icon="arrow_outward" />
+              <span className="hidden md:inline me-1">Contáctanos</span>
+              <img
+                  src={`${import.meta.env.BASE_URL}images/social/whatsapp.svg`}
+                  alt="Whatever"
+                  className="h-5 w-5 text-primary my-auto"
+              />
             </NavLink>
           </button>
         </div>
@@ -71,3 +82,4 @@ export const Navbar: React.FC = () => {
     </header>
   );
 };
+

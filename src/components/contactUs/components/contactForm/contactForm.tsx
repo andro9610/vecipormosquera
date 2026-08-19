@@ -1,39 +1,14 @@
-import { useState } from "react";
-import { MaterialIcon } from "../../../fragments/materialIcon/MaterialIcon";
-
-const DESTINATARIO = "vecipormosquera@hotmail.com";
+import { MaterialIcon } from "../../../../fragments/materialIcon/MaterialIcon";
+import { useConctactForm } from "./hooks/useContactForm";
 
 export const ContactForm = () => {
-    const [nombre, setNombre] = useState("");
-    const [correo, setCorreo] = useState("");
-    const [mensaje, setMensaje] = useState("");
-    const [medioEnvio, setMedioEnvio] = useState<"correo" | "whatsapp">("whatsapp");
-
-    const sendMail = () => {
-        const subject = `Mensaje de contacto de ${nombre.trim()}`;
-        const body = [`Nombre: ${nombre.trim()}`, `Correo: ${correo.trim()}`, "", mensaje.trim()].join("\n").trim();
-
-        const mailtoUrl = `mailto:${DESTINATARIO}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-
-        window.location.href = mailtoUrl;
-    }
-
-    const sendWhatsApp = () => {
-        const body = [mensaje.trim(), ` cordialmente ${nombre.trim()}`].join("\n").trim();
-        const whatsappUrl = `https://wa.me/573193646699?text=${encodeURIComponent(body)}`;
-
-        window.open(whatsappUrl, "_blank", "noopener,noreferrer");
-        return;
-    }
-
-
-    const handleSubmit = (event: React.SubmitEvent<HTMLFormElement>) => {
-        event.preventDefault();
-
-        medioEnvio === "whatsapp" ? sendWhatsApp() : sendMail();
-
-
-    };
+    const {
+        nombre, setNombre, 
+        correo, setCorreo, 
+        mensaje, setMensaje, 
+        medioEnvio, setMedioEnvio, 
+        handleSubmit
+    } = useConctactForm();
 
     return (
         <>

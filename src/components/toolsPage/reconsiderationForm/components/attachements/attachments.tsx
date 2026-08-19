@@ -1,7 +1,6 @@
-import { MaterialIcon } from "../../../../fragments/materialIcon/MaterialIcon";
-import { ACCEPTED_EXTENSIONS } from "../const/const";
-import { useAttachementUtilities } from "../hooks/useAttachementUtilities";
-import { useState } from "react";
+import { MaterialIcon } from "../../../../../fragments/materialIcon/MaterialIcon";
+import { ACCEPTED_EXTENSIONS } from "../../const/const";
+import { useAttachementUtilities } from "./hooks/useAttachementUtilities";
 
 type AttachmentsProps = {
   attachmentNames: string[];
@@ -9,16 +8,16 @@ type AttachmentsProps = {
 };
 
 export const Attachements = ({ attachmentNames, onAttachmentsChange }: AttachmentsProps) => {
-  const { fileInputRef, handleFileChange, clearAttachments, removeAttachment, openFilePicker } =
-    useAttachementUtilities({ attachmentNames, onAttachmentsChange });
-  const [manualInput, setManualInput] = useState("");
-
-  const handleAddManual = () => {
-    if (manualInput.trim()) {
-      onAttachmentsChange([...attachmentNames, manualInput.trim()]);
-      setManualInput("");
-    }
-  };
+  const {
+    fileInputRef, 
+    handleFileChange,
+    clearAttachments,
+    removeAttachment,
+    openFilePicker,
+    manualInput,
+    setManualInput,
+    handleAddManual
+  } = useAttachementUtilities({ attachmentNames, onAttachmentsChange });
 
   return (
     <div className="space-y-4">

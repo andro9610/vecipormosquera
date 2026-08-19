@@ -11,6 +11,7 @@ export type WizardStep = {
 };
 
 type WizardProps = {
+  icon?: string;
   title: string;
   steps: WizardStep[];
   onFinish: () => void;
@@ -18,7 +19,7 @@ type WizardProps = {
   finishLabel?: string;
 };
 
-export const Wizard = ({ title, steps, onFinish, onStep, finishLabel = "Finalizar" }: WizardProps) => {
+export const Wizard = ({ icon, title, steps, onFinish, onStep, finishLabel = "Finalizar" }: WizardProps) => {
   const [currentStep, setCurrentStep] = useState(0);
 
   if (steps.length === 0) {
@@ -49,16 +50,16 @@ export const Wizard = ({ title, steps, onFinish, onStep, finishLabel = "Finaliza
   };
 
   return (
-    <section className="surface-organic backdrop-blur md:p-8">
-      <header className="divider-soft mb-6 flex flex-col gap-3 border-b pb-5 sm:flex-row sm:items-center sm:justify-between">
+    <section className="surface-organic backdrop-blur md:m-8 sm:m-4">
+      <header className="divider-soft flex flex-col gap-4 border-b px-5 py-4 sm:flex-row sm:items-center sm:justify-between sm:px-6 sm:py-5">
         <div className="flex items-center gap-4">
-          <span className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-primary/12 text-primary">
-            <MaterialIcon icon="search_insights" weight={600} opticalSize={30} label="Formulario de solicitud" />
+          <span className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-primary/12 text-primary">
+            <MaterialIcon icon={icon ?? "search_insights"} weight={600} opticalSize={30} label="Formulario de solicitud" />
           </span>
-          <div>
-            <h4 className="text-2xl leading-tight text-base-content sm:text-3xl">{title}</h4>
-          </div>
-        </div>
+              <div className="min-w-0">
+            <h4 className="m-0 text-2xl leading-tight sm:text-3xl">{title}</h4>
+              </div>
+            </div>
       </header>
 
       <section
@@ -75,7 +76,7 @@ export const Wizard = ({ title, steps, onFinish, onStep, finishLabel = "Finaliza
                   Paso {currentStep + 1} de {steps.length}
                 </span>
                 <span className="mt-0.5 flex items-center gap-2 text-base font-semibold">{currentStepData.title}</span>
-              </div>
+        </div>
             </div>
             <p className="text-justify text-sm text-base-content/80">{currentStepData.helper}</p>
           </div>
@@ -119,3 +120,4 @@ export const Wizard = ({ title, steps, onFinish, onStep, finishLabel = "Finaliza
     </section>
   );
 };
+

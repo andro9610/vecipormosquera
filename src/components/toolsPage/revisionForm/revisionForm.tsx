@@ -118,6 +118,7 @@ export const RevisionForm = () => {
 
   return (
     <Wizard
+      icon="map_search"
       title="SOLICITUD DE REVISION DE AVALUO CATASTRAL"
       steps={steps}
       finishLabel="Generar documento"

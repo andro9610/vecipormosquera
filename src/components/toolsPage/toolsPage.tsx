@@ -10,16 +10,22 @@ type SelectionOption = {
 
 const options: SelectionOption[] = [
   {
+    title: "SOLICITUD DE EXPEDICION DE IMPUESTO PREDIAL",
+    description: "En caso de que no hayan expedido su recibo del impuesto predial se debe registrar una solicitud formal",
+    path: "solicitudExpedicionPredial",
+    icon: "receipt_long",
+  },
+  {
     title: "SOLICITUD DE REVISIÓN DE AVALUO CATASTRAL",
-    description: "Ingrese para diligenciar la solicitud de revision y generar el documento final.",
+    description: "En caso de presentar alguna inconsistencia en relación al avaluo catastral o información del predio.",
     path: "solicitudRevisionCatastral",
-    icon: "rule_settings",
+    icon: "map_search",
   },
   {
     title: "RECURSO DE RECONSIDERACIÓN DE IMPUESTO PREDIAL",
-    description: "Ingrese para elaborar el recurso de reconsideracion y anexar soportes si aplica.",
+    description: "En caso de que exista alguna anomalia en la facturación del impuesto predial, descuentos, conceptos y plazos de pago.",
     path: "solicitudReconsideracionPredial",
-    icon: "gavel",
+    icon: "autorenew",
   },
 ];
 

@@ -1,4 +1,4 @@
-import { ContactForm } from "./components/contactForm";
+import { ContactForm } from "./components/contactForm/contactForm";
 import { OtherContacts } from "./components/otherContacts";
 
 

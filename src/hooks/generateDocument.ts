@@ -4,6 +4,7 @@ import revisionTemplateUrl from '../docs/Solicitud_Revision.docx?url';
 import reconsiderationTemplateUrl from '../docs/Recurso_Reconsideracion.docx?url';
 import type { RequirementsState } from '../components/toolsPage/revisionForm/states/requirementsReducer';
 import type { ReconsiderationState } from '../components/toolsPage/reconsiderationForm/types/reconsiderationState';
+import type { ExpeditionState } from '../components/toolsPage/expeditionForm/types/expeditionState';
 import { formatNumberedList, formatWordText } from './formatNumberedList';
 import { useToastNotification } from './useToastNotification';
 type ReplacementInput = Map<string, string> | Map<string, string>[];
@@ -14,11 +15,12 @@ type TemplateGenerationOptions = {
     filePrefix: string;
 };
 
-type DocumentKind = 'revision' | 'reconsideracion';
-type DocumentData = RequirementsState | ReconsiderationState;
+type DocumentKind = 'revision' | 'reconsideracion' | 'expedicion';
+type DocumentData = RequirementsState | ReconsiderationState | ExpeditionState;
+type RevisionBaseDocument = RequirementsState | ReconsiderationState;
 
 const hasActuaComo = (
-    data: DocumentData
+    data: RevisionBaseDocument
 ): data is ReconsiderationState => {
     return 'actuaComo' in data.solicitante;
 };
@@ -48,16 +50,12 @@ const replaceExactMarkersInArchive = async (
     replacementMaps: Map<string, string>[]
 ) => {
     for (const entry of Object.values(archive.files)) {
-        if (entry.dir) {
-            continue;
-        }
+        if (entry.dir) continue;
 
         const fileName = entry.name.toLowerCase();
         const isXmlLikeFile = fileName.endsWith('.xml') || fileName.endsWith('.rels') || fileName.endsWith('.vml');
 
-        if (!isXmlLikeFile) {
-            continue;
-        }
+        if (!isXmlLikeFile)  continue;
 
         const originalContent = await entry.async('string');
         let updatedContent = originalContent;
@@ -75,7 +73,7 @@ const replaceExactMarkersInArchive = async (
     }
 };
 
-const buildCommonReplacements = (data: DocumentData): Map<string, string> => {
+const buildCommonReplacements = (data: RevisionBaseDocument): Map<string, string> => {
     return new Map<string, string>([
         ['Nombre_Solicitante', data.solicitante.nombre?.trim() ?? ''],
         ['Genero_Verbo', data.solicitante.tratamiento?.trim() === 'Sr' ? 'o' : 'a'],
@@ -88,7 +86,7 @@ const buildCommonReplacements = (data: DocumentData): Map<string, string> => {
     ]);
 };
 
-const buildReconsiderationReplacements = (data: DocumentData): Map<string, string> => {
+const buildReconsiderationReplacements = (data: RevisionBaseDocument): Map<string, string> => {
     const attachmentList = formatNumberedList(data.anexos.map((name) => ({ value: name })));
 
     return new Map<string, string>([
@@ -106,6 +104,25 @@ const buildReconsiderationReplacements = (data: DocumentData): Map<string, strin
         ['Anexos_Solicitud', attachmentList],
         ['Correo_Solicitante', data.solicitante.correo?.trim() ?? ''],
         ['Celular_Solicitante', data.solicitante.celular?.trim() ?? ''],
+    ]);
+};
+
+const buildExpeditionReplacements = (data: DocumentData): Map<string, string> => {
+    const expedition = data as ExpeditionState;
+
+    return new Map<string, string>([
+        ['Nombre_Solicitante', expedition.solicitante.nombre?.trim() ?? ''],
+        ['Genero_Verbo', expedition.solicitante.tratamiento?.trim() === 'Sr' ? 'o' : 'a'],
+        ['Cedula_Solicitante', expedition.solicitante.cedula?.trim() ?? ''],
+                        ['Actua_Como', expedition.solicitante.actuaComo
+            ? expedition.solicitante.tratamiento?.trim() === 'Sr' ? 'Propietario' : 'Propietaria'
+            : expedition.solicitante.tratamiento?.trim() === 'Sr' ? 'Poseedor' : 'Poseedora'],
+        ['Direccion_Solicitante', expedition.solicitante.direccion?.trim() ?? ''],
+        ['Celular_Solicitante', expedition.solicitante.celular?.trim() ?? ''],
+        ['Correo_Solicitante', expedition.solicitante.correo?.trim() ?? ''],
+        ['Identificador_Inmueble', expedition.predio?.identificador?.trim() ?? ''],
+        ['Numero_Identificacion_Inmueble', expedition.predio?.numeroIdentificacion?.trim() ?? ''],
+        ['Direccion_Predio', expedition.predio?.direccion?.trim() ?? ''],
     ]);
 };
 
@@ -175,11 +192,11 @@ export const useDocumentTools = () => {
         notify('success', 'Documento generado correctamente');
     };
 
-    const generateDocument = async (kind: DocumentKind, data: DocumentData) => {
+        const generateDocument = async (kind: DocumentKind, data: DocumentData) => {
         if (kind === 'revision') {
             await generateDocumentFromTemplate({
                 templateUrl: revisionTemplateUrl,
-                replacementMaps: buildCommonReplacements(data),
+                replacementMaps: buildCommonReplacements(data as RevisionBaseDocument),
                 filePrefix: 'Solicitud_Revision',
             });
             return;
@@ -188,8 +205,18 @@ export const useDocumentTools = () => {
         if (kind === 'reconsideracion') {
             await generateDocumentFromTemplate({
                 templateUrl: reconsiderationTemplateUrl,
-                replacementMaps: [buildCommonReplacements(data), buildReconsiderationReplacements(data)],
+                replacementMaps: [buildCommonReplacements(data as RevisionBaseDocument), buildReconsiderationReplacements(data as RevisionBaseDocument)],
                 filePrefix: 'Recurso_Reconsideracion',
+            });
+            return;
+        }
+
+        if (kind === 'expedicion') {
+            // NOTA: usar la plantilla de revision como base hasta disponer de la plantilla de expedicion
+            await generateDocumentFromTemplate({
+                templateUrl: revisionTemplateUrl,
+                replacementMaps: buildExpeditionReplacements(data),
+                filePrefix: 'Solicitud_Expedicion',
             });
             return;
         }
