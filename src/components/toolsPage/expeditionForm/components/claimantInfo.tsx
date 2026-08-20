@@ -118,19 +118,6 @@ export const ClaimantInfo = ({ value, onChangeField }: ClaimantInfoProps) => {
             onChange={(event) => onChangeField("correo", event.target.value)}
           />
         </div>
-        <div className="md:col-span-1">
-          <label htmlFor="direccion" className="label">
-            <span className="label-text">Direccion de notificacion</span>
-          </label>
-          <input
-            id="direccion"
-            type="text"
-            className="input input-bordered control-organic w-full"
-            placeholder="Ej: Calle X con Carrera Y"
-            value={value.direccion}
-            onChange={(event) => onChangeField("direccion", event.target.value)}
-          />
-        </div>
       </div>
     </div>
   );
