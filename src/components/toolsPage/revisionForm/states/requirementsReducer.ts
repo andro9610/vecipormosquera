@@ -1,4 +1,5 @@
 import type { SortableTextItem } from '../../../../types/sortableTextItem';
+import { createItem, reorderItems } from '../../../../utilities/textAreaUtilities';
 
 export type RequirementsState = {
     actuacionPrevia: string;
@@ -31,24 +32,6 @@ export type RequirementsAction =
     | { type: 'REMOVE_HECHO'; payload: string }
     | { type: 'UPDATE_HECHO'; payload: { id: string; value: string } }
     | { type: 'REORDER_HECHOS'; payload: { activeId: string; overId: string } }
-
-const createItem = (): SortableTextItem => ({ id: crypto.randomUUID(), value: '' });
-
-const reorderItems = <T extends { id: string }>(items: T[], activeId: string, overId: string): T[] => {
-    const oldIndex = items.findIndex((item) => item.id === activeId);
-    const newIndex = items.findIndex((item) => item.id === overId);
-
-    if (oldIndex === -1 || newIndex === -1 || oldIndex === newIndex) {
-        return items;
-    }
-
-    const nextItems = [...items];
-    const [movedItem] = nextItems.splice(oldIndex, 1);
-    const targetIndex = oldIndex < newIndex ? newIndex - 1 : newIndex;
-    nextItems.splice(targetIndex, 0, movedItem);
-
-    return nextItems;
-};
 
 export const initialState: RequirementsState = {
     actuacionPrevia: '',

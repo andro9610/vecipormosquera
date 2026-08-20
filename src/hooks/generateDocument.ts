@@ -2,11 +2,13 @@ import { Buffer } from 'buffer';
 import JSZip from 'jszip';
 import revisionTemplateUrl from '../docs/Solicitud_Revision.docx?url';
 import reconsiderationTemplateUrl from '../docs/Recurso_Reconsideracion.docx?url';
+import expeditionTemplateUrl from '../docs/Solicitud_Expedicion_Predial.docx?url';
 import type { RequirementsState } from '../components/toolsPage/revisionForm/states/requirementsReducer';
 import type { ReconsiderationState } from '../components/toolsPage/reconsiderationForm/types/reconsiderationState';
 import type { ExpeditionState } from '../components/toolsPage/expeditionForm/types/expeditionState';
 import { formatNumberedList, formatWordText } from './formatNumberedList';
 import { useToastNotification } from './useToastNotification';
+
 type ReplacementInput = Map<string, string> | Map<string, string>[];
 
 type TemplateGenerationOptions = {
@@ -83,8 +85,11 @@ const buildCommonReplacements = (data: RevisionBaseDocument): Map<string, string
         ['Correo_Solicitante', data.solicitante.correo?.trim() ?? ''],
         ['Actuacion_Previa', data.actuacionPrevia?.trim() ? `Referencia. ${data.actuacionPrevia.trim()}` : ''],
         ['Hechos_Solicitud', formatNumberedList(data.hechos)],
+        ['Peticiones_Solicitud', 'peticiones' in data ? formatNumberedList(data.peticiones) : ''],
     ]);
 };
+
+
 
 const buildReconsiderationReplacements = (data: RevisionBaseDocument): Map<string, string> => {
     const attachmentList = formatNumberedList(data.anexos.map((name) => ({ value: name })));
@@ -123,6 +128,7 @@ const buildExpeditionReplacements = (data: DocumentData): Map<string, string> =>
         ['Identificador_Inmueble', expedition.predio?.identificador?.trim() ?? ''],
         ['Numero_Identificacion_Inmueble', expedition.predio?.numeroIdentificacion?.trim() ?? ''],
         ['Direccion_Predio', expedition.predio?.direccion?.trim() ?? ''],
+        ['Adicion_Catastral', expedition.predio?.numeroIdentificacion.trim().length > 0 ? `y ${expedition.predio?.identificador?.trim()} ${expedition.predio?.numeroIdentificacion?.trim()}` : '']
     ]);
 };
 
@@ -212,11 +218,10 @@ export const useDocumentTools = () => {
         }
 
         if (kind === 'expedicion') {
-            // NOTA: usar la plantilla de revision como base hasta disponer de la plantilla de expedicion
             await generateDocumentFromTemplate({
-                templateUrl: revisionTemplateUrl,
+                templateUrl: expeditionTemplateUrl,
                 replacementMaps: buildExpeditionReplacements(data),
-                filePrefix: 'Solicitud_Expedicion',
+                filePrefix: 'Solicitud_Expedicion_Predial',
             });
             return;
         }
@@ -232,10 +237,15 @@ export const useDocumentTools = () => {
         await generateDocument('reconsideracion', data);
     };
 
+    const generateExpeditionDocument = async (data: DocumentData) => {
+        await generateDocument('expedicion', data);
+    }
+
     return {
         generateDocument,
         generateDocumentFromTemplate,
         generateRevisionDocument,
         generateReconsiderationDocument,
+        generateExpeditionDocument
     };
 };

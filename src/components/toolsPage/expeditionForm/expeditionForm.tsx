@@ -14,7 +14,6 @@ export const ExpeditionForm: React.FC = () => {
     solicitante.tratamiento,
     solicitante.nombre,
     solicitante.cedula,
-    solicitante.direccion,
     solicitante.celular,
     solicitante.correo,
   ].every((field) => String(field).trim().length > 0);

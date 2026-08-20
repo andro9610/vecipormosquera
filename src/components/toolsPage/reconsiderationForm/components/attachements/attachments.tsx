@@ -36,23 +36,23 @@ export const Attachements = ({ attachmentNames, onAttachmentsChange }: Attachmen
       {attachmentNames.length > 0 && (
         <div className="surface-panel bg-base-200/30 p-4">
           <div className="mb-2 flex items-center justify-between">
-            <h5 className="text-sm font-semibold text-base-content">Documentos seleccionados</h5>
-            <button type="button" className="btn btn-danger btn-sm" onClick={clearAttachments}>
+            <h5 className="font-semibold text-base-content">DOCUMENTOS SELECCIONADOS</h5>
+            <button type="button" className="btn btn-danger" onClick={clearAttachments}>
               <MaterialIcon icon="delete_sweep" className="mr-2" />
-              Limpiar
+              Eliminar todos
             </button>
           </div>
           <ul className="space-y-1 text-sm text-base-content/80">
             {attachmentNames.map((name, index) => (
-              <li key={`${name}-${index}`} className="flex items-center justify-between gap-2">
-                <span>
+              <li key={`${name}-${index}`} className="flex items-center justify-between gap-2 ml-5">
+                <span className="">
                   {index + 1}. {name}
                 </span>
                 <button
                   type="button"
-                  className="btn btn-danger btn-outline btn-sm"
+                  className="btn btn-danger btn-outline"
                   onClick={() => removeAttachment(name, index)}>
-                  <MaterialIcon icon="close_small" className="mr-2" />
+                  <MaterialIcon icon="close" className="mr-2" />
                   Eliminar
                 </button>
               </li>
@@ -60,16 +60,16 @@ export const Attachements = ({ attachmentNames, onAttachmentsChange }: Attachmen
           </ul>
         </div>
       )}
-      <div className="flex flex-col items stretch gap-2">
+      <div className="flex flex-row items-stretch gap-2">
         <button type="button" className="btn btn-outline" onClick={openFilePicker}>
           <MaterialIcon icon="add_notes" className="mr-2" />
           Cargar Documentos
         </button>
-        <div className="text-center">o</div>
-        <div className="flex flex-col w-full gap-2">
+        <div className="flex items-center justify-center text-center">o</div>
+        <div className="flex flex-row w-full gap-2">
           <input
             aria-label="Agregar documento manualmente"
-            placeholder="Escribe el nombre del documento y presiona +"
+            placeholder="Escribe el nombre del documento y presiona agregar"
             value={manualInput}
             onChange={(e) => setManualInput(e.target.value)}
             onKeyDown={(e) => {
@@ -78,9 +78,9 @@ export const Attachements = ({ attachmentNames, onAttachmentsChange }: Attachmen
                 handleAddManual();
               }
             }}
-            className="input input-sm w-full mb-3"
+            className="input w-full"
           />
-          <button type="button" className="btn btn-primary btn-sm py-2" onClick={handleAddManual}>
+          <button type="button" className="btn btn-primary" onClick={handleAddManual}>
             <MaterialIcon icon="add" className="mr-2" />
             Agregar
           </button>

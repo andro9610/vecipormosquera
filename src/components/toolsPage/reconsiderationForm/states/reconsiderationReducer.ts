@@ -1,9 +1,6 @@
 import type { ReconsiderationState } from '../types/reconsiderationState';
 import type { ReconsiderationAction } from '../types/reconsiderationAction';
-import { useTextAreaTools } from '../../../../hooks/useTextAreaTools';
-import type { SortableTextItem } from '../../../../types/sortableTextItem';
-
-const createItem = (): SortableTextItem => ({ id: crypto.randomUUID(), value: '' });
+import { createItem, reorderItems } from '../../../../utilities/textAreaUtilities';
 
 export const initialReconsiderationState: ReconsiderationState = {
 	actuacionPrevia: '',
@@ -26,7 +23,6 @@ export const reconsiderationReducer = (
 	state: ReconsiderationState = initialReconsiderationState,
 	action: ReconsiderationAction
 ): ReconsiderationState => {
-	const { createItem, reorderItems } = useTextAreaTools();
 
 	switch (action.type) {
 		case 'HYDRATE_REQUIREMENTS':
