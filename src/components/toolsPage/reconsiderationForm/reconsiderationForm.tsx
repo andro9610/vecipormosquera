@@ -158,7 +158,7 @@ export const ReconsiderationForm = () => {
     <div className="space-y-3">
       <Wizard
         icon="autorenew"
-        title="SOLICITUD DE RECONSIDERACIÓN"
+        title="RECURSO DE RECONSIDERACIÓN"
         steps={steps}
         finishLabel="Generar documento"
         onFinish={() => generateDocument("reconsideracion", state)}
