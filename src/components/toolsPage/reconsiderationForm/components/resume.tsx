@@ -1,3 +1,5 @@
+import { useDateTools } from "../../../../hooks/useDateTools";
+
 type ResumeProps = {
   actuacionPrevia: string;
   actuaComo: boolean;
@@ -6,6 +8,7 @@ type ResumeProps = {
   numeroIdentificacion: string;
   hechosCount: number;
   anexosCount: number;
+  fechaExpedicion: string;
   isActuacionComplete: boolean;
   isSolicitanteComplete: boolean;
 };
@@ -18,9 +21,12 @@ export const Resume = ({
   numeroIdentificacion,
   hechosCount,
   anexosCount,
+  fechaExpedicion,
   isActuacionComplete,
   isSolicitanteComplete,
 }: ResumeProps) => {
+  const { addMonthsToDate } = useDateTools();
+  const fechaLimite = addMonthsToDate(fechaExpedicion, 2);
   return (
     <div className="space-y-4">
       <div className="surface-panel bg-base-200/30 p-4">
@@ -46,6 +52,9 @@ export const Resume = ({
           </li>
         </ul>
       </div>
+      <h4 className="text-danger">
+        Recuerda: Tienes hasta el {fechaLimite || "dd/mm/yyyy"} para presentar el recurso
+      </h4>
     </div>
   );
 };

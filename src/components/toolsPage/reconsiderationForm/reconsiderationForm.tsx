@@ -1,5 +1,6 @@
 import { useReconsiderationContext } from "./context/reconsiderationContext";
 import { useDocumentTools } from "../../../hooks/generateDocument";
+import { useDateTools } from "../../../hooks/useDateTools";
 import { Wizard, type WizardStep } from "../../../fragments/wizard/wizard";
 import { Attachements } from "./components/attachements/attachments";
 import { ClaimantInfo } from "./components/claimantInfo";
@@ -7,13 +8,16 @@ import { Facts } from "./components/facts";
 import { PreviousAct } from "./components/previousAct";
 import { Resume } from "./components/resume";
 import { PropertyInfo } from "./components/propertyInfo";
+import { TermsCalculator } from "./components/termsCalculator";
 
 export const ReconsiderationForm = () => {
   const { state, dispatch } = useReconsiderationContext();
-  const { actuacionPrevia, solicitante, hechos, anexos } = state;
+  const { fechaExpedicion, actuacionPrevia, solicitante, hechos, anexos } = state;
   const { generateDocument } = useDocumentTools();
+  const { isDateWithinTwoMonths } = useDateTools();
 
   const hasFilledItems = (items: Array<{ value: string }>) => items.some((item) => item.value.trim().length > 0);
+  const isExpeditionDateValid = isDateWithinTwoMonths(fechaExpedicion);
   const isActuacionComplete = actuacionPrevia.trim().length > 0;
   const isSolicitanteComplete = [
     solicitante.tratamiento,
@@ -30,6 +34,18 @@ export const ReconsiderationForm = () => {
   const isHechosComplete = hasFilledItems(hechos);
 
   const steps: WizardStep[] = [
+    {
+      key: "calculadoraTerminos",
+      title: "Calculadora de terminos",
+      helper: "Primero, revisemos que estemos en tiempos de presentar el recurso",
+      canContinue: isExpeditionDateValid,
+      content: (
+        <TermsCalculator
+          value={fechaExpedicion}
+          onChange={(value) => dispatch({type: "SET_FECHA_EXPEDICION", payload: value})}
+        />
+      ),
+    },
     {
       key: "actuacion",
       title: "Actuacion previa",
@@ -130,6 +146,7 @@ export const ReconsiderationForm = () => {
           numeroIdentificacion={solicitante.numeroIdentificacion}
           hechosCount={hechos.length}
           anexosCount={anexos.length}
+          fechaExpedicion={fechaExpedicion}
           isActuacionComplete={isActuacionComplete}
           isSolicitanteComplete={isSolicitanteComplete}
         />
