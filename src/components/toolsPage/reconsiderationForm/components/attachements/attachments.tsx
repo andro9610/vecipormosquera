@@ -21,7 +21,7 @@ export const Attachements = ({ attachmentNames, onAttachmentsChange }: Attachmen
 
   return (
     <div className="space-y-4">
-      <div>
+      <div> 
         <input
           id="reconsideracionAnexos"
           ref={fileInputRef}

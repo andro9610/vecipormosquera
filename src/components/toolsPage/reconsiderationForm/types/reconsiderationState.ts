@@ -1,6 +1,7 @@
 import type { SortableTextItem } from "../../../../types/sortableTextItem";
 
 export type ReconsiderationState = {
+    fechaExpedicion: string;
     actuacionPrevia: string;
     solicitante: {
         tratamiento: string;

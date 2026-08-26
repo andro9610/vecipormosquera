@@ -3,6 +3,7 @@ import type { ReconsiderationAction } from '../types/reconsiderationAction';
 import { createItem, reorderItems } from '../../../../utilities/textAreaUtilities';
 
 export const initialReconsiderationState: ReconsiderationState = {
+	fechaExpedicion: '',
 	actuacionPrevia: '',
 	solicitante: {
 		tratamiento: 'Sr',
@@ -27,6 +28,12 @@ export const reconsiderationReducer = (
 	switch (action.type) {
 		case 'HYDRATE_REQUIREMENTS':
 			return action.payload;
+
+		case 'SET_FECHA_EXPEDICION':
+			return {
+				...state,
+				fechaExpedicion: action.payload,
+			};
 
 		case 'SET_ACTUACION_PREVIA':
 			return {
