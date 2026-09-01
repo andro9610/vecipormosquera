@@ -1,3 +1,4 @@
+// TODO: Aqui no hey Hooks, mover a la carpeta de funciones
 export const useDateTools = () => {
     const formatDateToEsCo = (d: string | Date) => {
         const date = typeof d === "string" ? new Date(d) : d;

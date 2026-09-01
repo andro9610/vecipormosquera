@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 export const useTimelineItems = () => {
     const navigate = useNavigate();
+    // TODO: Llevar los items del timeline a la base de datos
     const timelineItems: TimelineItemProps[] = [
         {
             title: "Constitución de la veeduría",

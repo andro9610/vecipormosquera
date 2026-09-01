@@ -1,7 +1,7 @@
 export type NumberedListItem = {
     value: string;
 };
-
+// TODO: Estos no son Hooks, llevar a la carpeta de funciones
 export const formatNumberedList = (items: NumberedListItem[]) => {
     return items
         .map((item, index) => {

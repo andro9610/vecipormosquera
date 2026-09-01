@@ -1,6 +1,6 @@
 import { useState, type ReactNode } from "react";
 import { MaterialIcon } from "../materialIcon/MaterialIcon";
-
+// TODO: Generar el tipo en su propio archivo
 export type WizardStep = {
   key: string;
   title: string;
@@ -19,6 +19,7 @@ type WizardProps = {
   finishLabel?: string;
 };
 
+// TODO: Separar responsabilidades
 export const Wizard = ({ icon, title, steps, onFinish, onStep, finishLabel = "Finalizar" }: WizardProps) => {
   const [currentStep, setCurrentStep] = useState(0);
 

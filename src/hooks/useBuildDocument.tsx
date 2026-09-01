@@ -1,6 +1,8 @@
 import { Packer } from "docx";
 import * as docx from 'docx'
 
+
+// TODO: Terminar de implementar el documento - https://docxjs-editor.vercel.app/playground/
 export async function downloadDocument() {
   const doc = new docx.Document({
     numbering:{

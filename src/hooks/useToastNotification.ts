@@ -5,6 +5,7 @@ type NotifyPayload = {
     message: string;
 };
 
+// TODO: Aqui no hay Hooks, llevar a la carpeta de funciones
 export const useToastNotification = () => {
     const notify = (arg1: NotifyPayload | string, arg2?: string, options?: ToastOptions) => {
         const payload: NotifyPayload = typeof arg1 === 'string'

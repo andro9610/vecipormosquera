@@ -8,6 +8,12 @@ import type { ReconsiderationState } from '../components/toolsPage/reconsiderati
 import type { ExpeditionState } from '../components/toolsPage/expeditionForm/types/expeditionState';
 import { formatNumberedList, formatWordText } from './formatNumberedList';
 import { useToastNotification } from './useToastNotification';
+import { useMutation } from '@tanstack/react-query';
+import { serviceUrl } from '../const/const';
+
+//TODO: Separar la logica
+//TODO: Crear archivos individuales para los tipos
+
 
 type ReplacementInput = Map<string, string> | Map<string, string>[];
 
@@ -89,8 +95,6 @@ const buildCommonReplacements = (data: RevisionBaseDocument): Map<string, string
     ]);
 };
 
-
-
 const buildReconsiderationReplacements = (data: RevisionBaseDocument): Map<string, string> => {
     const attachmentList = formatNumberedList(data.anexos.map((name) => ({ value: name })));
 
@@ -131,9 +135,26 @@ const buildExpeditionReplacements = (data: DocumentData): Map<string, string> =>
         ['Adicion_Catastral', expedition.predio?.numeroIdentificacion.trim().length > 0 ? `y ${expedition.predio?.identificador?.trim()} ${expedition.predio?.numeroIdentificacion?.trim()}` : '']
     ]);
 };
+// TODO: Trasladar la logica que incrementa el contador
+const incrementDocumentCounter = async (filePrefix: string) => {
+    const counterName = filePrefix.toUpperCase();
+    const response = await fetch(`${serviceUrl}/counters/${counterName}/increment`, {
+        method: 'POST',
+    });
 
+    if (!response.ok) {
+        throw new Error(`Error HTTP ${response.status} al incrementar el counter ${counterName}`);
+    }
+};
+
+// TODO: Simplificar la logica de generacion del documento
 export const useDocumentTools = () => {
     const { notify } = useToastNotification();
+
+    const incrementCounterMutation = useMutation({
+        mutationFn: incrementDocumentCounter,
+    });
+
     const generateDocumentFromTemplate = async ({
         templateUrl,
         replacementMaps,
@@ -195,6 +216,9 @@ export const useDocumentTools = () => {
         link.click();
         link.remove();
         URL.revokeObjectURL(url);
+
+        await incrementCounterMutation.mutateAsync(filePrefix).catch(() => {});
+
         notify('success', 'Documento generado correctamente');
     };
 
@@ -205,6 +229,7 @@ export const useDocumentTools = () => {
                 replacementMaps: buildCommonReplacements(data as RevisionBaseDocument),
                 filePrefix: 'Solicitud_Revision',
             });
+            
             return;
         }
 
@@ -229,6 +254,7 @@ export const useDocumentTools = () => {
 
     };
 
+    // TODO: Eliminar funciones y simplificar llamados donde sean necesarios
     const generateRevisionDocument = async (data: DocumentData) => {
         await generateDocument('revision', data);
     };

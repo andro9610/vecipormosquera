@@ -12,6 +12,7 @@ type SortableTextareaItemProps = {
   onRemove: (id: string) => void;
 };
 
+//TODO: Llevar funcion a donde corresponde
 export const handleDragEnd = (event: DragEndEvent, fun: Function) => {
   const { active, over } = event;
 
