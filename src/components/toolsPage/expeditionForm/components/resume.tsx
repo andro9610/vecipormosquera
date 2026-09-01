@@ -8,6 +8,7 @@ type ResumeProps = {
   isPredioComplete: boolean;
 };
 
+// TODO: Mejorar el Look & Feel de esta pagina
 export const Resume = ({
   actuaComo,
   solicitanteNombre,

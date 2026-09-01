@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { MaterialIcon } from "../../fragments/materialIcon/MaterialIcon";
+import { FaqAccordion } from "../../fragments/faqAccordion/faqAccordion";
 type SelectionOption = {
   title: string;
   description: string;
@@ -29,6 +30,17 @@ const options: SelectionOption[] = [
   },
 ];
 
+type Question = {
+  question: string;
+  answer: string;
+};
+// TODO : Llevar las preguntas frecuentes a la base de datos
+const questions: Question[] = [
+  {
+    question: "¿Debo pagar mi impuesto predial para presentar mi recurso de reconsideración?", 
+    answer: "No, Recuerda que el recurso tiene efecto suspensivo. Sin embargo se recomienda realizar el pago si tienes los medios para hacerlo"},
+]
+
 export const ToolsPage = () => {
   return (
     <section className="mx-auto w-full max-w-5xl space-y-6">
@@ -37,7 +49,7 @@ export const ToolsPage = () => {
         Haga clic para iniciar el formulario correspondiente.
       </p>
 
-      <div className="grid gap-4 md:grid-cols-2">
+      <div className="grid gap-4 md:grid-cols-3">
         {options.map((option) => (
           <Link
             key={option.path}
@@ -59,6 +71,7 @@ export const ToolsPage = () => {
           </Link>
         ))}
       </div>
+      <FaqAccordion items={questions} />
     </section>
   );
 };

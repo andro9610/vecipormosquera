@@ -12,6 +12,7 @@ type MaterialIconProps = Omit<ComponentPropsWithoutRef<'span'>, 'children'> & {
     label?: string;
 };
 
+// TODO: Simplificar la codificacion de los items
 export const MaterialIcon = ({
     icon,
     variant = 'rounded',

@@ -7,6 +7,7 @@ import "./styles.css";
 import "flyonui/flyonui";
 import "material-symbols";
 
+// TODO: Revisar la logica presente en Main.tsx - Separar responsabilidades
 document.documentElement.setAttribute("data-theme", "light");
 document.documentElement.style.colorScheme = "light";
 

@@ -7,6 +7,7 @@ export const useConctactForm = () =>{
     const [mensaje, setMensaje] = useState("");
     const [medioEnvio, setMedioEnvio] = useState<"correo" | "whatsapp">("whatsapp");
 
+    // TODO: Recuperar el numero de contacto de la base de datos
     const sendWhatsApp = () => {
         const body = [mensaje.trim(), ` cordialmente ${nombre.trim()}`].join("\n").trim();
         const whatsappUrl = `https://wa.me/573193646699?text=${encodeURIComponent(body)}`;

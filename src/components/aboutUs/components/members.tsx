@@ -1,6 +1,7 @@
 import { useMemo } from "react";
 import { useImageTools } from "../../../hooks/useImageTools";
 
+// TODO: Llevar el almacenamiento de los datos de los miembros a la base de datos
 const members = [
   {
     name: "Yohana Corredor",
@@ -30,6 +31,8 @@ const members = [
 ];
 
 export const Members: React.FC = () => {
+  // TODO: Construir las imagenes de los miembros desde la base de datos
+  
   const { buildAssetUrl } = useImageTools();
 
   const slides = useMemo(

@@ -8,6 +8,9 @@ type Props = {
 const SCRIPT_URL = "https://unpkg.com/pdfjs-dist@3.5.141/build/pdf.min.js";
 const WORKER_URL = "https://unpkg.com/pdfjs-dist@3.5.141/build/pdf.worker.min.js";
 
+//TODO: Simplificar la logica de generación del visor PDF
+//TODO: Separar responsabilidades del visor pdf
+
 export const PdfViewer: React.FC<Props> = ({ url }) => {
     const canvasRef = useRef<HTMLCanvasElement | null>(null);
     const containerRef = useRef<HTMLDivElement | null>(null);
