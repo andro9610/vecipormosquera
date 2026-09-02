@@ -13,7 +13,7 @@ export const Bylaws: React.FC = () => {
             </div>
             <div className="flex items-center justify-end w-full gap-2 mt-4">
                 <MaterialIcon icon="history" />
-                <span className="text-right">Ultima actualización: 6 de Agosto de 2026</span>
+                <span className="text-right">Ultima actualización: 2 de Septiembre de 2026</span>
             </div>
         </>
     );
