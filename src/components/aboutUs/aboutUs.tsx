@@ -1,5 +1,5 @@
 import { JoinUsBanner } from "./components/joinUsBanner";
-import { Members } from "./components/members";
+import { Members } from "./components/members/members";
 import { Partners } from "./components/partners";
 
 export const AboutUs: React.FC = () => {
