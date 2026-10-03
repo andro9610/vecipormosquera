@@ -1,15 +1,18 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&family=IBM+Plex+Sans:wght@400;500;600&family=Google+Sans+Flex:wght@400;500;700&display=swap");
 @import "tailwindcss";
 @import "../node_modules/flyonui/variants.css";
+/* Flatpickr (DatePicker de FlyonUI): primero el CSS base del vendor y despues el override de FlyonUI. */
+@import "../node_modules/flatpickr/dist/flatpickr.min.css";
+@import "../node_modules/flyonui/src/vendor/flatpickr.css";
 @plugin "flyonui";
 @source "../node_modules/flyonui/dist/index.js";
 
 :root {
 
     color-scheme: light;
-    --color-primary: #376400;
+    --color-primary: #4f7224;
     --color-primary-content: #ffffff;
-    --color-secondary: #f2af0d;
+    --color-secondary: #eeb93c;
     --color-secondary-content: #000000;
     --color-danger: #b91c1c;
     --color-danger-content: #ffffff;
@@ -26,7 +29,7 @@
     --toastify-color-error: #fdecea;
     --toastify-icon-color-info: #376400;
     --toastify-icon-color-success: #376400;
-    --toastify-icon-color-warning: #f2af0d;
+    --toastify-icon-color-warning: #eeb93c;
     --toastify-icon-color-error: #b91c1c;
 }
 
@@ -280,5 +283,29 @@ input[type="number"] {
 }
 .my-toast-progress {
     height: 4px !important;
+}
+
+.logo-pennant {
+    display: inline-flex;
+    filter: drop-shadow(0 12px 16px color-mix(in oklab, var(--color-base-content) 28%, transparent));
+    transition: filter 0.2s ease;
+}
+
+.logo-pennant__flag {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem 1rem 2.8rem;
+    background-color: var(--color-primary);
+    clip-path: polygon(0 0, 100% 0, 100% 70%, 50% 100%, 0 70%);
+}
+
+.logo-pennant:hover {
+    filter: drop-shadow(0 16px 22px color-mix(in oklab, var(--color-base-content) 34%, transparent));
+}
+
+.logo-pennant:focus-visible {
+    outline: none;
+    filter: drop-shadow(0 0 0.2rem color-mix(in oklab, var(--color-primary) 55%, transparent));
 }
 }

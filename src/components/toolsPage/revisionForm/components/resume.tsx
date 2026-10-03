@@ -7,6 +7,18 @@ type ResumeProps = {
     isSolicitanteComplete: boolean;
 };
 
+const pluralize = (count: number, singular: string, plural: string) =>
+    `${count} ${count === 1 ? singular : plural}`;
+
+const buildSupportsText = (hechosCount: number, peticionesCount: number): string => {
+    const supports: string[] = [];
+
+    if (hechosCount > 0) supports.push(pluralize(hechosCount, "hecho", "hechos"));
+    if (peticionesCount > 0) supports.push(pluralize(peticionesCount, "peticion", "peticiones"));
+
+    return supports.length > 0 ? ` soportado en ${supports.join(" y ")}.` : ".";
+};
+
 export const Resume = ({
     actuacionPrevia,
     solicitanteNombre,
@@ -15,15 +27,18 @@ export const Resume = ({
     isActuacionComplete,
     isSolicitanteComplete,
 }: ResumeProps) => {
+    const encabezado = isActuacionComplete ? `Dada la actuación previa ${actuacionPrevia}, ` : "";
+    const nombreSolicitante = isSolicitanteComplete ? solicitanteNombre : "N/N";
+    const soportesTexto = buildSupportsText(hechosCount, peticionesCount);
+
     return (
         <div className="space-y-4">
             <div className="surface-panel bg-base-200/30 p-4">
-                <ul className="mt-3 space-y-2 text-sm text-base-content/80">
-                    <li><b>Actuacion previa:</b> {isActuacionComplete ? actuacionPrevia : 'No registra'}</li>
-                    <li><b>Quien solicita:</b> {isSolicitanteComplete ? solicitanteNombre : 'pendientes'}</li>
-                    <li><b>Hechos:</b> {hechosCount}</li>
-                    <li><b>Peticiones:</b> {peticionesCount}</li>
-                </ul>
+                <p className="text-sm leading-relaxed text-base-content/80">
+                    {encabezado}
+                    <strong>{nombreSolicitante}</strong>
+                    {` presenta solicitud de revisión${soportesTexto}`}
+                </p>
             </div>
         </div>
     );

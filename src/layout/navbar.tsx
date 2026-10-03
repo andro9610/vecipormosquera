@@ -7,14 +7,19 @@ export const Navbar: React.FC = () => {
   const { isMobileMenuOpen, setIsMobileMenuOpen, getNavClassName } = useDropdownMenu();
 
   return (
-    <header className="px-6 py-5">
-      <nav className="navbar relative rounded-box shadow-base-300/20 shadow-sm">
-        <NavLink to="/" className="flex items-center gap-1">
-          <img
-            src={`${import.meta.env.BASE_URL}logo_vector.svg`}
-            alt="Logo"
-            className="absolute left-1/2 top-1/2 w-full max-w-[100px] h-12 transform -translate-x-1/2 -translate-y-1/2 sm:left-4 sm:translate-x-0"
-          />
+    <header className="relative z-40 px-2 md:px-4 pt-5 pb-12">
+      <nav className="navbar relative rounded-box shadow-base-300/20 shadow-sm bg-secondary backdrop-blur-md">
+        <NavLink
+          to="/"
+          aria-label="Ir al inicio"
+          className="logo-pennant absolute left-1/2 top-0 z-30 -translate-x-1/2 sm:left-20 sm:translate-x-0">
+          <span className="logo-pennant__flag">
+            <img
+              src={`${import.meta.env.BASE_URL}logo_vector.svg`}
+              alt="Veeduría Ciudadana por el pueblo de Mosquera"
+              className="h-20 w-auto sm:h-22 brightness-0 invert"
+            />
+          </span>
         </NavLink>
         <div className="navbar-start sm:hidden">
           <div className="relative inline-flex">
@@ -67,9 +72,9 @@ export const Navbar: React.FC = () => {
         </div>
 
         <div className="navbar-end ml-auto items-center">
-          <button className="btn btn-outline my-2 ms-1 me-2 flex items-center gap-2">
+          <button className="btn btn-outline border-secondary-content border my-2 ms-1 me-2 flex items-center gap-2">
             <NavLink to="/contact" className="flex items-center gap-1">
-              <span className="hidden md:inline me-1">Contáctanos</span>
+              <span className="hidden md:inline me-1 text-secondary-content">Contáctanos</span>
               <img
                   src={`${import.meta.env.BASE_URL}images/social/whatsapp.svg`}
                   alt="Whatever"

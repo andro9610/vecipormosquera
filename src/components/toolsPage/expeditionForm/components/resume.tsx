@@ -8,7 +8,8 @@ type ResumeProps = {
   isPredioComplete: boolean;
 };
 
-// TODO: Mejorar el Look & Feel de esta pagina
+const NO_REGISTRA = "(No registra)";
+
 export const Resume = ({
   actuaComo,
   solicitanteNombre,
@@ -18,24 +19,22 @@ export const Resume = ({
   isSolicitanteComplete,
   isPredioComplete,
 }: ResumeProps) => {
+  const nombreSolicitante = isSolicitanteComplete ? solicitanteNombre : "N/N";
+  const calidad = actuaComo ? "propietario" : "otro / no propietario";
+  const identificadorTexto = isPredioComplete && identificador ? identificador : NO_REGISTRA;
+  const numeroIdentificacionTexto =
+    isPredioComplete && numeroIdentificacion ? numeroIdentificacion : NO_REGISTRA;
+  const direccionTexto = isPredioComplete && direccionPredio ? direccionPredio : NO_REGISTRA;
+
   return (
     <div className="space-y-4">
       <div className="surface-panel bg-base-200/30 p-4">
-        <ul className="mt-3 space-y-2 text-sm text-base-content/80">
-          <li>
-            <b>Actua como:</b> {actuaComo ? "Propietario" : "Otro / No propietario"}
-          </li>
-          <li>
-            <b>Quien solicita:</b> {isSolicitanteComplete ? solicitanteNombre : "Pendientes"}
-          </li>
-          <li>
-            <b>{isPredioComplete && identificador ? identificador : "Identificador"}:</b>{" "}
-            {isPredioComplete && numeroIdentificacion ? numeroIdentificacion : "Pendiente"}
-          </li>
-          <li>
-            <b>Direccion del predio:</b> {isPredioComplete && direccionPredio ? direccionPredio : "Pendiente"}
-          </li>
-        </ul>
+        <p className="text-sm leading-relaxed text-base-content/80">
+          <strong>{nombreSolicitante}</strong>
+          {` en calidad de ${calidad} del inmueble registrado con `}
+          <strong>{identificadorTexto}</strong>
+          {` ${numeroIdentificacionTexto} ubicado en ${direccionTexto} presenta su solicitud de expedición de impuesto predial.`}
+        </p>
       </div>
     </div>
   );
