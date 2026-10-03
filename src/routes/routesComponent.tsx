@@ -6,21 +6,17 @@ import { Layout } from "../layout/layout";
 import { ReconsiderationProvider } from "../components/toolsPage/reconsiderationForm/context/reconsiderationProvider";
 import { RequirementsProvider } from "../components/toolsPage/revisionForm/context/requirementsProvider";
 import { ExpeditionProvider } from "../components/toolsPage/expeditionForm/context/expeditionProvider";
-import { AboutUs } from "../components/aboutUs/aboutUs";
 import { ContactUs } from "../components/contactUs/contactUs";
 import { Bylaws } from "../components/bylaws/bylaws";
-import { OrganizationTimeline } from "../components/organizationTimeline/organizationTimeLine";
-import { JoinUsForm } from "../components/aboutUs/components/joinUsForm/joinUsForm";
 import { ExpeditionForm } from "../components/toolsPage/expeditionForm/expeditionForm";
+import { Home } from "../components/home/home";
 
 export const RoutesComponent: React.FC = () => {
   return (
     <Routes>
       <Route element={<Layout />}>
-        {<Route index element={<OrganizationTimeline />} />}
+        {<Route index element={<Home />} />}
         {/**<Route index element={<TestPage />} />*/}
-        <Route path="aboutUs" element={<AboutUs />} />
-        <Route path="joinUs" element={<JoinUsForm />} />
         <Route path="contact" element={<ContactUs />} />
         <Route path="tools/*" element={<Outlet />}>
           <Route index element={<ToolsPage />} />
@@ -50,7 +46,7 @@ export const RoutesComponent: React.FC = () => {
           />
         </Route>
         <Route path="bylaws" element={<Bylaws />} />
-        <Route path="*" element={<OrganizationTimeline />} />
+        <Route path="*" element={<Home />} />
       </Route>
     </Routes>
   );

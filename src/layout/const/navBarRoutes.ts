@@ -1,6 +1,11 @@
-export const navBarRoutes = [
-    { to: "/", label: "Historia", icon: "book", end: true },
-    { to: "/tools", label: "Herramientas", icon: "handyman" },
-    { to: "/aboutUs", label: "Sobre Nosotros", icon: "diversity_1" },
-    { to: "/bylaws", label: "Estatutos", icon: "gavel" },
-  ];
+export type NavBarRoute = {
+  to: string;
+  label: string;
+  icon: string;
+  end?: boolean;
+};
+
+export const navBarRoutes: NavBarRoute[] = [
+  { to: "/tools", label: "Herramientas", icon: "handyman", end: false },
+  { to: "/bylaws", label: "Estatutos", icon: "gavel", end: false },
+];
