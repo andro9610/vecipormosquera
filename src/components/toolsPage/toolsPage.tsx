@@ -82,6 +82,12 @@ export const ToolsPage = () => {
           </Link>
         ))}
       </div>
+      <div className="surface-panel flex items-start gap-3 border-l-4 border-l-primary/60 p-4">
+        <MaterialIcon icon="info" className="mt-0.5 text-xl text-primary" />
+        <p className="text-sm text-base-content/80 md:text-base">
+          El contador de documentos generados no es un contador de solicitudes radicadas.
+        </p>
+      </div>
       <div className="pt-5">
         <FaqAccordion items={questions} />
       </div>
