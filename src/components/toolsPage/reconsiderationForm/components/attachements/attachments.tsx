@@ -1,5 +1,4 @@
 import { MaterialIcon } from "../../../../../fragments/materialIcon/MaterialIcon";
-import { ACCEPTED_EXTENSIONS } from "../../const/const";
 import { useAttachementUtilities } from "./hooks/useAttachementUtilities";
 
 type AttachmentsProps = {
@@ -8,31 +7,11 @@ type AttachmentsProps = {
 };
 
 export const Attachements = ({ attachmentNames, onAttachmentsChange }: AttachmentsProps) => {
-  const {
-    fileInputRef, 
-    handleFileChange,
-    clearAttachments,
-    removeAttachment,
-    openFilePicker,
-    manualInput,
-    setManualInput,
-    handleAddManual
-  } = useAttachementUtilities({ attachmentNames, onAttachmentsChange });
+  const { clearAttachments, removeAttachment, manualInput, setManualInput, handleAddManual } =
+    useAttachementUtilities({ attachmentNames, onAttachmentsChange });
 
   return (
     <div className="space-y-4">
-      <div> 
-        <input
-          id="reconsideracionAnexos"
-          ref={fileInputRef}
-          type="file"
-          className="hidden"
-          multiple
-          accept={ACCEPTED_EXTENSIONS}
-          onChange={handleFileChange}
-        />
-      </div>
-
       {attachmentNames.length > 0 && (
         <div className="surface-panel bg-base-200/30 p-4">
           <div className="mb-2 flex items-center justify-between">
@@ -60,31 +39,24 @@ export const Attachements = ({ attachmentNames, onAttachmentsChange }: Attachmen
           </ul>
         </div>
       )}
-      <div className="flex flex-row items-stretch gap-2">
-        <button type="button" className="btn btn-outline" onClick={openFilePicker}>
-          <MaterialIcon icon="add_notes" className="mr-2" />
-          Cargar Documentos
+      <div className="flex flex-row w-full gap-2">
+        <input
+          aria-label="Agregar documento manualmente"
+          placeholder="Escribe el nombre del documento y presiona agregar"
+          value={manualInput}
+          onChange={(e) => setManualInput(e.target.value)}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              e.preventDefault();
+              handleAddManual();
+            }
+          }}
+          className="input w-full"
+        />
+        <button type="button" className="btn btn-primary" onClick={handleAddManual}>
+          <MaterialIcon icon="add" className="mr-2" />
+          Agregar
         </button>
-        <div className="flex items-center justify-center text-center">o</div>
-        <div className="flex flex-row w-full gap-2">
-          <input
-            aria-label="Agregar documento manualmente"
-            placeholder="Escribe el nombre del documento y presiona agregar"
-            value={manualInput}
-            onChange={(e) => setManualInput(e.target.value)}
-            onKeyDown={(e) => {
-              if (e.key === "Enter") {
-                e.preventDefault();
-                handleAddManual();
-              }
-            }}
-            className="input w-full"
-          />
-          <button type="button" className="btn btn-primary" onClick={handleAddManual}>
-            <MaterialIcon icon="add" className="mr-2" />
-            Agregar
-          </button>
-        </div>
       </div>
     </div>
   );

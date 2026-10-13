@@ -3,54 +3,21 @@ import { useConctactForm } from "./hooks/useContactForm";
 
 export const ContactForm = () => {
     const {
-        nombre, setNombre, 
-        correo, setCorreo, 
-        mensaje, setMensaje, 
-        medioEnvio, setMedioEnvio, 
+        nombre, setNombre,
+        mensaje, setMensaje,
         handleSubmit
     } = useConctactForm();
 
     return (
-        <>
-            <div className="space-y-3">
-                <p className="text-sm font-semibold uppercase tracking-[0.3em] text-slate-600">Hablemos</p>
-                <p className="max-w-2xl text-sm md:text-base text-slate-700 leading-relaxed pb-5">
-                    ¿Un cafe para hablar? ¿Una propuesta interesante?.
+        <section className="flex flex-col gap-5">
+            <div className="flex flex-col gap-1">
+                <h3 className="text-lg">Envíanos un mensaje</h3>
+                <p className="text-sm text-base-content/70">
                     Déjanos tus datos y tu mensaje. Nos pondremos en contacto contigo.
                 </p>
             </div>
 
             <form className="grid gap-5" onSubmit={handleSubmit}>
-                <span className="label-text text-sm font-medium">Enviar por</span>
-                <div className="flex w-full items-start gap-3 flex-wrap sm:flex-nowrap">
-                    <label className="custom-option flex sm:w-1/2 flex-row items-start gap-3">
-                        <input
-                            type="radio"
-                            name="medioEnvio"
-                            className="radio radio-primary"
-                            checked={medioEnvio === "whatsapp"}
-                            onChange={() => setMedioEnvio("whatsapp")}
-                        />
-                        <span className="text-base font-medium">WhatsApp</span>
-                    </label>
-                </div>
-                {
-                    medioEnvio === "correo" && <>
-                        <label className="grid gap-2">
-                            <span className="label-text text-sm font-medium">Correo</span>
-                            <input
-                                className="input input-bordered control-organic w-full"
-                                type="email"
-                                name="correo"
-                                value={correo}
-                                onChange={(event) => setCorreo(event.target.value)}
-                                placeholder="tu@correo.com"
-                                required
-                            />
-                        </label>
-                    </>
-                }
-
                 <label className="grid gap-2">
                     <span className="label-text text-sm font-medium">Nombre</span>
                     <input
@@ -63,6 +30,7 @@ export const ContactForm = () => {
                         required
                     />
                 </label>
+
                 <label className="grid gap-2">
                     <span className="label-text text-sm font-medium">Mensaje</span>
                     <textarea
@@ -70,18 +38,22 @@ export const ContactForm = () => {
                         name="mensaje"
                         value={mensaje}
                         onChange={(event) => setMensaje(event.target.value)}
-                        placeholder="¿Porque quieres contactarnos?"
+                        placeholder="¿Por qué quieres contactarnos?"
                         required
                     />
                 </label>
 
-                <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-end pt-6">
-                    <button type="submit" className="btn btn-primary">
+                <div className="flex flex-col gap-3 pt-2">
+                    <span className="flex items-center gap-2 text-xs text-base-content/60">
+                        <MaterialIcon icon="chat" className="text-base text-primary" />
+                        Se enviará por WhatsApp
+                    </span>
+                    <button type="submit" className="btn btn-primary w-full">
                         <MaterialIcon icon="send" className="mr-2 text-base" />
                         Enviar
                     </button>
                 </div>
             </form>
-        </>
+        </section>
     );
-}
+};

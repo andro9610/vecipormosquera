@@ -14,7 +14,7 @@ type WizardProps = {
   icon?: string;
   title: string;
   steps: WizardStep[];
-  onFinish: () => void;
+  onFinish: () => void | Promise<void>;
   onStep?: (newIndex: number) => void;
   finishLabel?: string;
 };
@@ -22,6 +22,7 @@ type WizardProps = {
 // TODO: Separar responsabilidades
 export const Wizard = ({ icon, title, steps, onFinish, onStep, finishLabel = "Finalizar" }: WizardProps) => {
   const [currentStep, setCurrentStep] = useState(0);
+  const [isFinishing, setIsFinishing] = useState(false);
 
   if (steps.length === 0) {
     return null;
@@ -48,6 +49,16 @@ export const Wizard = ({ icon, title, steps, onFinish, onStep, finishLabel = "Fi
       if (targetStep?.onStep) targetStep.onStep(step, next);
       return next;
     });
+  };
+
+  const handleFinish = async () => {
+    if (isFinishing) return;
+    setIsFinishing(true);
+    try {
+      await onFinish();
+    } finally {
+      setIsFinishing(false);
+    }
   };
 
   return (
@@ -108,10 +119,15 @@ export const Wizard = ({ icon, title, steps, onFinish, onStep, finishLabel = "Fi
                 <button
                   className="btn btn-neutral py-5"
                   type="button"
-                  onClick={onFinish}
-                  disabled={!currentStepData.canContinue}>
-                  <MaterialIcon icon="file_save" opticalSize={20} className="mr-1" aria-hidden="true" />
-                  {finishLabel}
+                  onClick={handleFinish}
+                  disabled={!currentStepData.canContinue || isFinishing}>
+                  <MaterialIcon
+                    icon={isFinishing ? "progress_activity" : "file_save"}
+                    opticalSize={20}
+                    className={`mr-1${isFinishing ? " animate-spin" : ""}`}
+                    aria-hidden="true"
+                  />
+                  {isFinishing ? "Generando..." : finishLabel}
                 </button>
               )}
             </div>

@@ -11,6 +11,7 @@ export type TimelineItemProps = {
     variant?: Variant;
     tag?: string;
     visibleTag?: boolean;
+    image?: string;
 };
 
 export const TimelineItem: React.FC<TimelineItemProps> = ({ date, title, text, children, variant = "primary", tag, visibleTag = false }) => {

@@ -11,7 +11,7 @@ export const OrganizationTimeline: React.FC = () => {
         <>
             <h1 className="text-4xl">Conoce la historia de nuestra veeduria</h1>
             <TimelineFilter tags={tags} selectedTag={selectedTag} onChange={setSelectedTag} />
-            <div className="border border-gray-300 rounded-lg p-4 mt-4 shadow-md">
+            <div className="border border-gray-300 rounded-lg p-4 mt-4 shadow-md dark:border-base-300">
                 <TimeLine items={filteredItems} />
             </div>
         </>

@@ -5,7 +5,7 @@ import 'react-toastify/dist/ReactToastify.css';
 const App = () => {
   return (
     <>
-      <main className="min-h-screen px-4 py-3 md:px-4 md:py-3">
+      <main className="min-h-screen">
         <RoutesComponent />
         <ToastContainer
           position="bottom-center"

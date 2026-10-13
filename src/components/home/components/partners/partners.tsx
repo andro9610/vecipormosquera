@@ -10,13 +10,13 @@ export const Partners: React.FC = () => {
   if (isError) return <PartnerError />;
 
   return (
-    <section className="w-full max-w-6xl mx-auto mt-8 px-4 flex justify-center">
-      <div className="w-full flex flex-wrap items-center justify-center gap-x-10 gap-y-6">
-        {partners.map((partner) => (
-          <PartnerRef key={partner.id} partner={partner} />
-        ))}
-      </div>
+    <section className="flex w-full flex-wrap items-center justify-center gap-x-8 gap-y-4 md:justify-start">
+      <span className="text-xs font-semibold uppercase tracking-wide text-base-content/50">
+        Organizaciones aliadas
+      </span>
+      {partners.map((partner) => (
+        <PartnerRef key={partner.id} partner={partner} />
+      ))}
     </section>
   );
 };
-

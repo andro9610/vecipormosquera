@@ -6,10 +6,9 @@ import App from "./App.tsx";
 import "./styles.css";
 import "flyonui/flyonui";
 import "material-symbols";
+import { initializeTheme } from "./hooks/useTheme";
 
-// TODO: Revisar la logica presente en Main.tsx - Separar responsabilidades
-document.documentElement.setAttribute("data-theme", "light");
-document.documentElement.style.colorScheme = "light";
+initializeTheme();
 
 const queryClient = new QueryClient();
 

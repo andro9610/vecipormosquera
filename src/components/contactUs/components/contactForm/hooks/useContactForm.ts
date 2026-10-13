@@ -3,9 +3,7 @@ import { useState } from "react";
 export const useConctactForm = () =>{
 
     const [nombre, setNombre] = useState("");
-    const [correo, setCorreo] = useState("");
     const [mensaje, setMensaje] = useState("");
-    const [medioEnvio, setMedioEnvio] = useState<"correo" | "whatsapp">("whatsapp");
 
     // TODO: Recuperar el numero de contacto de la base de datos
     const sendWhatsApp = () => {
@@ -23,10 +21,8 @@ export const useConctactForm = () =>{
     };
 
     return {
-        nombre, setNombre, 
-        correo, setCorreo, 
-        mensaje, setMensaje, 
-        medioEnvio, setMedioEnvio, 
+        nombre, setNombre,
+        mensaje, setMensaje,
         handleSubmit
     }
 }

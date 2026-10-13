@@ -8,7 +8,7 @@ export const Bylaws: React.FC = () => {
     // TODO: Recuperar el documento de estatutos desde la base de datos
     return (
         <>
-            <div className="w-full bg-white">
+            <div className="w-full bg-white dark:bg-base-100">
                 <PdfViewer url={fileUrl} />
             </div>
             <div className="flex items-center justify-end w-full gap-2 mt-4">

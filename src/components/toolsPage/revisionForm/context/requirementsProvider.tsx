@@ -2,9 +2,18 @@ import React, { type ReactNode, useReducer } from "react";
 import type { ContextValue } from "../../../../types/contextValue";
 import { RequirementsContext } from "./requirementsContext";
 import requirementsReducer, { initialState } from "../states/requirementsReducer";
+import type { MunicipioInfo } from "../types/municipioInfo";
 
-export const RequirementsProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-  const [state, dispatch] = useReducer(requirementsReducer, initialState);
+type RequirementsProviderProps = {
+  children: ReactNode;
+  initialMunicipio?: MunicipioInfo;
+};
+
+export const RequirementsProvider: React.FC<RequirementsProviderProps> = ({ children, initialMunicipio }) => {
+  const [state, dispatch] = useReducer(
+    requirementsReducer,
+    initialMunicipio ? { ...initialState, municipio: initialMunicipio } : initialState
+  );
 
   const value: ContextValue = {
     state,
