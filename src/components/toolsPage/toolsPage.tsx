@@ -43,7 +43,20 @@ type Question = {
 const questions: Question[] = [
   {
     question: "¿Debo pagar mi impuesto predial para presentar mi recurso de reconsideración?", 
-    answer: "No, Recuerda que el recurso tiene efecto suspensivo. Sin embargo se recomienda realizar el pago si tienes los medios para hacerlo"},
+    answer: "No, Recuerda que el recurso tiene efecto suspensivo. Sin embargo se recomienda realizar el pago si tienes los medios para hacerlo"
+  },
+  {
+    question: "Ya presente mi recurso de reconsideración ¿Cuanto se pueden demorar en responder?",
+    answer: "De acuerdo con lo establecido en el Estatuto Tributario de Mosquera (Acuerdo 28 de 2020) y en concordancia con el Estatuto Tributario Nacional (Artículo 732), la administración tributaria municipal dispone de un término máximo de un (1) año para resolver el recurso de reconsideración y notificar la correspondiente decisión, contado a partir de la fecha de su presentación en debida forma."
+  },
+  {
+    question: "Si presente mi recurso de reconsideración y no me resuelven este año ¿El siguiente me cobran ambos montos?",
+    answer: "durante el tiempo en que transcurra la resolución del recurso, el cobro coactivo del acto administrativo impugnado queda suspendido."
+  },
+  {
+    question: "Presente mi recurso de reconsideración, ¿y si no me contestan?",
+    answer: "si la Secretaría de Hacienda municipal no notifica la resolución dentro del plazo legal fijado, opera la figura jurídica del silencio administrativo positivo. Esto implica que el recurso se entenderá resuelto a favor del contribuyente, debiendo la administración declarar de oficio o a petición de parte la efectividad de dicha figura y la invalidez del acto recurrido."
+  }
 ]
 
 export const ToolsPage = () => {
@@ -53,7 +66,7 @@ export const ToolsPage = () => {
     <section className="mx-auto w-full max-w-5xl space-y-6">
       <h1 className="text-2xl font-semibold md:text-3xl">AVALUO CATASTRAL E IMPUESTO PREDIAL</h1>
       <p className="mt-2 text-sm text-base-content/80 md:text-base">
-        Haga clic para iniciar el formulario correspondiente.
+        Seleccione una opción y presione "Diligenciar formulario" para iniciar el diligenciamiento.
       </p>
 
       <div className="grid gap-4 md:grid-cols-3">
@@ -70,9 +83,9 @@ export const ToolsPage = () => {
               <p className="mt-2 text-sm text-base-content/80 md:text-base">{option.description}</p>
             </div>
             <div className="col-start-2 space-y-3">
-              <span className="inline-flex items-center text-sm font-medium text-primary">
-                {option.actionText ?? "Diligenciar"}
-                <MaterialIcon icon="chevron_right" className="ml-1 text-base" />
+              <span className="btn btn-primary btn-sm w-full justify-between gap-1 font-medium normal-case sm:w-auto sm:justify-center py-5">
+                {option.actionText ?? "Diligenciar formulario"}
+                <MaterialIcon icon="chevron_right" className="text-base" />
               </span>
               <div className="flex items-center gap-2 border-l-2 border-primary/30 pl-3">
                 <span className="text-3xl font-bold leading-none text-primary">{counters[option.counterName] ?? 0}</span>

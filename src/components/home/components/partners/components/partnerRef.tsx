@@ -15,16 +15,16 @@ export const PartnerRef: React.FC<PartnerRefProps> = ({ partner }) => {
       rel="noopener noreferrer"
       title={name}
       aria-label={name}
-      className="flex items-center justify-center gap-2 text-slate-500 opacity-70 hover:opacity-100 transition-opacity"
+      className="flex items-center justify-center gap-2 text-slate-500 opacity-70 hover:opacity-100 transition-opacity dark:text-base-content/60"
     >
       {logoSrc && (
         <img
           src={logoSrc}
           alt={name}
-          className="h-10 w-10 object-contain grayscale"
+          className="h-10 w-10 object-contain grayscale dark:grayscale-0"
         />
       )}
-      <span className="text-base font-bold tracking-tight text-slate-700">{name}</span>
+      <span className="text-base font-bold tracking-tight text-slate-700 dark:text-base-content/85">{name}</span>
     </a>
   );
 }

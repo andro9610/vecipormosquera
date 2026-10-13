@@ -5,11 +5,18 @@ import { PreviousAct } from "./components/previousAct";
 import { ClaimantInfo } from "./components/claimantInfo";
 import { Facts } from "./components/facts";
 import { Requirements } from "./components/requirements";
+import { Attachments } from "./components/attachments/attachments";
+import { MunicipioInfo } from "./components/municipioInfo";
 import { Resume } from "./components/resume";
 
-export const RevisionForm = () => {
+type RevisionFormProps = {
+  isBackdoor?: boolean;
+};
+
+export const RevisionForm = ({ isBackdoor = false }: RevisionFormProps) => {
+  const showMunicipioStep = isBackdoor;
   const { state, dispatch } = useRequirementContext();
-  const { actuacionPrevia, solicitante, peticiones, hechos } = state;
+  const { actuacionPrevia, solicitante, peticiones, hechos, anexos, municipio } = state;
   const { generateDocument } = useDocumentTools();
 
   const hasFilledItems = (items: Array<{ value: string }>) => items.some((item) => item.value.trim().length > 0);
@@ -24,8 +31,37 @@ export const RevisionForm = () => {
   ].every((field) => String(field).trim().length > 0);
   const isPeticionesComplete = hasFilledItems(peticiones);
   const isHechosComplete = hasFilledItems(hechos);
+  const isMunicipioComplete = [
+    municipio.departamento,
+    municipio.municipio,
+    municipio.gestorCatastral,
+    municipio.correoGestorCatastral,
+  ].every((field) => String(field).trim().length > 0);
 
-  const steps: WizardStep[] = [
+  const steps: WizardStep[] = [];
+
+  if (showMunicipioStep) {
+    steps.push({
+      key: "municipio",
+      title: "Datos del municipio",
+      helper:
+        "Indique el departamento, el municipio, el gestor catastral y el correo del gestor catastral a quien se dirige la solicitud.",
+      canContinue: isMunicipioComplete,
+      content: (
+        <MunicipioInfo
+          value={municipio}
+          onChangeField={(field, value) =>
+            dispatch({
+              type: "SET_MUNICIPIO_FIELD",
+              payload: { field, value },
+            })
+          }
+        />
+      ),
+    });
+  }
+
+  steps.push(
     {
       key: "actuacion",
       title: "Actuacion previa",
@@ -99,22 +135,46 @@ export const RevisionForm = () => {
       ),
     },
     {
+      key: "anexos",
+      title: "Anexos",
+      helper: "Aqui se anexaran los documentos que soportan la solicitud de revision, si aplican.",
+      canContinue: true,
+      content: (
+        <Attachments
+          attachmentNames={anexos}
+          onAttachmentsChange={(attachmentNames) =>
+            dispatch({
+              type: "SET_ANEXOS",
+              payload: attachmentNames,
+            })
+          }
+        />
+      ),
+    },
+    {
       key: "resumen",
       title: "Resumen",
       helper: "Revise la informacion registrada antes de generar el documento final.",
-      canContinue: isSolicitanteComplete && isPeticionesComplete && isHechosComplete,
+      canContinue:
+        isSolicitanteComplete &&
+        isPeticionesComplete &&
+        isHechosComplete &&
+        (!showMunicipioStep || isMunicipioComplete),
       content: (
         <Resume
           actuacionPrevia={actuacionPrevia}
           solicitanteNombre={solicitante.nombre}
           hechosCount={hechos.length}
           peticionesCount={peticiones.length}
+          anexosCount={anexos.length}
           isActuacionComplete={isActuacionComplete}
           isSolicitanteComplete={isSolicitanteComplete}
+          showMunicipio={showMunicipioStep}
+          municipio={municipio}
         />
       ),
     },
-  ];
+  );
 
   return (
     <Wizard
@@ -122,7 +182,7 @@ export const RevisionForm = () => {
       title="SOLICITUD DE REVISION DE AVALUO CATASTRAL"
       steps={steps}
       finishLabel="Generar documento"
-      onFinish={() => generateDocument("revision", state)}
+      onFinish={() => generateDocument("revision", state, { skipCounter: isBackdoor })}
     />
   );
 };

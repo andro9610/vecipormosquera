@@ -7,9 +7,13 @@
 @plugin "flyonui";
 @source "../node_modules/flyonui/dist/index.js";
 
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
 :root {
 
     color-scheme: light;
+    --navbar-bg: var(--color-secondary);
+    --navbar-content: var(--color-secondary-content);
     --color-primary: #4f7224;
     --color-primary-content: #ffffff;
     --color-secondary: #eeb93c;
@@ -21,7 +25,6 @@
     --color-base-content: #000000;
     --color-neutral: #376400;
     --color-neutral-content: #ffffff;
-    /* TODO: Implementar modo oscuro*/
     /* React-Toastify background/icon color variables */
     --toastify-color-info: #e6f4ea;
     --toastify-color-success: #e6f4ea;
@@ -31,6 +34,46 @@
     --toastify-icon-color-success: #376400;
     --toastify-icon-color-warning: #eeb93c;
     --toastify-icon-color-error: #b91c1c;
+}
+
+[data-theme="dark"] {
+    color-scheme: dark;
+    --navbar-bg: color-mix(in oklab, var(--color-secondary) 72%, var(--color-base-200));
+    --navbar-content: color-mix(in oklab, var(--color-secondary-content) 80%, var(--color-secondary));
+    --color-base-100: #0f1611;
+    --color-base-200: #18211a;
+    --color-base-300: #2c3a30;
+    --color-base-content: #e7efe3;
+    --color-primary: #4f7224;
+    --color-primary-content: #ffffff;
+    --color-secondary: #eeb93c;
+    --color-secondary-content: #000000;
+    --color-danger: #b91c1c;
+    --color-danger-content: #ffffff;
+    --color-accent: #376400;
+    --color-accent-content: #ffffff;
+    --color-neutral: #376400;
+    --color-neutral-content: #ffffff;
+    --toastify-color-info: #10241a;
+    --toastify-color-success: #10241a;
+    --toastify-color-warning: #2a2310;
+    --toastify-color-error: #2a1212;
+    --toastify-icon-color-info: #8bbf5a;
+    --toastify-icon-color-success: #8bbf5a;
+    --toastify-icon-color-warning: #eeb93c;
+    --toastify-icon-color-error: #ef4444;
+    --toastify-text-color-info: #e7efe3;
+    --toastify-text-color-success: #e7efe3;
+    --toastify-text-color-warning: #f7edd6;
+    --toastify-text-color-error: #fde8e8;
+}
+
+.navbar .menu-horizontal {
+    --menu-hover-fg: var(--navbar-content);
+}
+
+.navbar .menu-horizontal :where(li:not(.menu-title, .menu-disabled)) {
+    color: var(--navbar-content);
 }
 
 @layer base {
@@ -308,4 +351,55 @@ input[type="number"] {
     outline: none;
     filter: drop-shadow(0 0 0.2rem color-mix(in oklab, var(--color-primary) 55%, transparent));
 }
+
+    [data-theme="dark"] body {
+        background:
+            radial-gradient(1000px 420px at 12% -10%, color-mix(in oklab, var(--color-primary) 32%, transparent), transparent 55%),
+            radial-gradient(800px 380px at 94% 2%, color-mix(in oklab, var(--color-accent) 34%, transparent), transparent 58%),
+            linear-gradient(145deg, color-mix(in oklab, var(--color-base-100) 94%, black), color-mix(in oklab, var(--color-base-100) 100%, black) 46%, color-mix(in oklab, var(--color-base-200) 94%, black));
+    }
+
+    [data-theme="dark"] .surface-organic {
+        border-color: color-mix(in oklab, var(--color-base-content) 12%, transparent);
+        background: linear-gradient(165deg,
+                color-mix(in oklab, var(--color-base-200) 96%, white 3%),
+                color-mix(in oklab, var(--color-base-100) 98%, var(--color-primary) 3%));
+        box-shadow:
+            0 20px 48px color-mix(in oklab, black 55%, transparent),
+            inset 0 1px 0 color-mix(in oklab, white 7%, transparent);
+    }
+
+    [data-theme="dark"] .surface-panel {
+        border-color: color-mix(in oklab, var(--color-base-content) 12%, transparent);
+        background: color-mix(in oklab, var(--color-base-200) 96%, white 2%);
+        box-shadow:
+            0 8px 24px color-mix(in oklab, black 45%, transparent),
+            inset 0 1px 0 color-mix(in oklab, white 6%, transparent);
+    }
+
+    [data-theme="dark"] .divider-soft {
+        border-color: color-mix(in oklab, var(--color-base-content) 14%, transparent);
+    }
+
+    [data-theme="dark"] .control-organic {
+        border-color: color-mix(in oklab, var(--color-base-content) 22%, transparent) !important;
+        background: color-mix(in oklab, var(--color-base-200) 88%, black 6%);
+        box-shadow: inset 0 1px 0 color-mix(in oklab, white 5%, transparent);
+    }
+
+    [data-theme="dark"] select.select,
+    [data-theme="dark"] select.select:focus,
+    [data-theme="dark"] select.select:focus-visible {
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='none' stroke='%23e7efe3' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 7l5 6 5-6'/%3E%3C/svg%3E");
+    }
+
+    [data-theme="dark"] .badge-danger {
+        background-color: color-mix(in oklab, var(--color-danger) 22%, var(--color-base-100));
+        color: color-mix(in oklab, var(--color-danger) 45%, white);
+    }
+
+    [data-theme="dark"] .surface-danger {
+        background: color-mix(in oklab, var(--color-danger) 16%, var(--color-base-100));
+        color: color-mix(in oklab, var(--color-danger) 40%, white);
+    }
 }

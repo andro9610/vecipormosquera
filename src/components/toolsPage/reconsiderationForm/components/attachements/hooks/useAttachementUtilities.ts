@@ -1,54 +1,37 @@
-import { useRef, useState, type ChangeEvent } from "react";
+import { useState } from "react";
 
 type useAttachmentsUtilitiesProps = {
   attachmentNames: string[];
   onAttachmentsChange: (attachmentNames: string[]) => void;
 };
 
-export const useAttachementUtilities = ({attachmentNames, onAttachmentsChange}: useAttachmentsUtilitiesProps) => {
-      const fileInputRef = useRef<HTMLInputElement | null>(null);
-    
-      const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
-        const selectedFiles = Array.from(event.target.files ?? []);
-        const selectedNames = selectedFiles.map((file) => file.name.trim()).filter(Boolean);
-        const mergedNames = Array.from(new Set([...attachmentNames, ...selectedNames]));
-        onAttachmentsChange(mergedNames);
-        event.target.value = "";
-      };
-    
-      const clearAttachments = () => {
-        onAttachmentsChange([]);
-      };
-    
-      const removeAttachment = (attachmentName: string, indexToRemove: number) => {
-        const nextAttachments = attachmentNames.filter((name, index) => {
-          return !(name === attachmentName && index === indexToRemove);
-        });
-    
-        onAttachmentsChange(nextAttachments);
-      };
-    
-      const openFilePicker = () => {
-        fileInputRef.current?.click();
-      };
+export const useAttachementUtilities = ({ attachmentNames, onAttachmentsChange }: useAttachmentsUtilitiesProps) => {
+  const clearAttachments = () => {
+    onAttachmentsChange([]);
+  };
 
+  const removeAttachment = (attachmentName: string, indexToRemove: number) => {
+    const nextAttachments = attachmentNames.filter((name, index) => {
+      return !(name === attachmentName && index === indexToRemove);
+    });
 
-      const [manualInput, setManualInput] = useState("");
+    onAttachmentsChange(nextAttachments);
+  };
 
-      const handleAddManual = () => {
-        if (manualInput.trim()) {
-          onAttachmentsChange([...attachmentNames, manualInput.trim()]);
-          setManualInput("");
-        }
-      };
+  const [manualInput, setManualInput] = useState("");
 
-      return {
-        fileInputRef,
-        handleFileChange,
-        clearAttachments,
-        removeAttachment,
-        openFilePicker,
-        manualInput, setManualInput,
-        handleAddManual
+  const handleAddManual = () => {
+    if (manualInput.trim()) {
+      onAttachmentsChange([...attachmentNames, manualInput.trim()]);
+      setManualInput("");
     }
-}
+  };
+
+  return {
+    clearAttachments,
+    removeAttachment,
+    manualInput,
+    setManualInput,
+    handleAddManual,
+  };
+};

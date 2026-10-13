@@ -7,5 +7,5 @@ export type NavBarRoute = {
 
 export const navBarRoutes: NavBarRoute[] = [
   { to: "/tools", label: "Herramientas", icon: "handyman", end: false },
-  { to: "/bylaws", label: "Estatutos", icon: "gavel", end: false },
+  { to: "/bylaws", label: "Estatutos", icon: "gavel", end: false }
 ];

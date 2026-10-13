@@ -8,8 +8,8 @@ export const JoinUsForm: React.FC = () => {
     return (
         <>
             <div className="space-y-3">
-                <p className="text-sm font-semibold uppercase tracking-[0.3em] text-slate-600">Únete</p>
-                <p className="max-w-2xl text-sm md:text-base text-slate-700 leading-relaxed pb-5">
+                <p className="text-sm font-semibold uppercase tracking-[0.3em] text-slate-600 dark:text-base-content/60">Únete</p>
+                <p className="max-w-2xl text-sm md:text-base text-slate-700 leading-relaxed pb-5 dark:text-base-content/75">
                     ¿Quieres ser parte de esta veeduria? Déjanos tu nombre y te contactaremos por WhatsApp.
                 </p>
             </div>

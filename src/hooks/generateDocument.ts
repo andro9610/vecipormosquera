@@ -21,6 +21,11 @@ type TemplateGenerationOptions = {
     templateUrl: string;
     replacementMaps: ReplacementInput;
     filePrefix: string;
+    skipCounter?: boolean;
+};
+
+type GenerateDocumentOptions = {
+    skipCounter?: boolean;
 };
 
 type DocumentKind = 'revision' | 'reconsideracion' | 'expedicion';
@@ -95,6 +100,18 @@ const buildCommonReplacements = (data: RevisionBaseDocument): Map<string, string
     ]);
 };
 
+const buildRevisionReplacements = (data: RequirementsState): Map<string, string> => {
+    const attachmentList = formatNumberedList(data.anexos.map((name) => ({ value: name })));
+
+    return new Map<string, string>([
+        ['Departamento_', data.municipio?.departamento?.trim() ?? ''],
+        ['Municipio_', data.municipio?.municipio?.trim() ?? ''],
+        ['Correo_Gestor_Catastral_', data.municipio?.correoGestorCatastral?.trim() ?? ''],
+        ['Gestor_Catastral_', data.municipio?.gestorCatastral?.trim() ?? ''],
+        ['Anexos_Solicitud_', attachmentList],
+    ]);
+};
+
 const buildReconsiderationReplacements = (data: RevisionBaseDocument): Map<string, string> => {
     const attachmentList = formatNumberedList(data.anexos.map((name) => ({ value: name })));
 
@@ -159,6 +176,7 @@ export const useDocumentTools = () => {
         templateUrl,
         replacementMaps,
         filePrefix,
+        skipCounter = false,
     }: TemplateGenerationOptions) => {
         const response = await fetch(templateUrl);
 
@@ -217,17 +235,21 @@ export const useDocumentTools = () => {
         link.remove();
         URL.revokeObjectURL(url);
 
-        await incrementCounterMutation.mutateAsync(filePrefix).catch(() => {});
+        if (!skipCounter) {
+            await incrementCounterMutation.mutateAsync(filePrefix).catch(() => {});
+        }
 
         notify('success', 'Documento generado correctamente');
     };
 
-        const generateDocument = async (kind: DocumentKind, data: DocumentData) => {
+        const generateDocument = async (kind: DocumentKind, data: DocumentData, options: GenerateDocumentOptions = {}) => {
+        const { skipCounter = false } = options;
         if (kind === 'revision') {
             await generateDocumentFromTemplate({
                 templateUrl: revisionTemplateUrl,
-                replacementMaps: buildCommonReplacements(data as RevisionBaseDocument),
+                replacementMaps: [buildCommonReplacements(data as RevisionBaseDocument), buildRevisionReplacements(data as RequirementsState)],
                 filePrefix: 'Solicitud_Revision',
+                skipCounter,
             });
             
             return;
@@ -238,6 +260,7 @@ export const useDocumentTools = () => {
                 templateUrl: reconsiderationTemplateUrl,
                 replacementMaps: [buildCommonReplacements(data as RevisionBaseDocument), buildReconsiderationReplacements(data as RevisionBaseDocument)],
                 filePrefix: 'Recurso_Reconsideracion',
+                skipCounter,
             });
             return;
         }
@@ -247,6 +270,7 @@ export const useDocumentTools = () => {
                 templateUrl: expeditionTemplateUrl,
                 replacementMaps: buildExpeditionReplacements(data),
                 filePrefix: 'Solicitud_Expedicion_Predial',
+                skipCounter,
             });
             return;
         }
