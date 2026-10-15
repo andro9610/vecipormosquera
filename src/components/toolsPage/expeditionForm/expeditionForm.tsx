@@ -1,7 +1,9 @@
+import { useNavigate } from "react-router-dom";
 import { useExpeditionContext } from "./context/expeditionContext";
 import { useDocumentTools } from "../../../hooks/generateDocument";
 import { Wizard, type WizardStep } from "../../../fragments/wizard/wizard";
 import { ClaimantInfo } from "./components/claimantInfo";
+import { NextSteps } from "./components/nextSteps";
 import { PropertyInfo } from "./components/propertyInfo";
 import { Resume } from "./components/resume";
 
@@ -9,6 +11,7 @@ export const ExpeditionForm: React.FC = () => {
   const { state, dispatch } = useExpeditionContext();
   const { solicitante, predio } = state;
   const { generateDocument } = useDocumentTools();
+  const navigate = useNavigate();
 
   const isSolicitanteComplete = [
     solicitante.tratamiento,
@@ -60,6 +63,8 @@ export const ExpeditionForm: React.FC = () => {
       key: "resumen",
       title: "Resumen",
       helper: "Revise la informacion registrada antes de generar el documento final.",
+      nextLabel: "Descargar documento y continuar",
+      onNext: () => generateDocument("expedicion", state),
       canContinue: isSolicitanteComplete && isPredioComplete,
       content: (
         <Resume
@@ -73,6 +78,13 @@ export const ExpeditionForm: React.FC = () => {
           />
       ),
     },
+    {
+      key: "siguientesPasos",
+      title: "Siguientes pasos",
+      helper: "",
+      canContinue: true,
+      content: <NextSteps />,
+    },
   ];
 
   return (
@@ -80,8 +92,7 @@ export const ExpeditionForm: React.FC = () => {
       icon="receipt_long"
       title="SOLICITUD DE EXPEDICION DE IMPUESTO PREDIAL"
       steps={steps}
-      finishLabel="Generar documento"
-      onFinish={() => generateDocument("expedicion", state)}
+      onFinish={() => navigate("/tools")}
     />
   );
 };

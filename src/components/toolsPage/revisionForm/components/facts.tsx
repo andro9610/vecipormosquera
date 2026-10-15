@@ -4,7 +4,6 @@ import type { SortableTextItem } from "../../../../types/sortableTextItem";
 import { MaterialIcon } from "../../../../fragments/materialIcon/MaterialIcon";
 import { SortableTextareaItem } from "../../../../fragments/sortableTextAreaItem/sortableTextAreaItem";
 import { useSortableTextAreaItemUtilities } from "../../../../fragments/sortableTextAreaItem/hooks/useSortableTextAreaItemUtilities";
-import SuggestionsChips from '../../../../fragments/suggestionsChips/suggestionsChips';
 import { useGetSuggestions } from "../../../../hooks/useGetSuggestions";
 
 type FactsProps = {
@@ -21,20 +20,6 @@ export const Facts = ({ facts, onAdd, onUpdate, onRemove, onReorder }: FactsProp
 
   return (
     <div className="space-y-3">
-      { suggestions.length > 0 &&
-        <SuggestionsChips
-          className="mb-2"
-          suggestions={suggestions}
-          onSelect={(t) => {
-            const emptyFact = facts.find((fact) => fact.value.trim().length === 0);
-            if (emptyFact) {
-              onUpdate(emptyFact.id, t);
-            } else {
-              onAdd(t);
-            }
-          }}
-        />
-      }
       <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
         <SortableContext items={facts.map((fact) => fact.id)} strategy={verticalListSortingStrategy}>
           {facts.map((fact) => (
@@ -45,6 +30,8 @@ export const Facts = ({ facts, onAdd, onUpdate, onRemove, onReorder }: FactsProp
               placeholder="Descripcion del hecho"
               onChange={onUpdate}
               onRemove={onRemove}
+              suggestions={suggestions}
+              onSelectSuggestion={(t) => onUpdate(fact.id, t)}
             />
           ))}
         </SortableContext>

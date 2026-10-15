@@ -22,7 +22,7 @@ export const ContactDrawer = ({ isOpen, onClose }: ContactDrawerProps) => {
         role="dialog"
         aria-modal="true"
         aria-label="Contacto"
-        className={`absolute inset-y-0 end-0 w-full max-w-md overflow-y-auto border-s border-base-content/10 bg-base-100 shadow-2xl transition-transform duration-300${
+        className={`absolute inset-y-0 inset-e-0 w-full max-w-md overflow-y-auto border-s border-base-content/10 bg-base-100 shadow-2xl transition-transform duration-300${
           isOpen ? " translate-x-0" : " translate-x-full"
         }`}>
         <div className="drawer-header relative">

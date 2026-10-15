@@ -7,6 +7,8 @@ export type WizardStep = {
   helper: string;
   canContinue: boolean;
   content: ReactNode;
+  nextLabel?: string;
+  onNext?: () => void | Promise<void>;
   onStep?: (from: number, to: number) => void;
 };
 
@@ -22,7 +24,7 @@ type WizardProps = {
 // TODO: Separar responsabilidades
 export const Wizard = ({ icon, title, steps, onFinish, onStep, finishLabel = "Finalizar" }: WizardProps) => {
   const [currentStep, setCurrentStep] = useState(0);
-  const [isFinishing, setIsFinishing] = useState(false);
+  const [isBusy, setIsBusy] = useState(false);
 
   if (steps.length === 0) {
     return null;
@@ -51,13 +53,29 @@ export const Wizard = ({ icon, title, steps, onFinish, onStep, finishLabel = "Fi
     });
   };
 
+  const handleNext = async () => {
+    if (isBusy) return;
+    const action = currentStepData.onNext;
+    if (!action) {
+      goToNextStep();
+      return;
+    }
+    setIsBusy(true);
+    try {
+      await action();
+      goToNextStep();
+    } finally {
+      setIsBusy(false);
+    }
+  };
+
   const handleFinish = async () => {
-    if (isFinishing) return;
-    setIsFinishing(true);
+    if (isBusy) return;
+    setIsBusy(true);
     try {
       await onFinish();
     } finally {
-      setIsFinishing(false);
+      setIsBusy(false);
     }
   };
 
@@ -90,7 +108,9 @@ export const Wizard = ({ icon, title, steps, onFinish, onStep, finishLabel = "Fi
                 <span className="mt-0.5 flex items-center gap-2 text-base font-semibold">{currentStepData.title}</span>
         </div>
             </div>
-            <p className="text-justify text-sm text-base-content/80">{currentStepData.helper}</p>
+            <p className="text-justify text-base leading-relaxed text-base-content md:text-lg">
+              {currentStepData.helper}
+            </p>
           </div>
         </div>
 
@@ -109,10 +129,15 @@ export const Wizard = ({ icon, title, steps, onFinish, onStep, finishLabel = "Fi
                 <button
                   className="btn btn-primary py-5"
                   type="button"
-                  onClick={goToNextStep}
-                  disabled={!currentStepData.canContinue}>
-                  <MaterialIcon icon="chevron_right" opticalSize={20} className="mr-1" aria-hidden="true" />
-                  Siguiente
+                  onClick={handleNext}
+                  disabled={!currentStepData.canContinue || isBusy}>
+                  <MaterialIcon
+                    icon={isBusy ? "progress_activity" : "chevron_right"}
+                    opticalSize={20}
+                    className={`mr-1${isBusy ? " animate-spin" : ""}`}
+                    aria-hidden="true"
+                  />
+                  {isBusy ? "Procesando..." : currentStepData.nextLabel ?? "Siguiente"}
                 </button>
               )}
               {isLastStep && (
@@ -120,14 +145,14 @@ export const Wizard = ({ icon, title, steps, onFinish, onStep, finishLabel = "Fi
                   className="btn btn-neutral py-5"
                   type="button"
                   onClick={handleFinish}
-                  disabled={!currentStepData.canContinue || isFinishing}>
+                  disabled={!currentStepData.canContinue || isBusy}>
                   <MaterialIcon
-                    icon={isFinishing ? "progress_activity" : "file_save"}
+                    icon={isBusy ? "progress_activity" : "check"}
                     opticalSize={20}
-                    className={`mr-1${isFinishing ? " animate-spin" : ""}`}
+                    className={`mr-1${isBusy ? " animate-spin" : ""}`}
                     aria-hidden="true"
                   />
-                  {isFinishing ? "Generando..." : finishLabel}
+                  {isBusy ? "Procesando..." : finishLabel}
                 </button>
               )}
             </div>
