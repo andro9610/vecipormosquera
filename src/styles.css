@@ -20,6 +20,10 @@
     --color-secondary-content: #000000;
     --color-danger: #b91c1c;
     --color-danger-content: #ffffff;
+    --color-warning: #eeb93c;
+    --color-warning-content: #000000;
+    --color-info: #2ea1e4;
+    --color-info-content: #ffffff;
     --color-accent: #376400;
     --color-accent-content: #ffffff;
     --color-base-content: #000000;
@@ -50,6 +54,10 @@
     --color-secondary-content: #000000;
     --color-danger: #b91c1c;
     --color-danger-content: #ffffff;
+    --color-warning: #eeb93c;
+    --color-warning-content: #000000;
+    --color-info: #2ea1e4;
+    --color-info-content: #ffffff;
     --color-accent: #376400;
     --color-accent-content: #ffffff;
     --color-neutral: #376400;
@@ -271,6 +279,28 @@ input[type="number"] {
     color: color-mix(in oklab, var(--color-danger) 88%, black);
 }
 
+/* Variante warning reutilizable para mensajes de advertencia. */
+.text-warning {
+    color: var(--color-warning) !important;
+}
+
+.surface-warning {
+    border: 1px solid color-mix(in oklab, var(--color-warning) 45%, transparent);
+    background: color-mix(in oklab, var(--color-warning) 15%, white);
+    color: color-mix(in oklab, var(--color-warning) 68%, black);
+}
+
+/* Variante info reutilizable para mensajes informativos. */
+.text-info {
+    color: var(--color-info) !important;
+}
+
+.surface-info {
+    border: 1px solid color-mix(in oklab, var(--color-info) 35%, transparent);
+    background: color-mix(in oklab, var(--color-info) 10%, white);
+    color: color-mix(in oklab, var(--color-info) 88%, black);
+}
+
 /* Reglas específicas para React-Toastify (tema 'colored') */
 .Toastify__toast--success {
     background: var(--toastify-color-success) !important;
@@ -401,5 +431,15 @@ input[type="number"] {
     [data-theme="dark"] .surface-danger {
         background: color-mix(in oklab, var(--color-danger) 16%, var(--color-base-100));
         color: color-mix(in oklab, var(--color-danger) 40%, white);
+    }
+
+    [data-theme="dark"] .surface-warning {
+        background: color-mix(in oklab, var(--color-warning) 16%, var(--color-base-100));
+        color: color-mix(in oklab, var(--color-warning) 55%, white);
+    }
+
+    [data-theme="dark"] .surface-info {
+        background: color-mix(in oklab, var(--color-info) 16%, var(--color-base-100));
+        color: color-mix(in oklab, var(--color-info) 50%, white);
     }
 }

@@ -3,6 +3,7 @@ import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import type { DragEndEvent } from "@dnd-kit/core";
 import { MaterialIcon } from "../materialIcon/MaterialIcon";
+import SuggestionsChips, { type Suggestion } from "../suggestionsChips/suggestionsChips";
 
 type SortableTextareaItemProps = {
   id: string;
@@ -10,6 +11,8 @@ type SortableTextareaItemProps = {
   placeholder: string;
   onChange: (id: string, value: string) => void;
   onRemove: (id: string) => void;
+  suggestions?: Suggestion[];
+  onSelectSuggestion?: (value: string) => void;
 };
 
 //TODO: Llevar funcion a donde corresponde
@@ -23,7 +26,15 @@ export const handleDragEnd = (event: DragEndEvent, fun: Function) => {
   fun?.();
 };
 
-export const SortableTextareaItem = ({ id, value, placeholder, onChange, onRemove }: SortableTextareaItemProps) => {
+export const SortableTextareaItem = ({
+  id,
+  value,
+  placeholder,
+  onChange,
+  onRemove,
+  suggestions,
+  onSelectSuggestion,
+}: SortableTextareaItemProps) => {
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id });
 
   const style: React.CSSProperties = {
@@ -34,19 +45,26 @@ export const SortableTextareaItem = ({ id, value, placeholder, onChange, onRemov
     touchAction: "none",
   };
 
+  const showSuggestions = (suggestions?.length ?? 0) > 0 && value.trim().length === 0;
+
   return (
     <div
       ref={setNodeRef}
       style={style}
       className={`surface-panel mb-3 flex items-start gap-3 p-4 transition-all ${isDragging ? "border-primary ring-2 ring-primary/20 shadow-lg" : ""}`}>
-      <textarea
-        rows={4}
-        value={value}
-        onChange={(event) => onChange(id, event.target.value)}
-        placeholder={placeholder}
-        className="textarea textarea-ghost control-organic w-full resize-y bg-transparent"
-        style={{ minHeight: "4.5rem" }}
-      />
+      <div className="relative w-full">
+        <textarea
+          rows={4}
+          value={value}
+          onChange={(event) => onChange(id, event.target.value)}
+          placeholder={showSuggestions ? "" : placeholder}
+          className="textarea textarea-ghost control-organic w-full resize-y bg-transparent"
+          style={{ minHeight: "4.5rem" }}
+        />
+        {showSuggestions && onSelectSuggestion && (
+          <SuggestionsChips suggestions={suggestions ?? []} onSelect={onSelectSuggestion} />
+        )}
+      </div>
       <div className="flex min-w-14 flex-col gap-2">
         <button
           type="button"

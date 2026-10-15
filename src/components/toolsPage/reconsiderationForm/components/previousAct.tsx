@@ -8,24 +8,24 @@ type PreviousActProps = {
 
 export const PreviousAct = ({ value, onChange }: PreviousActProps) => {
     const { suggestions } = useGetSuggestions('SOLICITUD_REVISION', 'ACTUACION_PREVIA');
-    
+    const showSuggestions = suggestions.length > 0 && value.trim().length === 0;
+
     return (
-        <div className="space-y-2">
-            { suggestions.length > 0 &&
-                <SuggestionsChips
-                className="mb-2"
-                suggestions={suggestions}
-                onSelect={(t) => onChange(t)}
-                />
-            }
+        <div className="relative">
             <input
                 id="actuacionPrevia"
                 type="text"
                 className="input input-bordered control-organic w-full"
-                placeholder="Ej: Impuesto predial XXXX para el año 2026"
+                placeholder={showSuggestions ? "" : "Ej: Impuesto predial XXXX para el año 2026"}
                 value={value}
                 onChange={(event) => onChange(event.target.value)}
             />
+            {showSuggestions && (
+                <SuggestionsChips
+                    suggestions={suggestions}
+                    onSelect={(t) => onChange(t)}
+                />
+            )}
         </div>
     );
 };

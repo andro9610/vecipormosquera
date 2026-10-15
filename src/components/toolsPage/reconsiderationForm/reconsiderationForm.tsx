@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import { useReconsiderationContext } from "./context/reconsiderationContext";
 import { useDocumentTools } from "../../../hooks/generateDocument";
 import { useDateTools } from "../../../hooks/useDateTools";
@@ -9,12 +10,14 @@ import { PreviousAct } from "./components/previousAct";
 import { Resume } from "./components/resume";
 import { PropertyInfo } from "./components/propertyInfo";
 import { TermsCalculator } from "./components/termsCalculator";
+import { NextSteps } from "./nextSteps";
 
 export const ReconsiderationForm = () => {
   const { state, dispatch } = useReconsiderationContext();
   const { fechaExpedicion, actuacionPrevia, solicitante, hechos, anexos } = state;
   const { generateDocument } = useDocumentTools();
   const { isDateWithinTwoMonths } = useDateTools();
+  const navigate = useNavigate();
 
   const hasFilledItems = (items: Array<{ value: string }>) => items.some((item) => item.value.trim().length > 0);
   const isExpeditionDateValid = isDateWithinTwoMonths(fechaExpedicion);
@@ -98,7 +101,7 @@ export const ReconsiderationForm = () => {
       key: "fundamentos",
       title: "Fundamentos de hecho y de derecho",
       helper:
-        "Narrar los hechos de manera cronológica del más antiguo al más reciente, apoyándolos de argumentación jurídica de las razones por las que el impuesto está mal liquidado, está mal formulado o hay algún yerro y por ello, se requiere su modificación parcial o total. Para ello, se puede apoyar del normograma que va adjunto al paquete de minutas entregado junto a la presente. ",
+        "Narre los hechos del más antiguo al más reciente, sustentando de manera jurídica (si es posible) las razones por las que el impuesto está mal liquidado o hay algún error y por ello, se requiere su modificación parcial o total. ",
       canContinue: isHechosComplete,
       content: (
         <Facts
@@ -118,7 +121,7 @@ export const ReconsiderationForm = () => {
     {
       key: "anexos",
       title: "Anexos",
-      helper: "Aqui se anexaran los documentos que soportan la solicitud de reconsideración, si aplican.",
+      helper: "(Opcional recomendado) Aqui se anexaran los documentos que soportan la solicitud de reconsideración, si aplican.",
       canContinue: true,
       content: (
         <Attachements
@@ -136,6 +139,8 @@ export const ReconsiderationForm = () => {
       key: "resumen",
       title: "Resumen",
       helper: "Revise la informacion registrada antes de generar el documento final.",
+      nextLabel: "Descargar documento y continuar",
+      onNext: () => generateDocument("reconsideracion", state),
       canContinue: isActuacionComplete && isSolicitanteComplete && isHechosComplete,
       content: (
         <Resume
@@ -152,6 +157,13 @@ export const ReconsiderationForm = () => {
         />
       ),
     },
+    {
+      key: "siguientesPasos",
+      title: "Siguientes pasos",
+      helper: "",
+      canContinue: true,
+      content: <NextSteps/>,
+    },
   ];
 
   return (
@@ -160,8 +172,7 @@ export const ReconsiderationForm = () => {
         icon="autorenew"
         title="RECURSO DE RECONSIDERACIÓN"
         steps={steps}
-        finishLabel="Generar documento"
-        onFinish={() => generateDocument("reconsideracion", state)}
+        onFinish={() => navigate("/tools")}
       />
     </div>
   );

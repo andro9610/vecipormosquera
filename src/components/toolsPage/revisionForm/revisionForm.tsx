@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import { useRequirementContext } from "./context/requirementsContext";
 import { useDocumentTools } from "../../../hooks/generateDocument";
 import { Wizard, type WizardStep } from "../../../fragments/wizard/wizard";
@@ -7,6 +8,7 @@ import { Facts } from "./components/facts";
 import { Requirements } from "./components/requirements";
 import { Attachments } from "./components/attachments/attachments";
 import { MunicipioInfo } from "./components/municipioInfo";
+import { NextSteps } from "./components/nextSteps";
 import { Resume } from "./components/resume";
 
 type RevisionFormProps = {
@@ -18,6 +20,7 @@ export const RevisionForm = ({ isBackdoor = false }: RevisionFormProps) => {
   const { state, dispatch } = useRequirementContext();
   const { actuacionPrevia, solicitante, peticiones, hechos, anexos, municipio } = state;
   const { generateDocument } = useDocumentTools();
+  const navigate = useNavigate();
 
   const hasFilledItems = (items: Array<{ value: string }>) => items.some((item) => item.value.trim().length > 0);
   const isActuacionComplete = actuacionPrevia.trim().length > 0;
@@ -137,7 +140,7 @@ export const RevisionForm = ({ isBackdoor = false }: RevisionFormProps) => {
     {
       key: "anexos",
       title: "Anexos",
-      helper: "Aqui se anexaran los documentos que soportan la solicitud de revision, si aplican.",
+      helper: "(Opcional recomendado) Aqui se anexaran los documentos que soportan la solicitud de revision, si aplican.",
       canContinue: true,
       content: (
         <Attachments
@@ -155,6 +158,8 @@ export const RevisionForm = ({ isBackdoor = false }: RevisionFormProps) => {
       key: "resumen",
       title: "Resumen",
       helper: "Revise la informacion registrada antes de generar el documento final.",
+      nextLabel: "Descargar documento y continuar",
+      onNext: () => generateDocument("revision", state, { skipCounter: isBackdoor }),
       canContinue:
         isSolicitanteComplete &&
         isPeticionesComplete &&
@@ -174,6 +179,13 @@ export const RevisionForm = ({ isBackdoor = false }: RevisionFormProps) => {
         />
       ),
     },
+    {
+      key: "siguientesPasos",
+      title: "Siguientes pasos",
+      helper: "",
+      canContinue: true,
+      content: <NextSteps />,
+    },
   );
 
   return (
@@ -181,8 +193,7 @@ export const RevisionForm = ({ isBackdoor = false }: RevisionFormProps) => {
       icon="map_search"
       title="SOLICITUD DE REVISION DE AVALUO CATASTRAL"
       steps={steps}
-      finishLabel="Generar documento"
-      onFinish={() => generateDocument("revision", state, { skipCounter: isBackdoor })}
+      onFinish={() => navigate("/tools")}
     />
   );
 };

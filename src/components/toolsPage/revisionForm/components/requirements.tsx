@@ -4,7 +4,6 @@ import type { SortableTextItem } from "../../../../types/sortableTextItem";
 import { MaterialIcon } from "../../../../fragments/materialIcon/MaterialIcon";
 import { SortableTextareaItem } from "../../../../fragments/sortableTextAreaItem/sortableTextAreaItem";
 import { useSortableTextAreaItemUtilities } from "../../../../fragments/sortableTextAreaItem/hooks/useSortableTextAreaItemUtilities";
-import SuggestionsChips from '../../../../fragments/suggestionsChips/suggestionsChips';
 import { useGetSuggestions } from "../../../../hooks/useGetSuggestions";
 
 type RequirementsProps = {
@@ -20,20 +19,6 @@ export const Requirements = ({ requirements, onAdd, onUpdate, onRemove, onReorde
   const { suggestions } = useGetSuggestions('SOLICITUD_REVISION', 'PRETENSIONES');
   return (
     <div className="space-y-3">
-      { suggestions.length > 0 &&
-        <SuggestionsChips
-          className="mb-2"
-          suggestions={suggestions}
-          onSelect={(t) => {
-            const emptyRequirement = requirements.find((req) => req.value.trim().length === 0);
-            if (emptyRequirement) {
-              onUpdate(emptyRequirement.id, t);
-            } else {
-              onAdd(t);
-            }
-          }}
-        />
-      }
       <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
         <SortableContext
           items={requirements.map((requirement) => requirement.id)}
@@ -46,6 +31,8 @@ export const Requirements = ({ requirements, onAdd, onUpdate, onRemove, onReorde
               placeholder="Descripcion de la peticion"
               onChange={onUpdate}
               onRemove={onRemove}
+              suggestions={suggestions}
+              onSelectSuggestion={(t) => onUpdate(requirement.id, t)}
             />
           ))}
         </SortableContext>
