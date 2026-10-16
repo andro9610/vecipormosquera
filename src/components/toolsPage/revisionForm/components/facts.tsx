@@ -16,7 +16,7 @@ type FactsProps = {
 
 export const Facts = ({ facts, onAdd, onUpdate, onRemove, onReorder }: FactsProps) => {
   const { sensors, handleDragEnd } = useSortableTextAreaItemUtilities(onReorder);
-  const { suggestions } = useGetSuggestions('SOLICITUD_REVISION', 'HECHOS');
+  const { suggestions, isLoading: suggestionsLoading, isError: suggestionsError } = useGetSuggestions('SOLICITUD_REVISION', 'HECHOS');
 
   return (
     <div className="space-y-3">
@@ -31,6 +31,8 @@ export const Facts = ({ facts, onAdd, onUpdate, onRemove, onReorder }: FactsProp
               onChange={onUpdate}
               onRemove={onRemove}
               suggestions={suggestions}
+              suggestionsLoading={suggestionsLoading}
+              suggestionsError={suggestionsError}
               onSelectSuggestion={(t) => onUpdate(fact.id, t)}
             />
           ))}

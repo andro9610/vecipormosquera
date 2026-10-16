@@ -1,4 +1,6 @@
 import { MaterialIcon } from "../../../../../fragments/materialIcon/MaterialIcon";
+import SuggestionsChips from "../../../../../fragments/suggestionsChips/suggestionsChips";
+import { useGetSuggestions } from "../../../../../hooks/useGetSuggestions";
 import { useAttachementUtilities } from "./hooks/useAttachementUtilities";
 
 type AttachmentsProps = {
@@ -9,6 +11,13 @@ type AttachmentsProps = {
 export const Attachements = ({ attachmentNames, onAttachmentsChange }: AttachmentsProps) => {
   const { clearAttachments, removeAttachment, manualInput, setManualInput, handleAddManual } =
     useAttachementUtilities({ attachmentNames, onAttachmentsChange });
+  const { suggestions, isLoading, isError } = useGetSuggestions("RECURSO_RECONSIDERACION", "ANEXOS");
+  const showSuggestions = (isLoading || suggestions.length > 0) && !isError && manualInput.trim().length === 0;
+
+  const handleSelectSuggestion = (text: string) => {
+    onAttachmentsChange([...attachmentNames, text]);
+    setManualInput("");
+  };
 
   return (
     <div className="space-y-4">
@@ -40,19 +49,29 @@ export const Attachements = ({ attachmentNames, onAttachmentsChange }: Attachmen
         </div>
       )}
       <div className="flex flex-row w-full gap-2">
-        <input
-          aria-label="Agregar documento manualmente"
-          placeholder="Escribe el nombre del documento y presiona agregar"
-          value={manualInput}
-          onChange={(e) => setManualInput(e.target.value)}
-          onKeyDown={(e) => {
-            if (e.key === "Enter") {
-              e.preventDefault();
-              handleAddManual();
-            }
-          }}
-          className="input w-full"
-        />
+        <div className="relative flex-1">
+          <input
+            aria-label="Agregar documento manualmente"
+            placeholder={showSuggestions ? "" : "Escribe el nombre del documento y presiona agregar"}
+            value={manualInput}
+            onChange={(e) => setManualInput(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                e.preventDefault();
+                handleAddManual();
+              }
+            }}
+            className="input w-full"
+          />
+          {showSuggestions && (
+            <SuggestionsChips
+              suggestions={suggestions}
+              isLoading={isLoading}
+              isError={isError}
+              onSelect={handleSelectSuggestion}
+            />
+          )}
+        </div>
         <button type="button" className="btn btn-primary" onClick={handleAddManual}>
           <MaterialIcon icon="add" className="mr-2" />
           Agregar

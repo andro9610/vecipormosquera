@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { serviceUrl } from "../const/const";
 
 export const useGetSuggestions = (form: string, section: string) => {
-  const { data: suggestions } = useQuery({
+  const { data: suggestions, isLoading, isError } = useQuery({
     queryKey: ["suggestions", form, section],
     queryFn: async () => {
       const response = await fetch(`${serviceUrl}/suggestions/${form}/${section}`);
@@ -11,5 +11,5 @@ export const useGetSuggestions = (form: string, section: string) => {
       return data.map((item) => ({ alias: item.ALIAS, text: item.TEXT }));
     },
   });
-  return { suggestions: suggestions ?? [] };
+  return { suggestions: suggestions ?? [], isLoading, isError };
 };

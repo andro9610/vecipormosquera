@@ -7,8 +7,8 @@ type PreviousActProps = {
 };
 
 export const PreviousAct = ({ value, onChange }: PreviousActProps) => {
-    const { suggestions } = useGetSuggestions('SOLICITUD_REVISION', 'ACTUACION_PREVIA');
-    const showSuggestions = suggestions.length > 0 && value.trim().length === 0;
+    const { suggestions, isLoading, isError } = useGetSuggestions('SOLICITUD_REVISION', 'ACTUACION_PREVIA');
+    const showSuggestions = (isLoading || suggestions.length > 0) && !isError && value.trim().length === 0;
 
     return (
         <div className="relative">
@@ -23,6 +23,8 @@ export const PreviousAct = ({ value, onChange }: PreviousActProps) => {
             {showSuggestions && (
                 <SuggestionsChips
                     suggestions={suggestions}
+                    isLoading={isLoading}
+                    isError={isError}
                     onSelect={(t) => onChange(t)}
                 />
             )}
