@@ -13,6 +13,8 @@ type SortableTextareaItemProps = {
   onRemove: (id: string) => void;
   suggestions?: Suggestion[];
   onSelectSuggestion?: (value: string) => void;
+  suggestionsLoading?: boolean;
+  suggestionsError?: boolean;
 };
 
 //TODO: Llevar funcion a donde corresponde
@@ -34,6 +36,8 @@ export const SortableTextareaItem = ({
   onRemove,
   suggestions,
   onSelectSuggestion,
+  suggestionsLoading,
+  suggestionsError,
 }: SortableTextareaItemProps) => {
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id });
 
@@ -45,7 +49,8 @@ export const SortableTextareaItem = ({
     touchAction: "none",
   };
 
-  const showSuggestions = (suggestions?.length ?? 0) > 0 && value.trim().length === 0;
+  const showSuggestions =
+    value.trim().length === 0 && !suggestionsError && (suggestionsLoading || (suggestions?.length ?? 0) > 0);
 
   return (
     <div
@@ -62,7 +67,12 @@ export const SortableTextareaItem = ({
           style={{ minHeight: "4.5rem" }}
         />
         {showSuggestions && onSelectSuggestion && (
-          <SuggestionsChips suggestions={suggestions ?? []} onSelect={onSelectSuggestion} />
+          <SuggestionsChips
+            suggestions={suggestions ?? []}
+            isLoading={suggestionsLoading}
+            isError={suggestionsError}
+            onSelect={onSelectSuggestion}
+          />
         )}
       </div>
       <div className="flex min-w-14 flex-col gap-2">

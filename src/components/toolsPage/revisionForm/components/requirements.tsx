@@ -16,7 +16,7 @@ type RequirementsProps = {
 
 export const Requirements = ({ requirements, onAdd, onUpdate, onRemove, onReorder }: RequirementsProps) => {
   const { sensors, handleDragEnd } = useSortableTextAreaItemUtilities(onReorder);
-  const { suggestions } = useGetSuggestions('SOLICITUD_REVISION', 'PRETENSIONES');
+  const { suggestions, isLoading: suggestionsLoading, isError: suggestionsError } = useGetSuggestions('SOLICITUD_REVISION', 'PRETENSIONES');
   return (
     <div className="space-y-3">
       <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
@@ -32,6 +32,8 @@ export const Requirements = ({ requirements, onAdd, onUpdate, onRemove, onReorde
               onChange={onUpdate}
               onRemove={onRemove}
               suggestions={suggestions}
+              suggestionsLoading={suggestionsLoading}
+              suggestionsError={suggestionsError}
               onSelectSuggestion={(t) => onUpdate(requirement.id, t)}
             />
           ))}
