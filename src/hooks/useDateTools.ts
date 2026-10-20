@@ -19,9 +19,11 @@ export const useDateTools = () => {
         const today = new Date();
 
         if (parsedDate > today) return false;
-        
-        const twoMonthsAgo = new Date(today.getFullYear(), today.getMonth() - 2, today.getDate());
-        return parsedDate > twoMonthsAgo;
+
+        const limitDate = new Date(today.getFullYear(), today.getMonth() - 2, today.getDate());
+        limitDate.setDate(limitDate.getDate() - 1);
+
+        return parsedDate > limitDate;
     }
 
     const addMonthsToDate = (date: string, months: number): string => {
