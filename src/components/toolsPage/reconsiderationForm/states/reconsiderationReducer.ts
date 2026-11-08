@@ -1,98 +1,62 @@
-import type { ReconsiderationState } from '../types/reconsiderationState';
-import type { ReconsiderationAction } from '../types/reconsiderationAction';
-import { createItem, reorderItems } from '../../../../utilities/textAreaUtilities';
+import type { ReconsiderationAction, ReconsiderationState } from "../../../../types/toolsForms";
+import {
+  addItem,
+  createItem,
+  createItemWithValue,
+  removeItem,
+  reorderItems,
+  updateField,
+  updateItemValue,
+} from "../../../../utilities/textAreaUtilities";
 
 export const initialReconsiderationState: ReconsiderationState = {
-	fechaExpedicion: '',
-	actuacionPrevia: '',
-	solicitante: {
-		tratamiento: 'Sr',
-		actuaComo: true,
-		nombre: '',
-		cedula: '',
-		direccion: '',
-		identificador: 'Matricula',
-		numeroIdentificacion: '',
-		celular: '',
-		correo: '',
-	},
-	hechos: [createItem()],
-	anexos: [],
+  fechaExpedicion: "",
+  actuacionPrevia: "",
+  solicitante: {
+    tratamiento: "Sr",
+    actuaComo: true,
+    nombre: "",
+    cedula: "",
+    direccion: "",
+    identificador: "Matricula",
+    numeroIdentificacion: "",
+    celular: "",
+    correo: "",
+  },
+  hechos: [createItem()],
+  anexos: [],
 };
 
 export const reconsiderationReducer = (
-	state: ReconsiderationState = initialReconsiderationState,
-	action: ReconsiderationAction
+  state: ReconsiderationState = initialReconsiderationState,
+  action: ReconsiderationAction,
 ): ReconsiderationState => {
+  switch (action.type) {
+    case "SET_FECHA_EXPEDICION":
+      return { ...state, fechaExpedicion: action.payload };
 
-	switch (action.type) {
-		case 'HYDRATE_REQUIREMENTS':
-			return action.payload;
+    case "SET_ACTUACION_PREVIA":
+      return { ...state, actuacionPrevia: action.payload };
 
-		case 'SET_FECHA_EXPEDICION':
-			return {
-				...state,
-				fechaExpedicion: action.payload,
-			};
+    case "SET_SOLICITANTE_FIELD":
+      return { ...state, solicitante: updateField(state.solicitante, action.payload.field, action.payload.value) };
 
-		case 'SET_ACTUACION_PREVIA':
-			return {
-				...state,
-				actuacionPrevia: action.payload,
-			};
+    case "SET_ANEXOS":
+      return { ...state, anexos: action.payload };
 
-		case 'SET_SOLICITANTE_FIELD':
-			return {
-				...state,
-				solicitante: {
-					...state.solicitante,
-					[action.payload.field]: action.payload.value,
-				},
-			};
+    case "ADD_HECHO_WITH_VALUE":
+      return { ...state, hechos: addItem(state.hechos, createItemWithValue(action.payload)) };
 
-		case 'SET_ANEXOS':
-			return {
-				...state,
-				anexos: action.payload,
-			};
+    case "REMOVE_HECHO":
+      return { ...state, hechos: removeItem(state.hechos, action.payload) };
 
-		case 'ADD_HECHO':
-				return {
-					...state,
-					hechos: [...state.hechos, createItem()],
-				};
+    case "UPDATE_HECHO":
+      return { ...state, hechos: updateItemValue(state.hechos, action.payload) };
 
-			case 'ADD_HECHO_WITH_VALUE':
-				return {
-					...state,
-					hechos: [...state.hechos, { id: crypto.randomUUID(), value: action.payload ?? '' }],
-				};
+    case "REORDER_HECHOS":
+      return { ...state, hechos: reorderItems(state.hechos, action.payload.activeId, action.payload.overId) };
 
-		case 'REMOVE_HECHO':
-			return {
-				...state,
-				hechos: state.hechos.length > 1
-					? state.hechos.filter((hecho) => hecho.id !== action.payload)
-					: state.hechos.map((hecho) =>
-						hecho.id === action.payload ? { ...hecho, value: '' } : hecho
-					),
-			};
-
-		case 'UPDATE_HECHO':
-			return {
-				...state,
-				hechos: state.hechos.map((hecho) =>
-					hecho.id === action.payload.id ? { ...hecho, value: action.payload.value } : hecho
-				),
-			};
-
-		case 'REORDER_HECHOS':
-			return {
-				...state,
-				hechos: reorderItems(state.hechos, action.payload.activeId, action.payload.overId),
-			};
-
-		default:
-			return state;
-	}
-}
+    default:
+      return state;
+  }
+};

@@ -1,14 +1,10 @@
 import { useEffect, useEffectEvent, useState } from "react";
 import flatpickr from "flatpickr";
 import { Spanish } from "flatpickr/dist/l10n/es.js";
-import { useToastNotification } from "../../../../../hooks/useToastNotification";
-import { useDateTools } from "../../../../../hooks/useDateTools";
+import { isDateWithinTwoMonths } from "../../../../../utilities/dateUtilities";
+import { notify } from "../../../../../utilities/notificationUtilities";
 
 export const useTermsCalculator = (value: string, onChange: (value: string) => void) => {
-
-    const { isDateWithinTwoMonths } = useDateTools();
-    const { notify } = useToastNotification();
-
     const [inputEl, setInputEl] = useState<HTMLInputElement | null>(null);
     const [picker, setPicker] = useState<flatpickr.Instance | null>(null);
 
@@ -40,9 +36,9 @@ export const useTermsCalculator = (value: string, onChange: (value: string) => v
 
     useEffect(() => {
         if (value.trim().length > 0 && !isDateWithinTwoMonths(value)) {
-            notify({ type: 'warn', message: 'Ya no es posible presentar este recurso' });
+            notify({ type: "warn", message: "Ya no es posible presentar este recurso" });
         }
     }, [value]);
-    
-    return {setInputEl}
-}
+
+    return { setInputEl };
+};

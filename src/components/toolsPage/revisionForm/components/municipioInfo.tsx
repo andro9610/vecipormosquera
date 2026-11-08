@@ -1,4 +1,4 @@
-import type { MunicipioInfo as MunicipioInfoType } from "../types/municipioInfo";
+import type { MunicipioInfo as MunicipioInfoType } from "../../../../types/toolsForms";
 
 type MunicipioInfoProps = {
   value: MunicipioInfoType;

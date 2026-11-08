@@ -1,7 +1,7 @@
 import React from "react";
 import type { Variant } from "./types/variant";
 import { variantToClasses } from "./const/variantToClases";
-import { useDateTools } from "../../hooks/useDateTools";
+import { formatDateToEsCo } from "../../utilities/dateUtilities";
 
 export type TimelineItemProps = {
     date: string | Date;
@@ -16,7 +16,6 @@ export type TimelineItemProps = {
 
 export const TimelineItem: React.FC<TimelineItemProps> = ({ date, title, text, children, variant = "primary", tag, visibleTag = false }) => {
     const classes = variantToClasses[variant];
-    const { formatDateToEsCo } = useDateTools();
 
     return (
         <>

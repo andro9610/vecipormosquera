@@ -1,13 +1,13 @@
-import { usePartners } from "./hooks/usePartners";
-import { PartnerSkeleton } from "./components/partnerSkeleton";
-import { PartnerError } from "./components/partnerError";
+import { ErrorMessage } from "../../../../fragments/status/errorMessage";
 import { PartnerRef } from "./components/partnerRef";
+import { PartnerSkeleton } from "./components/partnerSkeleton";
+import { usePartners } from "./hooks/usePartners";
 
 export const Partners: React.FC = () => {
   const { partners, isLoading, isError } = usePartners();
 
   if (isLoading) return <PartnerSkeleton length={4} />;
-  if (isError) return <PartnerError />;
+  if (isError) return <ErrorMessage message="No se pudieron cargar las organizaciones aliadas. Inténtalo de nuevo más tarde." />;
 
   return (
     <section className="flex w-full flex-wrap items-center justify-center gap-x-8 gap-y-4 md:justify-start">

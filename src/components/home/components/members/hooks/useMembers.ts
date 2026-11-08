@@ -14,7 +14,7 @@ const memberSeed: MemberSeed[] = [
   { id: 2, name: "Santiago Avila", role: "Vocal", image: "santiago.jpg", isActive: true },
   { id: 3, name: "Mauro Ruiz", role: "Presidente", image: "mauro.jpg", isActive: true },
   { id: 4, name: "Yohana Corredor", role: "Vocal", image: "yohana.jpg", isActive: true },
-  { id: 5, name: "Manuel Nova", role: "Secretario", image: "manuel.png", isActive: true}
+  { id: 5, name: "Manuel Nova", role: "Secretario", image: "manuel.png", isActive: true },
 ];
 
 export const useMembers = () => {
@@ -27,7 +27,6 @@ export const useMembers = () => {
         role: seed.role,
         isActive: seed.isActive,
         photoSrc: `${import.meta.env.BASE_URL}images/members/${seed.image}`,
-        revokeSrc: () => {},
       })),
     staleTime: 60 * 1000,
   });

@@ -1,5 +1,5 @@
-import type { ExpeditionAction } from "../types/expeditionAction";
-import type { ExpeditionState } from "../types/expeditionState";
+import type { ExpeditionAction, ExpeditionState } from "../../../../types/toolsForms";
+import { updateField } from "../../../../utilities/textAreaUtilities";
 
 export const initialExpeditionState: ExpeditionState = {
   solicitante: {
@@ -23,26 +23,11 @@ export const expeditionReducer = (
   action: ExpeditionAction,
 ): ExpeditionState => {
   switch (action.type) {
-    case "HYDRATE_EXPEDITION":
-      return action.payload;
-
     case "SET_SOLICITANTE_FIELD":
-      return {
-        ...state,
-        solicitante: {
-          ...state.solicitante,
-          [action.payload.field]: action.payload.value,
-        },
-      };
+      return { ...state, solicitante: updateField(state.solicitante, action.payload.field, action.payload.value) };
 
     case "SET_PREDIO_FIELD":
-      return {
-        ...state,
-        predio: {
-          ...state.predio,
-          [action.payload.field]: action.payload.value,
-        },
-      };
+      return { ...state, predio: updateField(state.predio, action.payload.field, action.payload.value) };
 
     default:
       return state;

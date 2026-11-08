@@ -1,29 +1,30 @@
 import { Navigate, Outlet, Route, Routes } from "react-router-dom";
+import { DEFAULT_MUNICIPIO } from "../components/toolsPage/const/const";
+import { ExpeditionForm } from "../components/toolsPage/expeditionForm/expeditionForm";
+import { ExpeditionProvider } from "../components/toolsPage/expeditionForm/context/expeditionContext";
 import { ReconsiderationForm } from "../components/toolsPage/reconsiderationForm/reconsiderationForm";
+import { ReconsiderationProvider } from "../components/toolsPage/reconsiderationForm/context/reconsiderationContext";
+import { RequirementsProvider } from "../components/toolsPage/revisionForm/context/requirementsContext";
 import { RevisionForm } from "../components/toolsPage/revisionForm/revisionForm";
 import { ToolsPage } from "../components/toolsPage/toolsPage";
-import { Layout } from "../layout/layout";
-import { ReconsiderationProvider } from "../components/toolsPage/reconsiderationForm/context/reconsiderationProvider";
-import { RequirementsProvider } from "../components/toolsPage/revisionForm/context/requirementsProvider";
-import { DEFAULT_MUNICIPIO } from "../components/toolsPage/revisionForm/const/const";
-import { ExpeditionProvider } from "../components/toolsPage/expeditionForm/context/expeditionProvider";
 import { Bylaws } from "../components/bylaws/bylaws";
-import { ExpeditionForm } from "../components/toolsPage/expeditionForm/expeditionForm";
 import { Home } from "../components/home/home";
+import { CourseDetail } from "../components/learn/courseDetail/courseDetail";
+import { Learn } from "../components/learn/learn";
+import { Layout } from "../layout/layout";
 
 export const RoutesComponent: React.FC = () => {
   return (
     <Routes>
       <Route element={<Layout />}>
-        {<Route index element={<Home />} />}
-        {/**<Route index element={<TestPage />} />*/}
+        <Route index element={<Home />} />
         <Route path="contact" element={<Navigate to="/" replace />} />
         <Route path="tools/*" element={<Outlet />}>
           <Route index element={<ToolsPage />} />
           <Route
             path="solicitudRevisionCatastral"
             element={
-              <RequirementsProvider initialMunicipio={DEFAULT_MUNICIPIO}>
+              <RequirementsProvider overrides={{ municipio: DEFAULT_MUNICIPIO }}>
                 <RevisionForm />
               </RequirementsProvider>
             }
@@ -56,7 +57,8 @@ export const RoutesComponent: React.FC = () => {
           />
         </Route>
         <Route path="learn/*" element={<Outlet />}>
-            <Route index element={<></>}/>
+          <Route index element={<Learn />} />
+          <Route path=":courseSlug" element={<CourseDetail />} />
         </Route>
         <Route path="bylaws" element={<Bylaws />} />
         <Route path="*" element={<Home />} />
@@ -64,4 +66,3 @@ export const RoutesComponent: React.FC = () => {
     </Routes>
   );
 };
-

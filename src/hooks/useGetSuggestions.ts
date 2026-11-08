@@ -1,15 +1,11 @@
 import { useQuery } from "@tanstack/react-query";
-import { serviceUrl } from "../const/const";
+import { fetchSuggestions } from "../services/suggestionsService";
 
 export const useGetSuggestions = (form: string, section: string) => {
-  const { data: suggestions, isLoading, isError } = useQuery({
+  const { data, isLoading, isError } = useQuery({
     queryKey: ["suggestions", form, section],
-    queryFn: async () => {
-      const response = await fetch(`${serviceUrl}/suggestions/${form}/${section}`);
-      if (!response.ok) throw new Error(`Error HTTP: ${response.status}`);
-      const data = await response.json() as { ALIAS: string; TEXT: string }[];
-      return data.map((item) => ({ alias: item.ALIAS, text: item.TEXT }));
-    },
+    queryFn: () => fetchSuggestions(form, section),
   });
-  return { suggestions: suggestions ?? [], isLoading, isError };
+
+  return { suggestions: data ?? [], isLoading, isError };
 };
