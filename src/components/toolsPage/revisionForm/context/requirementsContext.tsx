@@ -1,14 +1,8 @@
-import { createContext, useContext } from "react";
-import { type ContextValue } from "../../../../types/contextValue";
+import { createWizardContext } from "../../../../fragments/forms/context/createWizardContext";
+import type { RequirementsAction, RequirementsState } from "../../../../types/toolsForms";
+import requirementsReducer, { initialState } from "../states/requirementsReducer";
 
-export const RequirementsContext = createContext<ContextValue | undefined>(undefined);
-
-export const useRequirementContext = (): ContextValue => {
-  const context = useContext(RequirementsContext);
-
-  if (!context) {
-    throw new Error("Entorno sin contexto");
-  }
-
-  return context;
-};
+export const { Provider: RequirementsProvider, useWizardContext: useRequirementContext } = createWizardContext<
+  RequirementsState,
+  RequirementsAction
+>(requirementsReducer, initialState);

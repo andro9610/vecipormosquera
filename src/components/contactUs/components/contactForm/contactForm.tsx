@@ -1,12 +1,12 @@
 import { MaterialIcon } from "../../../../fragments/materialIcon/MaterialIcon";
-import { useConctactForm } from "./hooks/useContactForm";
+import { useContactForm } from "./hooks/useContactForm";
 
 export const ContactForm = () => {
     const {
         nombre, setNombre,
         mensaje, setMensaje,
         handleSubmit
-    } = useConctactForm();
+    } = useContactForm();
 
     return (
         <section className="flex flex-col gap-5">

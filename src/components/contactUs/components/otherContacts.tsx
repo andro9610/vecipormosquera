@@ -1,5 +1,5 @@
 import { MaterialIcon } from "../../../fragments/materialIcon/MaterialIcon";
-import { useImageTools } from "../../../hooks/useImageTools";
+import { buildAssetUrl } from "../../../utilities/assetUtilities";
 
 interface SocialNetwork {
     name: string;
@@ -35,8 +35,6 @@ const SOCIAL_NETWORKS: SocialNetwork[] = [
 ];
 
 export const OtherContacts = () => {
-    const { buildAssetUrl } = useImageTools();
-
     return (
         <section className="flex flex-col gap-5">
             <img

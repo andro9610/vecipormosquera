@@ -10,7 +10,13 @@ type PartnerSeed = {
 };
 
 const partnerSeed: PartnerSeed[] = [
-  { id: 1, name: "Veeduria Manuela Beltran", image: "manuelaBeltran.webp", websiteUrl: "https://veeduriamanuelabeltran.org/", isActive: true },
+  {
+    id: 1,
+    name: "Veeduria Manuela Beltran",
+    image: "manuelaBeltran.webp",
+    websiteUrl: "https://veeduriamanuelabeltran.org/",
+    isActive: true,
+  },
 ];
 
 export const usePartners = () => {
@@ -23,7 +29,6 @@ export const usePartners = () => {
         isActive: seed.isActive,
         logoSrc: `${import.meta.env.BASE_URL}images/partners/${seed.image}`,
         websiteUrl: seed.websiteUrl || undefined,
-        revokeSrc: () => {},
       })),
     staleTime: 60 * 1000,
   });

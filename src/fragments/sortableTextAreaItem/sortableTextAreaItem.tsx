@@ -1,7 +1,6 @@
 import React from "react";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
-import type { DragEndEvent } from "@dnd-kit/core";
 import { MaterialIcon } from "../materialIcon/MaterialIcon";
 import SuggestionsChips, { type Suggestion } from "../suggestionsChips/suggestionsChips";
 
@@ -15,17 +14,6 @@ type SortableTextareaItemProps = {
   onSelectSuggestion?: (value: string) => void;
   suggestionsLoading?: boolean;
   suggestionsError?: boolean;
-};
-
-//TODO: Llevar funcion a donde corresponde
-export const handleDragEnd = (event: DragEndEvent, fun: Function) => {
-  const { active, over } = event;
-
-  if (!over || active.id === over.id) {
-    return;
-  }
-
-  fun?.();
 };
 
 export const SortableTextareaItem = ({

@@ -1,13 +1,13 @@
 import { MaterialIcon } from "../../../../fragments/materialIcon/MaterialIcon";
-import { useMembers } from "./hooks/useMembers";
+import { ErrorMessage } from "../../../../fragments/status/errorMessage";
 import { MemberSkeleton } from "./components/memberSkeleton";
-import { MemberError } from "./components/memberError";
+import { useMembers } from "./hooks/useMembers";
 
 export const Members: React.FC = () => {
   const { members, isLoading, isError } = useMembers();
 
-  if (isLoading) return <MemberSkeleton length={5} />
-  if (isError) return <MemberError />
+  if (isLoading) return <MemberSkeleton length={5} />;
+  if (isError) return <ErrorMessage message="No se pudieron cargar los miembros. Inténtalo de nuevo más tarde." />;
 
   return (
     <section className="surface-panel p-4 md:p-5">
@@ -36,7 +36,7 @@ export const Members: React.FC = () => {
                 <span>Sin foto</span>
               </div>
             )}
-            <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/85 via-black/50 to-transparent p-3">
+            <div className="absolute inset-x-0 bottom-0 bg-linear-to-t from-black/85 via-black/50 to-transparent p-3">
               <h4 className="text-sm font-semibold leading-tight text-white">{member.name}</h4>
               <p className="mt-0.5 text-xs font-medium text-white/85">{member.role}</p>
             </div>

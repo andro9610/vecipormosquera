@@ -1,14 +1,9 @@
-import { createContext, useContext } from "react";
-import type { ReconsiderationContextValue } from "../types/reconsiderationContextValue";
+import { createWizardContext } from "../../../../fragments/forms/context/createWizardContext";
+import type { ReconsiderationAction, ReconsiderationState } from "../../../../types/toolsForms";
+import { initialReconsiderationState, reconsiderationReducer } from "../states/reconsiderationReducer";
 
-export const ReconsiderationContext = createContext<ReconsiderationContextValue | undefined>(undefined);
-
-export const useReconsiderationContext = (): ReconsiderationContextValue => {
-  const context = useContext(ReconsiderationContext);
-
-  if (!context) {
-    throw new Error("Entorno sin contexto de reconsideracion");
-  }
-
-  return context;
-};
+export const { Provider: ReconsiderationProvider, useWizardContext: useReconsiderationContext } =
+  createWizardContext<ReconsiderationState, ReconsiderationAction>(
+    reconsiderationReducer,
+    initialReconsiderationState,
+  );

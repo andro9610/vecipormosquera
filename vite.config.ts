@@ -20,14 +20,4 @@ export default defineConfig({
   define: {
     global: 'globalThis',
   },
-  server: {
-    proxy: {
-      '/api': {
-        target: 'https://vecipormosquerabackend.onrender.com',
-        changeOrigin: true,
-        secure: false,
-        rewrite: (path) => path.replace(/^\/api/, ''),
-      },
-    },
-  },
 });

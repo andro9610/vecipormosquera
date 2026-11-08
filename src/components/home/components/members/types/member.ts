@@ -4,5 +4,4 @@ export type Member = {
   role: string;
   isActive: boolean;
   photoSrc?: string;
-  revokeSrc: () => void;
-}
+};

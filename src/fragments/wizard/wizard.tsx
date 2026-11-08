@@ -1,16 +1,8 @@
-import { useState, type ReactNode } from "react";
+import { useState } from "react";
 import { MaterialIcon } from "../materialIcon/MaterialIcon";
-// TODO: Generar el tipo en su propio archivo
-export type WizardStep = {
-  key: string;
-  title: string;
-  helper: string;
-  canContinue: boolean;
-  content: ReactNode;
-  nextLabel?: string;
-  onNext?: () => void | Promise<void>;
-  onStep?: (from: number, to: number) => void;
-};
+import type { WizardStep } from "./types/wizardStep";
+
+export type { WizardStep };
 
 type WizardProps = {
   icon?: string;

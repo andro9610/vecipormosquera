@@ -1,90 +1,76 @@
 import { useNavigate } from "react-router-dom";
+import { Note } from "../../../fragments/note/note";
+import {
+  createClaimantStep,
+  createNextStepsStep,
+  createPropertyStep,
+  createSummaryStep,
+} from "../../../fragments/forms/wizardStepFactory";
+import { SummaryPanel } from "../../../fragments/forms/summaryPanel";
+import { Wizard } from "../../../fragments/wizard/wizard";
+import type { WizardStep } from "../../../fragments/wizard/types/wizardStep";
+import { generateDocument } from "../../../utilities/documents/generateDocument";
+import { areFieldsFilled, isFilled } from "../../../utilities/validationUtilities";
+import { NO_REGISTRA } from "../const/const";
 import { useExpeditionContext } from "./context/expeditionContext";
-import { useDocumentTools } from "../../../hooks/generateDocument";
-import { Wizard, type WizardStep } from "../../../fragments/wizard/wizard";
-import { ClaimantInfo } from "./components/claimantInfo";
-import { NextSteps } from "./components/nextSteps";
-import { PropertyInfo } from "./components/propertyInfo";
-import { Resume } from "./components/resume";
 
 export const ExpeditionForm: React.FC = () => {
   const { state, dispatch } = useExpeditionContext();
   const { solicitante, predio } = state;
-  const { generateDocument } = useDocumentTools();
   const navigate = useNavigate();
 
-  const isSolicitanteComplete = [
-    solicitante.tratamiento,
-    solicitante.nombre,
-    solicitante.cedula,
-    solicitante.celular,
-    solicitante.correo,
-  ].every((field) => String(field).trim().length > 0);
+  const isSolicitanteComplete = areFieldsFilled(solicitante, [
+    "tratamiento",
+    "nombre",
+    "cedula",
+    "celular",
+    "correo",
+  ]);
+  const isPredioComplete = isFilled(predio.direccion);
 
-  const isDireccionPredioComplete = predio.direccion.trim().length > 0;
-  const isPredioComplete = isDireccionPredioComplete;
+  const calidad = solicitante.actuaComo ? "propietario" : "otro / no propietario";
+  const identificadorTexto = isPredioComplete && predio.identificador ? predio.identificador : NO_REGISTRA;
+  const numeroIdentificacionTexto =
+    isPredioComplete && predio.numeroIdentificacion ? predio.numeroIdentificacion : NO_REGISTRA;
+  const direccionTexto = isPredioComplete && predio.direccion ? predio.direccion : NO_REGISTRA;
 
-    const steps: WizardStep[] = [
-        {
-            key: "claimantInfo",
-            title: "Información del solicitante",
-            helper: "",
+  const steps: WizardStep[] = [
+    createClaimantStep({
+      value: solicitante,
+      onChangeField: (field, value) => dispatch({ type: "SET_SOLICITANTE_FIELD", payload: { field, value } }),
       canContinue: isSolicitanteComplete,
-            content: (
-        <ClaimantInfo
-          value={solicitante}
-          onChangeField={(field, value) =>
-            dispatch({
-              type: "SET_SOLICITANTE_FIELD",
-              payload: { field, value },
-            })
-          }
-        />
-      ),
-        },
-        {
-      key: "wellInfo",
+      showRole: true,
+      showDireccion: false,
+      helper: "",
+    }),
+    createPropertyStep({
+      value: predio,
+      onChangeField: (field, value) => dispatch({ type: "SET_PREDIO_FIELD", payload: { field, value } }),
+      canContinue: isPredioComplete,
+      identifierLabel: "Tipo de identificacion del predio",
+      numberLabel: "Numero de identificacion",
+      showDireccion: true,
       title: "Información del predio",
       helper: "Diligencie cuantos datos tenga sobre el predio",
-      canContinue: isPredioComplete,
-            content: (
-        <PropertyInfo
-          value={predio}
-          onChangeField={(field, value) =>
-            dispatch({
-              type: "SET_PREDIO_FIELD",
-              payload: { field, value },
-            })
-          }
-        />
-      ),
-    },
-    {
-      key: "resumen",
-      title: "Resumen",
-      helper: "Revise la informacion registrada antes de generar el documento final.",
-      nextLabel: "Descargar documento y continuar",
-      onNext: () => generateDocument("expedicion", state),
+    }),
+    createSummaryStep({
       canContinue: isSolicitanteComplete && isPredioComplete,
+      onNext: () => generateDocument("expedicion", state),
       content: (
-        <Resume
-          actuaComo={solicitante.actuaComo}
-          solicitanteNombre={solicitante.nombre}
-          identificador={predio.identificador}
-          numeroIdentificacion={predio.numeroIdentificacion}
-          direccionPredio={predio.direccion}
-          isSolicitanteComplete={isSolicitanteComplete}
-          isPredioComplete={isPredioComplete}
-          />
+        <SummaryPanel>
+          <strong>{isSolicitanteComplete ? solicitante.nombre : "N/N"}</strong>
+          {` en calidad de ${calidad} del inmueble registrado con `}
+          <strong>{identificadorTexto}</strong>
+          {` ${numeroIdentificacionTexto} ubicado en ${direccionTexto} presenta su solicitud de expedición de impuesto predial.`}
+        </SummaryPanel>
       ),
-    },
-    {
-      key: "siguientesPasos",
-      title: "Siguientes pasos",
-      helper: "",
-      canContinue: true,
-      content: <NextSteps />,
-    },
+    }),
+    createNextStepsStep(
+      <Note variant="info">
+        Guarda bien la radicación de la solicitud y respuesta del proceso, estas evidencias seran utiles para procesos
+        futuros.
+      </Note>,
+    ),
   ];
 
   return (

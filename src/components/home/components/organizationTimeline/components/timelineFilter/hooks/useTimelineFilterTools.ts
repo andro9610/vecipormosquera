@@ -6,27 +6,18 @@ export const useTimeLineFilterTools = (timelineItems: TimelineItemProps[]) => {
 
     const tags = useMemo(() => {
         const tagSet = new Set<string>();
+
         timelineItems.forEach((item) => {
-            if (item.tag) {
-                tagSet.add(item.tag);
-            }
+            if (item.tag) tagSet.add(item.tag);
         });
 
         return Array.from(tagSet);
-    }, []);
+    }, [timelineItems]);
 
     const filteredItems = useMemo(() => {
-        if (!selectedTag) {
-            return timelineItems;
-        }
-
+        if (!selectedTag) return timelineItems;
         return timelineItems.filter((item) => item.tag === selectedTag);
-    }, [selectedTag]);
+    }, [timelineItems, selectedTag]);
 
-    return {
-        tags,
-        selectedTag,
-        setSelectedTag,
-        filteredItems,
-    };
-}
+    return { tags, selectedTag, setSelectedTag, filteredItems };
+};

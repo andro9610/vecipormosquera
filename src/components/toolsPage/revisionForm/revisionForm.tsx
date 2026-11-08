@@ -1,15 +1,23 @@
 import { useNavigate } from "react-router-dom";
-import { useRequirementContext } from "./context/requirementsContext";
-import { useDocumentTools } from "../../../hooks/generateDocument";
-import { Wizard, type WizardStep } from "../../../fragments/wizard/wizard";
-import { PreviousAct } from "./components/previousAct";
-import { ClaimantInfo } from "./components/claimantInfo";
-import { Facts } from "./components/facts";
-import { Requirements } from "./components/requirements";
-import { Attachments } from "./components/attachments/attachments";
+import { Note } from "../../../fragments/note/note";
+import {
+  createAttachmentsStep,
+  createClaimantStep,
+  createFactsStep,
+  createNextStepsStep,
+  createPeticionesStep,
+  createPreviousActStep,
+  createSummaryStep,
+} from "../../../fragments/forms/wizardStepFactory";
+import { SummaryPanel, SummarySection } from "../../../fragments/forms/summaryPanel";
+import { Wizard } from "../../../fragments/wizard/wizard";
+import type { WizardStep } from "../../../fragments/wizard/types/wizardStep";
+import { generateDocument } from "../../../utilities/documents/generateDocument";
+import { buildSupportsText } from "../../../utilities/textUtilities";
+import { areFieldsFilled, hasFilledItems, isFilled } from "../../../utilities/validationUtilities";
+import { NO_REGISTRA, SUGGESTION_FORMS } from "../const/const";
 import { MunicipioInfo } from "./components/municipioInfo";
-import { NextSteps } from "./components/nextSteps";
-import { Resume } from "./components/resume";
+import { useRequirementContext } from "./context/requirementsContext";
 
 type RevisionFormProps = {
   isBackdoor?: boolean;
@@ -19,27 +27,26 @@ export const RevisionForm = ({ isBackdoor = false }: RevisionFormProps) => {
   const showMunicipioStep = isBackdoor;
   const { state, dispatch } = useRequirementContext();
   const { actuacionPrevia, solicitante, peticiones, hechos, anexos, municipio } = state;
-  const { generateDocument } = useDocumentTools();
   const navigate = useNavigate();
 
-  const hasFilledItems = (items: Array<{ value: string }>) => items.some((item) => item.value.trim().length > 0);
-  const isActuacionComplete = actuacionPrevia.trim().length > 0;
-  const isSolicitanteComplete = [
-    solicitante.tratamiento,
-    solicitante.nombre,
-    solicitante.cedula,
-    solicitante.direccion,
-    solicitante.celular,
-    solicitante.correo,
-  ].every((field) => String(field).trim().length > 0);
+  const isActuacionComplete = isFilled(actuacionPrevia);
+  const isSolicitanteComplete = areFieldsFilled(solicitante, [
+    "tratamiento",
+    "nombre",
+    "cedula",
+    "direccion",
+    "celular",
+    "correo",
+  ]);
   const isPeticionesComplete = hasFilledItems(peticiones);
   const isHechosComplete = hasFilledItems(hechos);
-  const isMunicipioComplete = [
-    municipio.departamento,
-    municipio.municipio,
-    municipio.gestorCatastral,
-    municipio.correoGestorCatastral,
-  ].every((field) => String(field).trim().length > 0);
+  const isMunicipioComplete = areFieldsFilled(municipio, [
+    "departamento",
+    "municipio",
+    "gestorCatastral",
+    "correoGestorCatastral",
+  ]);
+  const hasMunicipioData = showMunicipioStep && (municipio.departamento.trim() || municipio.municipio.trim());
 
   const steps: WizardStep[] = [];
 
@@ -53,139 +60,89 @@ export const RevisionForm = ({ isBackdoor = false }: RevisionFormProps) => {
       content: (
         <MunicipioInfo
           value={municipio}
-          onChangeField={(field, value) =>
-            dispatch({
-              type: "SET_MUNICIPIO_FIELD",
-              payload: { field, value },
-            })
-          }
+          onChangeField={(field, value) => dispatch({ type: "SET_MUNICIPIO_FIELD", payload: { field, value } })}
         />
       ),
     });
   }
 
+  const supports = buildSupportsText([
+    { count: hechos.length, singular: "hecho", plural: "hechos" },
+    { count: peticiones.length, singular: "peticion", plural: "peticiones" },
+    { count: anexos.length, singular: "anexo", plural: "anexos" },
+  ]);
+
   steps.push(
-    {
-      key: "actuacion",
-      title: "Actuacion previa",
-      helper: "Aqui puede indicar cual es la actuacion o documento que motiva la solicitud",
+    createPreviousActStep({
+      value: actuacionPrevia,
+      onChange: (value) => dispatch({ type: "SET_ACTUACION_PREVIA", payload: value }),
+      suggestionForm: SUGGESTION_FORMS.revision,
       canContinue: true,
-      content: (
-        <PreviousAct
-          value={actuacionPrevia}
-          onChange={(value) => dispatch({ type: "SET_ACTUACION_PREVIA", payload: value })}
-        />
-      ),
-    },
-    {
-      key: "solicitante",
-      title: "Informacion del solicitante",
-      helper:
-        "En las siguientes direcciones se notificara, comunicara o enviara la respuesta, se recomienda escribir bien las direcciones y asegurarse que sea una direccion reciente o que se revise frecuentemente.",
+    }),
+    createClaimantStep({
+      value: solicitante,
+      onChangeField: (field, value) => dispatch({ type: "SET_SOLICITANTE_FIELD", payload: { field, value } }),
       canContinue: isSolicitanteComplete,
-      content: (
-        <ClaimantInfo
-          value={solicitante}
-          onChangeField={(field, value) =>
-            dispatch({
-              type: "SET_SOLICITANTE_FIELD",
-              payload: { field, value },
-            })
-          }
-        />
-      ),
-    },
-    {
-      key: "hechos",
-      title: "Hechos",
-      helper:
-        "Escribir los hechos en orden cronologico, del mas antiguo al mas reciente, y de manera clara para que cada uno sea entendible.",
+    }),
+    createFactsStep({
+      items: hechos,
+      suggestionForm: SUGGESTION_FORMS.revision,
       canContinue: isHechosComplete,
-      content: (
-        <Facts
-          facts={hechos}
-          onAdd={(initialValue?: string) => dispatch({ type: "ADD_HECHO_WITH_VALUE", payload: initialValue })}
-          onUpdate={(id, value) => dispatch({ type: "UPDATE_HECHO", payload: { id, value } })}
-          onRemove={(id) => dispatch({ type: "REMOVE_HECHO", payload: id })}
-          onReorder={(activeId, overId) =>
-            dispatch({
-              type: "REORDER_HECHOS",
-              payload: { activeId, overId },
-            })
-          }
-        />
-      ),
-    },
-    {
-      key: "peticiones",
-      title: "Peticiones",
-      helper:
-        "Escribir las peticiones o preguntas de la manera mas clara posible, utilizando al inicio frases como se me informe, se me indique, o se me senale.",
+      onAdd: (initialValue) => dispatch({ type: "ADD_HECHO_WITH_VALUE", payload: initialValue }),
+      onUpdate: (id, value) => dispatch({ type: "UPDATE_HECHO", payload: { id, value } }),
+      onRemove: (id) => dispatch({ type: "REMOVE_HECHO", payload: id }),
+      onReorder: (activeId, overId) => dispatch({ type: "REORDER_HECHOS", payload: { activeId, overId } }),
+    }),
+    createPeticionesStep({
+      items: peticiones,
+      suggestionForm: SUGGESTION_FORMS.revision,
       canContinue: isPeticionesComplete,
-      content: (
-        <Requirements
-          requirements={peticiones}
-          onAdd={() => dispatch({ type: "ADD_PETICION" })}
-          onUpdate={(id, value) => dispatch({ type: "UPDATE_PETICION", payload: { id, value } })}
-          onRemove={(id) => dispatch({ type: "REMOVE_PETICION", payload: id })}
-          onReorder={(activeId, overId) =>
-            dispatch({
-              type: "REORDER_PETICIONES",
-              payload: { activeId, overId },
-            })
-          }
-        />
-      ),
-    },
-    {
-      key: "anexos",
-      title: "Anexos",
-      helper: "(Opcional recomendado) Aqui se anexaran los documentos que soportan la solicitud de revision, si aplican.",
-      canContinue: true,
-      content: (
-        <Attachments
-          attachmentNames={anexos}
-          onAttachmentsChange={(attachmentNames) =>
-            dispatch({
-              type: "SET_ANEXOS",
-              payload: attachmentNames,
-            })
-          }
-        />
-      ),
-    },
-    {
-      key: "resumen",
-      title: "Resumen",
-      helper: "Revise la informacion registrada antes de generar el documento final.",
-      nextLabel: "Descargar documento y continuar",
-      onNext: () => generateDocument("revision", state, { skipCounter: isBackdoor }),
+      onAdd: () => dispatch({ type: "ADD_PETICION" }),
+      onUpdate: (id, value) => dispatch({ type: "UPDATE_PETICION", payload: { id, value } }),
+      onRemove: (id) => dispatch({ type: "REMOVE_PETICION", payload: id }),
+      onReorder: (activeId, overId) => dispatch({ type: "REORDER_PETICIONES", payload: { activeId, overId } }),
+    }),
+    createAttachmentsStep({
+      attachmentNames: anexos,
+      onAttachmentsChange: (attachmentNames) => dispatch({ type: "SET_ANEXOS", payload: attachmentNames }),
+      suggestionForm: SUGGESTION_FORMS.revision,
+      helper:
+        "(Opcional recomendado) Aqui se anexaran los documentos que soportan la solicitud de revision, si aplican.",
+    }),
+    createSummaryStep({
       canContinue:
-        isSolicitanteComplete &&
-        isPeticionesComplete &&
-        isHechosComplete &&
-        (!showMunicipioStep || isMunicipioComplete),
+        isSolicitanteComplete && isPeticionesComplete && isHechosComplete && (!showMunicipioStep || isMunicipioComplete),
+      onNext: () => generateDocument("revision", state, { skipCounter: isBackdoor }),
       content: (
-        <Resume
-          actuacionPrevia={actuacionPrevia}
-          solicitanteNombre={solicitante.nombre}
-          hechosCount={hechos.length}
-          peticionesCount={peticiones.length}
-          anexosCount={anexos.length}
-          isActuacionComplete={isActuacionComplete}
-          isSolicitanteComplete={isSolicitanteComplete}
-          showMunicipio={showMunicipioStep}
-          municipio={municipio}
-        />
+        <div className="space-y-4">
+          <SummaryPanel>
+            {isActuacionComplete ? `Dada la actuación previa ${actuacionPrevia}, ` : ""}
+            <strong>{isSolicitanteComplete ? solicitante.nombre : "N/N"}</strong>
+            {` presenta solicitud de revisión${supports}`}
+          </SummaryPanel>
+          {hasMunicipioData && (
+            <SummarySection
+              title="DATOS DEL MUNICIPIO"
+              items={[
+                { label: "Departamento", value: municipio.departamento || NO_REGISTRA },
+                { label: "Municipio", value: municipio.municipio || NO_REGISTRA },
+                { label: "Gestor catastral", value: municipio.gestorCatastral || NO_REGISTRA },
+                {
+                  label: "Correo del gestor catastral",
+                  value: municipio.correoGestorCatastral || NO_REGISTRA,
+                },
+              ]}
+            />
+          )}
+        </div>
       ),
-    },
-    {
-      key: "siguientesPasos",
-      title: "Siguientes pasos",
-      helper: "",
-      canContinue: true,
-      content: <NextSteps />,
-    },
+    }),
+    createNextStepsStep(
+      <Note variant="info">
+        Recuerda radicar esta solicitud ante tu gestor catastral de manera presencial o por correo electronico. La
+        información de tu gestor esta en el contenido del documento que generaste.
+      </Note>,
+    ),
   );
 
   return (

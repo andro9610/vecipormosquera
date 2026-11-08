@@ -1,3 +1,1 @@
-const backendUrl = "https://vecipormosquerabackend.onrender.com";
-
-export const serviceUrl = import.meta.env.DEV ? "/api" : backendUrl;
+export const WHATSAPP_NUMBER = "573193646699";

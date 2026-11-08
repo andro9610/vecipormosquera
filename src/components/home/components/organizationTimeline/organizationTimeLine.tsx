@@ -1,10 +1,9 @@
 import TimeLine from "../../../../fragments/timeline/timeline";
+import { timelineItems } from "../../const/timelineItems";
 import { TimelineFilter } from "./components/timelineFilter/timelineFilter";
-import { useTimelineItems } from "./components/timelineFilter/hooks/useTimelineItems";
 import { useTimeLineFilterTools } from "./components/timelineFilter/hooks/useTimelineFilterTools";
 
 export const OrganizationTimeline: React.FC = () => {
-    const { timelineItems } = useTimelineItems();
     const { tags, selectedTag, setSelectedTag, filteredItems } = useTimeLineFilterTools(timelineItems);
 
     return (
