@@ -16,7 +16,7 @@ export const Layout = () => {
       <Navbar isContactOpen={isContactOpen} onOpenContact={() => setIsContactOpen(true)} />
       <main className="flex min-h-0 flex-1 flex-col">
         <section
-          className={`flex-1 min-h-0 overflow-y-auto ${isHome ? "" : "px-4 pb-5 pt-24 md:px-6 md:pb-6 md:pt-28"}`}
+          className={`flex-1 min-h-0 overflow-y-auto ${isHome ? "" : "px-4 pb-5 pt-28 md:px-6 md:pb-6 md:pt-32"}`}
         >
           <div className={isHome ? "w-full" : "mx-auto w-full max-w-7xl"}>
             <Outlet />

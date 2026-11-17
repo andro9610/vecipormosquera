@@ -5,15 +5,14 @@ import PdfViewer from "../../fragments/pdfViewer/PdfViewer";
 
 export const Bylaws: React.FC = () => {
     const fileUrl = estatutosUrl;
-    // TODO: Recuperar el documento de estatutos desde la base de datos
     return (
         <>
-            <div className="w-full bg-white dark:bg-base-100">
-                <PdfViewer url={fileUrl} />
+            <div className="w-full">
+                <PdfViewer url={fileUrl} title="Estatutos" fileName="Estatutos.pdf" />
             </div>
-            <div className="flex items-center justify-end w-full gap-2 mt-4">
-                <MaterialIcon icon="history" />
-                <span className="text-right">Ultima actualización: 2 de Septiembre de 2026</span>
+            <div className="surface-panel mt-4 flex items-center justify-end gap-2 px-4 py-2 w-full">
+                <MaterialIcon icon="history" className="text-base opacity-70" />
+                <span className="text-right text-sm opacity-80">Ultima actualización: 17 de Noviembre de 2026</span>
             </div>
         </>
     );

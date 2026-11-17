@@ -1,5 +1,5 @@
 import { MaterialIcon } from "../../../fragments/materialIcon/MaterialIcon";
-import { buildAssetUrl } from "../../../utilities/assetUtilities";
+import { getPublicStorageUrl } from "../../../utilities/storageUtilities";
 
 interface SocialNetwork {
     name: string;
@@ -9,26 +9,25 @@ interface SocialNetwork {
     handle: string;
 }
 
-// TODO: Llevar Las redes sociales a la base de datos
 const SOCIAL_NETWORKS: SocialNetwork[] = [
     {
         name: "facebook",
         label: "Facebook",
-        iconUrl: "images/social/facebook.webp",
+        iconUrl: getPublicStorageUrl("assets/social_networks/facebook.webp"),
         url: "https://www.facebook.com/vecipormosquera",
         handle: "@vecipormosquera",
     },
     {
         name: "instagram",
         label: "Instagram",
-        iconUrl: "images/social/instagram.webp",
+        iconUrl: getPublicStorageUrl("assets/social_networks/instagram.webp"),
         url: "https://www.instagram.com/vecipormosquera/",
         handle: "@vecipormosquera",
     },
     {
         name: "tiktok",
         label: "TikTok",
-        iconUrl: "images/social/tiktok.svg",
+        iconUrl: getPublicStorageUrl("assets/social_networks/tiktok.svg"),
         url: "https://www.tiktok.com/@vecipormosquera",
         handle: "@vecipormosquera",
     },
@@ -38,7 +37,7 @@ export const OtherContacts = () => {
     return (
         <section className="flex flex-col gap-5">
             <img
-                src={buildAssetUrl("logo_vector.svg")}
+                src={getPublicStorageUrl("assets/logo/logo_vector.svg")}
                 alt="Logo Veeduría Ciudadana por el Pueblo de Mosquera"
                 className="mx-auto h-auto w-full max-w-56 rounded-2xl p-4 dark:bg-white dark:ring-1 dark:ring-white/20"
             />
@@ -62,7 +61,7 @@ export const OtherContacts = () => {
                     >
                         <span className="flex size-11 shrink-0 items-center justify-center rounded-xl bg-white p-2 ring-1 ring-black/10">
                             <img
-                                src={buildAssetUrl(network.iconUrl)}
+                                src={network.iconUrl}
                                 alt={network.label}
                                 className="size-6 object-contain"
                             />

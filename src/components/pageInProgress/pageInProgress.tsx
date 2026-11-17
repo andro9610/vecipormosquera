@@ -1,4 +1,5 @@
 import { MaterialIcon } from "../../fragments/materialIcon/MaterialIcon";
+import { getPublicStorageUrl } from "../../utilities/storageUtilities";
 import { useNavigate } from "react-router-dom";
 
 export const PageInProgress: React.FC = () => {
@@ -7,7 +8,7 @@ export const PageInProgress: React.FC = () => {
     return (
         <div className="flex flex-col items-center justify-center h-100vh text-center">
             <img
-                src={`${import.meta.env.BASE_URL}logo_vector.svg`}
+                src={getPublicStorageUrl("assets/logo/logo_vector.svg")}
                 alt="Logo"
                 className="w-full max-w-[320px] h-100 grayscale"
             />

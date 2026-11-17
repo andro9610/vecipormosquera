@@ -1,8 +1,9 @@
 import { MaterialIcon } from "../../../fragments/materialIcon/MaterialIcon";
 import type { TimelineItemProps } from "../../../fragments/timeline/timelineItem";
+import { getPublicStorageUrl } from "../../../utilities/storageUtilities";
 import { Link } from "react-router-dom";
 
-const heroImage = `${import.meta.env.BASE_URL}logo_vector.svg`;
+const heroImage = getPublicStorageUrl("assets/logo/logo_vector.svg");
 
 export const timelineItems: TimelineItemProps[] = [
   {
