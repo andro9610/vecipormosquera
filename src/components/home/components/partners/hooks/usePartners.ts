@@ -1,4 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
+import { getPublicStorageUrl } from "../../../../../utilities/storageUtilities";
 import type { Partner } from "../types/partner";
 
 type PartnerSeed = {
@@ -27,7 +28,7 @@ export const usePartners = () => {
         id: seed.id,
         name: seed.name,
         isActive: seed.isActive,
-        logoSrc: `${import.meta.env.BASE_URL}images/partners/${seed.image}`,
+        logoSrc: getPublicStorageUrl(`photos/partners/${seed.image}`),
         websiteUrl: seed.websiteUrl || undefined,
       })),
     staleTime: 60 * 1000,

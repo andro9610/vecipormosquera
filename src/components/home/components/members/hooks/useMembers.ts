@@ -1,4 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
+import { getPublicStorageUrl } from "../../../../../utilities/storageUtilities";
 import type { Member } from "../types/member";
 
 type MemberSeed = {
@@ -26,7 +27,7 @@ export const useMembers = () => {
         name: seed.name,
         role: seed.role,
         isActive: seed.isActive,
-        photoSrc: `${import.meta.env.BASE_URL}images/members/${seed.image}`,
+        photoSrc: getPublicStorageUrl(`photos/members/${seed.image}`),
       })),
     staleTime: 60 * 1000,
   });
