@@ -1,0 +1,120 @@
+/* Estilos de la estructura del modulo de aprendizaje: contenedor, titulos y portada. */
+.learn-shell {
+    --learn-ink: #1f2a18;
+    --learn-muted: #647159;
+    --learn-soft: #f6f7f1;
+    --learn-paper: #eef1e6;
+    --learn-card: #ffffff;
+    --learn-line: #e4e8dc;
+    --learn-line-strong: #d3dbc5;
+    --learn-green: #4f7224;
+    --learn-green-dark: #3c5a19;
+    --learn-green-hover: #3c5a19;
+    --learn-green-soft: #e9f1da;
+    --learn-gold: #eeb93c;
+    --learn-on-green: #ffffff;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    width: 100%;
+    max-width: 84rem;
+    margin-inline: auto;
+    padding: 1.5rem;
+    border: 1px solid var(--learn-line);
+    border-radius: 1.75rem;
+    background: var(--learn-paper);
+    color: var(--learn-ink);
+    font-family: "IBM Plex Sans", sans-serif;
+}
+
+[data-theme="dark"] .learn-shell {
+    --learn-ink: #edf2e4;
+    --learn-muted: #a5b098;
+    --learn-soft: #1e261a;
+    --learn-paper: #12170f;
+    --learn-card: #1a2116;
+    --learn-line: #2b3424;
+    --learn-line-strong: #3a4630;
+    --learn-green: #8bbf5a;
+    --learn-green-dark: #b7d98d;
+    --learn-green-hover: #79ad4b;
+    --learn-green-soft: #263319;
+    --learn-gold: #eeb93c;
+    --learn-on-green: #10160c;
+}
+
+@media (min-width: 768px) {
+    .learn-shell {
+        padding: 2rem;
+    }
+}
+
+.learn-shell :where(button, a):focus-visible {
+    outline: 2px solid color-mix(in oklab, var(--learn-green) 70%, transparent);
+    outline-offset: 2px;
+}
+
+.learn-title {
+    margin: 0;
+    font-family: "Google Sans Flex", "Roboto", sans-serif;
+    font-size: clamp(1.9rem, 4vw, 3rem);
+    font-weight: 700;
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    text-transform: none;
+    color: var(--learn-ink);
+}
+
+.learn-title--sm {
+    font-size: clamp(1.3rem, 2.2vw, 1.75rem);
+    line-height: 1.15;
+}
+
+.learn-title__mark {
+    display: inline;
+    background: linear-gradient(180deg,
+            transparent 68%,
+            color-mix(in oklab, var(--learn-green-soft) 92%, transparent) 68%);
+}
+
+.learn-hero {
+    position: relative;
+    overflow: hidden;
+    padding: 1.75rem;
+    border: 1px solid var(--learn-line);
+    border-radius: 1.5rem;
+    background: var(--learn-card);
+    box-shadow: 0 24px 48px -42px color-mix(in oklab, var(--learn-ink) 55%, transparent);
+}
+
+.learn-hero--compact {
+    padding: 1.5rem;
+}
+
+@media (min-width: 768px) {
+    .learn-hero {
+        padding: 2.25rem 2.5rem;
+    }
+
+    .learn-hero--compact {
+        padding: 1.75rem 2rem;
+    }
+}
+
+.learn-hero__watermark {
+    display: none;
+}
+
+.learn-hero__lead {
+    max-width: 38rem;
+    margin-top: 1rem;
+    font-size: 0.92rem;
+    line-height: 1.7;
+    color: var(--learn-muted);
+}
+
+.learn-hero__lead--tight {
+    margin-top: 0.65rem;
+    font-size: 0.88rem;
+}

@@ -13,11 +13,6 @@ type CourseFeedbackProps = {
   actionIcon?: string;
 };
 
-const toneClasses: Record<CourseFeedbackTone, string> = {
-  primary: "text-primary/70",
-  danger: "text-danger",
-};
-
 export const CourseFeedback = ({
   icon,
   title,
@@ -28,13 +23,15 @@ export const CourseFeedback = ({
   actionIcon = "arrow_back",
 }: CourseFeedbackProps) => {
   return (
-    <div className="surface-panel flex flex-col items-center gap-3 p-8 text-center">
-      <MaterialIcon icon={icon} className={`text-4xl ${toneClasses[tone]}`} />
-      <h2 className="text-xl md:text-2xl">{title}</h2>
-      <p className="max-w-xl text-sm text-base-content/70">{description}</p>
+    <div className={`learn-feedback ${tone === "danger" ? "learn-feedback--danger" : ""}`}>
+      <span className="learn-feedback__icon">
+        <MaterialIcon icon={icon} />
+      </span>
+      <h2>{title}</h2>
+      <p>{description}</p>
       {actionLabel && actionTo && (
-        <Link to={actionTo} className="btn btn-primary btn-sm mt-1 gap-1">
-          <MaterialIcon icon={actionIcon} className="text-base" />
+        <Link to={actionTo} className="learn-btn learn-btn--solid mt-1">
+          <MaterialIcon icon={actionIcon} />
           {actionLabel}
         </Link>
       )}

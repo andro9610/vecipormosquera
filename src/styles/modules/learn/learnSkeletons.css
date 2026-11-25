@@ -1,0 +1,54 @@
+/* Estilos de los esqueletos de carga del modulo de aprendizaje y sus animaciones. */
+.learn-skeleton__media,
+.learn-skeleton__line,
+.learn-skeleton__pill {
+    border-radius: 0.6rem;
+    background: var(--learn-soft);
+    animation: learn-pulse 1.6s ease-in-out infinite;
+}
+
+.learn-skeleton__media {
+    aspect-ratio: 16 / 9;
+}
+
+.learn-skeleton__body {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    gap: 0.6rem;
+    padding: 1.15rem 1.25rem 1.25rem;
+}
+
+.learn-skeleton__line {
+    height: 0.8rem;
+}
+
+.learn-skeleton__line--sm {
+    height: 0.6rem;
+}
+
+.learn-skeleton__pill {
+    margin-top: auto;
+    height: 2.2rem;
+    border-radius: 999px;
+}
+
+@keyframes learn-pulse {
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.5;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .learn-grid > *,
+    .learn-skeleton__media,
+    .learn-skeleton__line,
+    .learn-skeleton__pill {
+        animation: none;
+    }
+}

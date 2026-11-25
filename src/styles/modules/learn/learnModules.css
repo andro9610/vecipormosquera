@@ -1,0 +1,116 @@
+/* Estilos del acordeon de modulos del curso: encabezados, insignias y estados abiertos. */
+.learn-modules {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    margin-top: 0.25rem;
+}
+
+.learn-sidebar .learn-modules {
+    max-height: none;
+    overflow: visible;
+}
+
+.learn-module {
+    border: 0;
+    border-top: 1px solid var(--learn-line);
+    border-radius: 0;
+    background: transparent;
+}
+
+.learn-module:first-child {
+    border-top: 0;
+}
+
+.learn-module--active {
+    border-color: var(--learn-line);
+    background: transparent;
+}
+
+.learn-module__toggle {
+    display: flex;
+    width: 100%;
+    align-items: flex-start;
+    gap: 0.7rem;
+    padding: 0.9rem 0;
+    border: 0;
+    background: transparent;
+    text-align: left;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.learn-module__toggle:hover {
+    background: transparent;
+}
+
+.learn-module__badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.6rem;
+    height: 1.6rem;
+    flex-shrink: 0;
+    border-radius: 999px;
+    background: var(--learn-card);
+    border: 1px solid var(--learn-line-strong);
+    color: var(--learn-muted);
+    font-size: 0.58rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+}
+
+.learn-module--active .learn-module__badge {
+    background: var(--learn-green-soft);
+    border-color: transparent;
+    color: var(--learn-green-dark);
+}
+
+.learn-module__text {
+    display: flex;
+    min-width: 0;
+    flex: 1;
+    flex-direction: column;
+    gap: 0.15rem;
+}
+
+.learn-module__eyebrow {
+    color: var(--learn-green-dark);
+    font-size: 0.54rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+}
+
+.learn-module__title {
+    color: var(--learn-ink);
+    font-size: 0.84rem;
+    font-weight: 600;
+    line-height: 1.4;
+}
+
+.learn-module__meta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    color: var(--learn-muted);
+    font-size: 0.62rem;
+    letter-spacing: 0;
+    text-transform: none;
+}
+
+.learn-module__meta .material-symbols-rounded {
+    font-size: 0.8rem;
+}
+
+.learn-module__chevron {
+    margin-top: 0.15rem;
+    flex-shrink: 0;
+    color: var(--learn-muted);
+    font-size: 1rem;
+    transition: transform 0.25s ease;
+}
+
+.learn-module__chevron.is-open {
+    transform: rotate(180deg);
+}

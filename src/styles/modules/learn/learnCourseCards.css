@@ -1,0 +1,284 @@
+/* Estilos de las tarjetas de curso y sus estados de carga o error. */
+.learn-card {
+    --learn-accent: var(--learn-green);
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    overflow: hidden;
+    border: 1px solid var(--learn-line);
+    border-radius: 1.25rem;
+    background: var(--learn-card);
+    color: var(--learn-ink);
+    text-decoration: none;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.learn-card--accent-1 {
+    --learn-accent: var(--learn-green);
+}
+
+.learn-card--accent-2 {
+    --learn-accent: #c9922a;
+}
+
+.learn-card--accent-3 {
+    --learn-accent: #35651a;
+}
+
+.learn-card--accent-4 {
+    --learn-accent: #8a6d1f;
+}
+
+.learn-card:hover {
+    transform: translateY(-3px);
+    border-color: var(--learn-line-strong);
+    box-shadow: 0 20px 40px -34px color-mix(in oklab, var(--learn-ink) 55%, transparent);
+}
+
+.learn-card:focus-visible {
+    outline: 2px solid color-mix(in oklab, var(--learn-green) 60%, transparent);
+    outline-offset: 2px;
+}
+
+.learn-card__media {
+    position: relative;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    background: var(--learn-soft);
+}
+
+.learn-card__media img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+}
+
+.learn-card:hover .learn-card__media img {
+    transform: scale(1.03);
+}
+
+.learn-card__media::after {
+    display: none;
+}
+
+.learn-card__media-fallback {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+    background:
+        radial-gradient(140px 140px at 82% 16%, color-mix(in oklab, white 55%, transparent), transparent 70%),
+        linear-gradient(140deg,
+            color-mix(in oklab, var(--learn-accent) 24%, white),
+            color-mix(in oklab, var(--learn-accent) 8%, white));
+    color: color-mix(in oklab, var(--learn-accent) 82%, #1f2a18);
+    font-size: 2.75rem;
+}
+
+[data-theme="dark"] .learn-card__media-fallback {
+    background:
+        radial-gradient(140px 140px at 82% 16%, color-mix(in oklab, white 12%, transparent), transparent 70%),
+        linear-gradient(140deg,
+            color-mix(in oklab, var(--learn-accent) 42%, var(--learn-card)),
+            color-mix(in oklab, var(--learn-accent) 16%, var(--learn-card)));
+    color: color-mix(in oklab, var(--learn-accent) 55%, white);
+}
+
+.learn-card__level {
+    position: absolute;
+    top: 0.75rem;
+    left: 0.75rem;
+    z-index: 1;
+    padding: 0.25rem 0.6rem;
+    border-radius: 999px;
+    background: color-mix(in oklab, white 92%, transparent);
+    color: #1f2a18;
+    font-size: 0.6rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+
+.learn-card__count {
+    position: absolute;
+    right: 0.75rem;
+    bottom: 0.75rem;
+    z-index: 1;
+    padding: 0.25rem 0.6rem;
+    border-radius: 999px;
+    background: color-mix(in oklab, #10160c 58%, transparent);
+    color: #f6f8f0;
+    font-size: 0.6rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+}
+
+.learn-card__play {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    border-radius: 999px;
+    background: color-mix(in oklab, white 94%, transparent);
+    color: var(--learn-green);
+    font-size: 1.4rem;
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.9);
+    transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.learn-card:hover .learn-card__play {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+}
+
+@media (hover: none) {
+    .learn-card__play {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+    }
+}
+
+.learn-card__body {
+    position: relative;
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 1.15rem 1.25rem 1.25rem;
+}
+
+.learn-card__index {
+    display: none;
+}
+
+.learn-card__title {
+    margin: 0;
+    font-family: "Google Sans Flex", "Roboto", sans-serif;
+    font-size: 1.05rem;
+    font-weight: 700;
+    line-height: 1.35;
+    letter-spacing: -0.01em;
+    text-transform: none;
+    color: var(--learn-ink);
+}
+
+.learn-card__desc {
+    display: -webkit-box;
+    overflow: hidden;
+    margin: 0;
+    color: var(--learn-muted);
+    font-size: 0.82rem;
+    line-height: 1.6;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+}
+
+.learn-card__meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem 0.85rem;
+    margin-top: 0.25rem;
+    color: var(--learn-muted);
+    font-size: 0.68rem;
+    font-weight: 500;
+    letter-spacing: 0;
+    text-transform: none;
+}
+
+.learn-card__meta span {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+}
+
+.learn-card__meta .material-symbols-rounded {
+    font-size: 0.9rem;
+    color: var(--learn-green);
+}
+
+.learn-card__foot {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    margin-top: auto;
+    padding-top: 0.9rem;
+    border-top: 1px solid var(--learn-line);
+    color: var(--learn-green-dark);
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.learn-card__arrow {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.8rem;
+    height: 1.8rem;
+    border-radius: 999px;
+    background: var(--learn-green-soft);
+    color: var(--learn-green-dark);
+    font-size: 0.95rem;
+    transition: transform 0.2s ease, background 0.2s ease, color 0.2s ease;
+}
+
+.learn-card:hover .learn-card__arrow {
+    background: var(--learn-green);
+    color: var(--learn-on-green);
+    transform: rotate(45deg);
+}
+
+.learn-feedback {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.85rem;
+    padding: 3rem 2rem;
+    border: 1px solid var(--learn-line);
+    border-radius: 1.25rem;
+    background: var(--learn-card);
+    text-align: center;
+}
+
+.learn-feedback__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 3rem;
+    height: 3rem;
+    border-radius: 0.9rem;
+    background: var(--learn-green-soft);
+    color: var(--learn-green-dark);
+    font-size: 1.6rem;
+}
+
+.learn-feedback--danger .learn-feedback__icon {
+    background: color-mix(in oklab, var(--color-danger) 12%, var(--learn-card));
+    color: var(--color-danger);
+}
+
+.learn-feedback h2 {
+    margin: 0;
+    font-family: "Google Sans Flex", sans-serif;
+    font-size: 1.15rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    text-transform: none;
+    color: var(--learn-ink);
+}
+
+.learn-feedback p {
+    max-width: 32rem;
+    margin: 0;
+    color: var(--learn-muted);
+    font-size: 0.86rem;
+    line-height: 1.65;
+}

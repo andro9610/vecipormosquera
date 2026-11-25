@@ -4,16 +4,13 @@ import { flattenCourseLessons } from "../../utilities/courseStats";
 
 export const useCourseNavigation = (course: Course | null) => {
   const [selectedLessonId, setSelectedLessonId] = useState<string | null>(null);
-  const [expandedModuleIds, setExpandedModuleIds] = useState<string[] | null>(null);
+  const [expandedModuleId, setExpandedModuleId] = useState<string | null>(null);
 
   const lessons = useMemo(() => (course ? flattenCourseLessons(course) : []), [course]);
 
-  const defaultModuleIds = useMemo(
-    () => (course?.modules[0] ? [course.modules[0].id] : []),
-    [course]
-  );
+  const defaultModuleId = course?.modules[0]?.id ?? null;
 
-  const openModuleIds = expandedModuleIds ?? defaultModuleIds;
+  const openModuleId = expandedModuleId ?? defaultModuleId;
 
   const activeLesson = useMemo(
     () => lessons.find((lesson) => lesson.id === selectedLessonId) ?? lessons[0] ?? null,
@@ -28,18 +25,13 @@ export const useCourseNavigation = (course: Course | null) => {
 
   const selectLesson = (lesson: CourseLesson) => {
     setSelectedLessonId(lesson.id);
-    setExpandedModuleIds((current) => {
-      const base = current ?? defaultModuleIds;
-      return base.includes(lesson.moduleId) ? base : [...base, lesson.moduleId];
-    });
+    setExpandedModuleId(lesson.moduleId);
   };
 
   const toggleModule = (moduleId: string) => {
-    setExpandedModuleIds((current) => {
-      const base = current ?? defaultModuleIds;
-      return base.includes(moduleId)
-        ? base.filter((id) => id !== moduleId)
-        : [...base, moduleId];
+    setExpandedModuleId((current) => {
+      const base = current ?? defaultModuleId;
+      return base === moduleId ? null : moduleId;
     });
   };
 
@@ -63,7 +55,7 @@ export const useCourseNavigation = (course: Course | null) => {
     activeLesson,
     activeLessonIndex,
     activeModuleId,
-    openModuleIds,
+    openModuleId,
     selectLesson,
     toggleModule,
     goToPreviousLesson,

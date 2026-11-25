@@ -1,0 +1,62 @@
+/* Estilos de controles reutilizables del modulo de aprendizaje: botones y etiquetas. */
+.learn-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.45rem;
+    padding: 0.65rem 1.2rem;
+    border: 1px solid transparent;
+    border-radius: 999px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+.learn-btn--solid {
+    background: var(--learn-green);
+    color: var(--learn-on-green);
+}
+
+.learn-btn--solid:hover:not(:disabled) {
+    background: var(--learn-green-hover);
+}
+
+.learn-btn--ghost {
+    border-color: var(--learn-line-strong);
+    background: var(--learn-card);
+    color: var(--learn-ink);
+}
+
+.learn-btn--ghost:hover:not(:disabled) {
+    border-color: color-mix(in oklab, var(--learn-green) 45%, transparent);
+    color: var(--learn-green-dark);
+}
+
+.learn-btn:disabled {
+    cursor: not-allowed;
+    opacity: 0.45;
+}
+
+.learn-btn .material-symbols-rounded {
+    font-size: 1rem;
+}
+
+.learn-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    padding: 0.22rem 0.6rem;
+    border: 1px solid var(--learn-line);
+    border-radius: 999px;
+    background: var(--learn-soft);
+    color: var(--learn-muted);
+    font-size: 0.6rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+
+.learn-tag--ghost {
+    background: transparent;
+}

@@ -1,0 +1,33 @@
+/* Estilos de botones: radio base, boton danger y sus variantes outline, hover y focus. */
+@layer base {
+    .btn {
+        border-radius: 0.3rem;
+    }
+
+    .btn-danger {
+        border-color: var(--color-danger) !important;
+        background-color: var(--color-danger) !important;
+        color: var(--color-danger-content) !important;
+    }
+
+    .btn-danger:hover,
+    .btn-danger:active {
+        border-color: color-mix(in oklab, var(--color-danger) 88%, black) !important;
+        background-color: color-mix(in oklab, var(--color-danger) 88%, black) !important;
+    }
+
+    .btn-danger:focus-visible {
+        outline: none;
+        box-shadow: 0 0 0 0.2rem color-mix(in oklab, var(--color-danger) 24%, transparent);
+    }
+
+    .btn.btn-outline.btn-danger {
+        background-color: transparent !important;
+        color: var(--color-danger) !important;
+    }
+
+    .btn.btn-outline.btn-danger:hover,
+    .btn.btn-outline.btn-danger:active {
+        background-color: color-mix(in oklab, var(--color-danger) 12%, transparent) !important;
+    }
+}

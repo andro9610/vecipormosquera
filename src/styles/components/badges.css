@@ -1,0 +1,13 @@
+/* Estilos de insignias: badge de peligro y su variante para tema oscuro. */
+@layer base {
+    .badge-danger {
+        border: 1px solid color-mix(in oklab, var(--color-danger) 35%, transparent);
+        background-color: color-mix(in oklab, var(--color-danger) 13%, white);
+        color: color-mix(in oklab, var(--color-danger) 92%, black);
+    }
+
+    [data-theme="dark"] .badge-danger {
+        background-color: color-mix(in oklab, var(--color-danger) 22%, var(--color-base-100));
+        color: color-mix(in oklab, var(--color-danger) 45%, white);
+    }
+}
