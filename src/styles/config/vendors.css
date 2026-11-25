@@ -1,0 +1,5 @@
+/* Configuracion de FlyonUI: carga el plugin, sus fuentes de deteccion y la variante dark. */
+@plugin "flyonui";
+@source "../../../node_modules/flyonui/dist/index.js";
+
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));

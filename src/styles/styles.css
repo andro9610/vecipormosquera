@@ -1,0 +1,27 @@
+/* Entrada principal de estilos: importa Tailwind, configuracion, base, componentes y modulos. */
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&family=IBM+Plex+Sans:wght@400;500;600&family=Google+Sans+Flex:wght@400;500;700&display=swap");
+@import "tailwindcss";
+@import "../../node_modules/flyonui/variants.css";
+@import "../../node_modules/flatpickr/dist/flatpickr.min.css";
+@import "../../node_modules/flyonui/src/vendor/flatpickr.css";
+@import "./config/vendors.css";
+@import "./config/theme.css";
+@import "./base/base.css";
+@import "./components/navbar.css";
+@import "./components/surfaces.css";
+@import "./components/forms.css";
+@import "./components/buttons.css";
+@import "./components/badges.css";
+@import "./components/utilities.css";
+@import "./components/toastify.css";
+@import "./components/logo.css";
+@import "./modules/learn/learnShell.css";
+@import "./modules/learn/learnMetrics.css";
+@import "./modules/learn/learnGrid.css";
+@import "./modules/learn/learnCourseCards.css";
+@import "./modules/learn/learnControls.css";
+@import "./modules/learn/learnCourseDetail.css";
+@import "./modules/learn/learnModules.css";
+@import "./modules/learn/learnLessons.css";
+@import "./modules/learn/learnPlayer.css";
+@import "./modules/learn/learnSkeletons.css";

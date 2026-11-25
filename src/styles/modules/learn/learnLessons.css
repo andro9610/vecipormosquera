@@ -1,0 +1,85 @@
+/* Estilos de la lista de lecciones dentro de cada modulo del curso. */
+.learn-lessons {
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
+    margin: 0;
+    padding: 0 0 0.85rem;
+    list-style: none;
+}
+
+.learn-lesson {
+    display: flex;
+    width: 100%;
+    align-items: flex-start;
+    gap: 0.55rem;
+    padding: 0.5rem 0.6rem 0.5rem 2.3rem;
+    border: 0;
+    border-radius: 0.55rem;
+    text-align: left;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.learn-lesson:hover {
+    background: color-mix(in oklab, var(--learn-green-soft) 55%, transparent);
+}
+
+.learn-lesson--active {
+    background: var(--learn-green-soft);
+}
+
+.learn-lesson__marker {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.2rem;
+    height: 1.2rem;
+    margin-top: 0.1rem;
+    flex-shrink: 0;
+    border: 1px solid var(--learn-line-strong);
+    border-radius: 999px;
+    background: transparent;
+    color: var(--learn-muted);
+    font-size: 0.5rem;
+    font-weight: 600;
+}
+
+.learn-lesson--active .learn-lesson__marker {
+    border-color: transparent;
+    background: var(--learn-green);
+    color: var(--learn-on-green);
+    font-size: 0.85rem;
+}
+
+.learn-lesson__text {
+    display: flex;
+    min-width: 0;
+    flex: 1;
+    flex-direction: column;
+    gap: 0.1rem;
+}
+
+.learn-lesson__title {
+    color: var(--learn-ink);
+    font-size: 0.76rem;
+    font-weight: 500;
+    line-height: 1.45;
+}
+
+.learn-lesson--active .learn-lesson__title {
+    color: var(--learn-green-dark);
+    font-weight: 600;
+}
+
+.learn-lesson__duration {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.2rem;
+    color: var(--learn-muted);
+    font-size: 0.62rem;
+}
+
+.learn-lesson__duration .material-symbols-rounded {
+    font-size: 0.78rem;
+}

@@ -1,0 +1,125 @@
+/* Estilos del reproductor de lecciones: pantalla, informacion y navegacion entre lecciones. */
+.learn-player {
+    display: flex;
+    min-width: 0;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+.learn-player__heading {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+}
+
+.learn-player__screen {
+    position: relative;
+    aspect-ratio: 16 / 9;
+    width: 100%;
+    padding: 0.5rem;
+    overflow: hidden;
+    border: 1px solid var(--learn-line);
+    border-radius: 1.1rem;
+    background: var(--learn-soft);
+}
+
+.learn-player__screen iframe {
+    position: absolute;
+    inset: 0.5rem;
+    height: calc(100% - 1rem);
+    width: calc(100% - 1rem);
+    border: 0;
+    border-radius: 0.7rem;
+}
+
+.learn-player__fallback {
+    position: absolute;
+    inset: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding-inline: 1rem;
+    border-radius: 0.7rem;
+    background: var(--learn-soft);
+    text-align: center;
+    color: var(--learn-muted);
+    font-size: 0.85rem;
+}
+
+.learn-player__fallback .material-symbols-rounded {
+    font-size: 2.25rem;
+    color: var(--learn-green);
+}
+
+.learn-player__body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+}
+
+.learn-player__meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem 0.9rem;
+    color: var(--learn-muted);
+    font-size: 0.68rem;
+    font-weight: 500;
+    letter-spacing: 0;
+    text-transform: none;
+}
+
+.learn-player__meta > span:not(.learn-tag) {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+.learn-player__meta .material-symbols-rounded {
+    font-size: 0.9rem;
+    color: var(--learn-green);
+}
+
+.learn-player__title {
+    margin: 0;
+    font-family: "Google Sans Flex", sans-serif;
+    font-size: clamp(1.2rem, 2vw, 1.55rem);
+    font-weight: 700;
+    line-height: 1.3;
+    letter-spacing: -0.02em;
+    text-transform: none;
+    color: var(--learn-ink);
+}
+
+.learn-player__desc {
+    margin: 0;
+    color: var(--learn-muted);
+    font-size: 0.88rem;
+    line-height: 1.7;
+}
+
+.learn-player__nav {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.6rem;
+    padding-top: 1.1rem;
+    border-top: 1px solid var(--learn-line);
+}
+
+.learn-player__nav .learn-btn {
+    width: 100%;
+}
+
+@media (min-width: 640px) {
+    .learn-player__nav {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .learn-player__nav .learn-btn {
+        width: auto;
+    }
+}

@@ -15,30 +15,20 @@ export const LessonListItem = ({ lesson, index, isActive, onSelect }: LessonList
         type="button"
         onClick={() => onSelect(lesson)}
         aria-current={isActive ? "true" : undefined}
-        className={`flex w-full items-start gap-3 rounded-xl border px-3 py-2.5 text-left transition ${
-          isActive
-            ? "border-primary/50 bg-primary/10"
-            : "border-transparent hover:border-base-300/70 hover:bg-base-200/50"
-        }`}
+        className={`learn-lesson ${isActive ? "learn-lesson--active" : ""}`}
       >
-        <span
-          className={`mt-0.5 inline-flex size-7 shrink-0 items-center justify-center rounded-full text-xs font-bold ${
-            isActive ? "bg-primary text-primary-content" : "bg-base-300/70 text-base-content/70"
-          }`}
-        >
-          {isActive ? <MaterialIcon icon="play_arrow" className="text-base" fill={1} /> : index + 1}
+        <span className="learn-lesson__marker">
+          {isActive ? (
+            <MaterialIcon icon="play_arrow" fill={1} />
+          ) : (
+            String(index + 1).padStart(2, "0")
+          )}
         </span>
-        <span className="min-w-0 flex-1">
-          <span
-            className={`block text-sm font-semibold leading-snug ${
-              isActive ? "text-primary" : "text-base-content"
-            }`}
-          >
-            {lesson.title}
-          </span>
+        <span className="learn-lesson__text">
+          <span className="learn-lesson__title">{lesson.title}</span>
           {lesson.duration && (
-            <span className="mt-0.5 inline-flex items-center gap-1 text-xs text-base-content/55">
-              <MaterialIcon icon="schedule" className="text-sm" />
+            <span className="learn-lesson__duration">
+              <MaterialIcon icon="schedule" />
               {lesson.duration}
             </span>
           )}

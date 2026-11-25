@@ -3,7 +3,7 @@ import { createRoot } from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
 import { QueryClientProvider } from "@tanstack/react-query";
 import App from "./App.tsx";
-import "./styles.css";
+import "./styles/styles.css";
 import "flyonui/flyonui";
 import "material-symbols";
 import { initializeTheme } from "./hooks/useTheme";
